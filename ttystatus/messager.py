@@ -27,6 +27,7 @@ class Messager(object):
         self._last_msg = '' # What did we write last?
         self._last_time = 0 # When did we write last?
         self._period = 1 # How long between updates?
+        self._cached_msg = '' # Last message from user, to write() method.
         
     def _now(self):
         '''Return current time.'''
@@ -51,6 +52,7 @@ class Messager(object):
         if now - self._last_time >= self._period:
             self._overwrite(string)
             self._last_time = now
+        self._cached_msg = string
             
     def clear(self):
         '''Remove current message from terminal.'''
@@ -76,4 +78,5 @@ class Messager(object):
         
     def finish(self):
         '''Finalize output.'''
+        self._overwrite(self._cached_msg)
         self._raw_write('\n')
