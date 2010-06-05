@@ -15,6 +15,7 @@
 
 
 import fcntl
+import signal
 import struct
 import sys
 import time
@@ -31,6 +32,7 @@ class Messager(object):
         self._period = 1 # How long between updates?
         self._cached_msg = '' # Last message from user, to write() method.
         self.width = self._get_terminal_width() # Width of terminal
+        signal.signal(signal.SIGWINCH, self._sigwinch_handler)
         
     def _now(self):
         '''Return current time.'''
@@ -57,6 +59,12 @@ class Messager(object):
             if not hasattr(self.output, 'fileno'):
                 return default_width
             raise
+
+    def _sigwinch_handler(self, signum, frame): # pragma: no cover
+        # Clear the terminal from old stuff, using the old width.
+        self.clear()
+        # Get new width.
+        self.width = self.get_terminal_width()
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
