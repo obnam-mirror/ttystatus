@@ -36,21 +36,25 @@ class Messager(object):
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
         if self.output.isatty():
-            if self._last_msg:
-                self.output.write('\r' + (' ' * len(self._last_msg)) + '\r')
             self.output.write(string)
-            self._last_msg = string
+
+    def _overwrite(self, string):
+        '''Overwrite current message on terminal.'''
+        if self._last_msg:
+            self._raw_write('\r' + (' ' * len(self._last_msg)) + '\r')
+        self._raw_write(string)
+        self._last_msg = string
             
     def write(self, string):
         '''Write raw data, but only once per period.'''
         now = self._now()
         if now - self._last_time >= self._period:
-            self._raw_write(string)
+            self._overwrite(string)
             self._last_time = now
             
     def clear(self):
         '''Remove current message from terminal.'''
-        self._raw_write('')
+        self._overwrite('')
         
     def notify(self, string):
         '''Show a notification message string to the user.
@@ -68,9 +72,8 @@ class Messager(object):
         old = self._last_msg
         self.clear()
         self.output.write('%s\n' % string)
-        self._raw_write(old)
+        self._overwrite(old)
         
     def finish(self):
         '''Finalize output.'''
-        if self.output.isatty():
-            self.output.write('\n')
+        self._raw_write('\n')
