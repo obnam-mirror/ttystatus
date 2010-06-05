@@ -14,6 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import fcntl
+import struct
 import sys
 import time
 
@@ -28,13 +30,34 @@ class Messager(object):
         self._last_time = 0 # When did we write last?
         self._period = 1 # How long between updates?
         self._cached_msg = '' # Last message from user, to write() method.
-        self.width = 80 # Width of terminal
+        self.width = self._get_terminal_width() # Width of terminal
         
     def _now(self):
         '''Return current time.'''
         # This is a wrapper around time.time(), for testing.
         return time.time()
         
+    def _get_terminal_width(self): # pragma: no cover
+        '''Return width of terminal in characters.
+
+        If this fails, assume 80.
+        
+        Borrowed and adapted from bzrlib.
+        
+        '''
+        
+        default_width = 80
+        try:
+            s = struct.pack('HHHH', 0, 0, 0, 0)
+            x = fcntl.ioctl(self.output.fileno(), termios.TIOCGWINSZ, s)
+            return struct.unpack('HHHH', x)[1]
+        except IOError:
+            return default_width
+        except AttributeError:
+            if not hasattr(self.output, 'fileno'):
+                return default_width
+            raise
+
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
         if self.output.isatty():
