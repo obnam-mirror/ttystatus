@@ -26,11 +26,11 @@ class Messager(object):
 
     '''Write messages to the terminal.'''
     
-    def __init__(self, output=None):
+    def __init__(self, output=None, period=1.0):
         self.output = output or sys.stderr
         self._last_msg = '' # What did we write last?
         self._last_time = 0 # When did we write last?
-        self._period = 1 # How long between updates?
+        self._period = period # How long between updates?
         self._cached_msg = '' # Last message from user, to write() method.
         self.width = self._get_terminal_width() # Width of terminal
         signal.signal(signal.SIGWINCH, self._sigwinch_handler)
