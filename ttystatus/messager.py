@@ -24,18 +24,22 @@ class Messager(object):
     
     def __init__(self, output=None):
         self.output = output or sys.stderr
+        self._last_msg = '' # What did we write last?
         self._last_time = 0 # When did we write last?
         self._period = 1 # How long between updates?
-        
-    def _raw_write(self, string):
-        '''Write raw data if output is terminal.'''
-        if self.output.isatty():
-            self.output.write(string)
         
     def _now(self):
         '''Return current time.'''
         # This is a wrapper around time.time(), for testing.
         return time.time()
+        
+    def _raw_write(self, string):
+        '''Write raw data if output is terminal.'''
+        if self.output.isatty():
+            if self._last_msg:
+                self.output.write('\r' + (' ' * len(self._last_msg)) + '\r')
+            self.output.write(string)
+            self._last_msg = string
             
     def write(self, string):
         '''Write raw data, but only once per period.'''

@@ -31,6 +31,9 @@ class MessagerTests(unittest.TestCase):
     def setUp(self):
         self.output = DummyTerminal()
         self.messager = ttystatus.Messager(output=self.output)
+
+    def fast_time(self):
+        return self.messager._last_time + self.messager._period
         
     def test_sets_output(self):
         self.assertEqual(self.messager.output, self.output)
@@ -49,8 +52,14 @@ class MessagerTests(unittest.TestCase):
         self.assertEqual(self.output.getvalue(), 'foo')
         
     def test_cached_write_writes_once_within_a_second(self):
-        self.messager._now = lambda: (self.messager._period + 1)
+        self.messager._now = lambda: self.messager._period + 1
         self.messager.write('foo')
         self.messager.write('bar')
         self.assertEqual(self.output.getvalue(), 'foo')
+
+    def test_write_removes_old_message(self):
+        self.messager._now = self.fast_time
+        self.messager.write('foo')
+        self.messager.write('bar')
+        self.assertEqual(self.output.getvalue(), 'foo\r   \rbar')
 
