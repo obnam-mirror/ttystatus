@@ -84,3 +84,11 @@ class MessagerTests(unittest.TestCase):
         self.messager.write('foo')
         self.messager.finish()
         self.assertEqual(self.output.getvalue(), 'foo\n')
+        
+    def test_has_width(self):
+        self.assertEqual(self.messager.width, 80)
+        
+    def test_write_truncates_at_one_less_than_width(self):
+        self.messager.width = 4
+        self.messager.write('foobar')
+        self.assertEqual(self.output.getvalue(), 'foo')

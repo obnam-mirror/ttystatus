@@ -28,6 +28,7 @@ class Messager(object):
         self._last_time = 0 # When did we write last?
         self._period = 1 # How long between updates?
         self._cached_msg = '' # Last message from user, to write() method.
+        self.width = 80 # Width of terminal
         
     def _now(self):
         '''Return current time.'''
@@ -48,6 +49,7 @@ class Messager(object):
             
     def write(self, string):
         '''Write raw data, but only once per period.'''
+        string = string[:self.width - 1]
         now = self._now()
         if now - self._last_time >= self._period:
             self._overwrite(string)
