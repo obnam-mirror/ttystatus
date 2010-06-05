@@ -51,3 +51,21 @@ class Messager(object):
     def clear(self):
         '''Remove current message from terminal.'''
         self._raw_write('')
+        
+    def notify(self, string):
+        '''Show a notification message string to the user.
+        
+        Notifications are meant for error messages and other things
+        that do not belong in, say, progress bars. Whatever is currently
+        on the terminal is wiped, then the notification message is shown,
+        a new line is started, and the old message is restored.
+        
+        Notifications are written even when the output is not going
+        to a terminal.
+        
+        '''
+        
+        old = self._last_msg
+        self.clear()
+        self.output.write('%s\n' % string)
+        self._raw_write(old)
