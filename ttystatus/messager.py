@@ -72,4 +72,5 @@ class Messager(object):
         
     def finish(self):
         '''Finalize output.'''
-        self.clear()
+        if self.output.isatty():
+            self.output.write('\n')
