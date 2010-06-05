@@ -38,4 +38,8 @@ class MessagerTests(unittest.TestCase):
     def test_writes_nothing_if_output_is_not_a_terminal(self):
         self.messager.output = StringIO.StringIO()
         self.messager.raw_write('foo')
-        self.assertEqual(self.output.getvalue(), '')
+        self.assertEqual(self.messager.output.getvalue(), '')
+        
+    def test_writes_something_if_output_is_not_a_terminal(self):
+        self.messager.raw_write('foo')
+        self.assertEqual(self.output.getvalue(), 'foo')

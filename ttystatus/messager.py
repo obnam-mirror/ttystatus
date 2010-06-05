@@ -25,4 +25,5 @@ class Messager(object):
         self.output = output or sys.stderr
         
     def raw_write(self, string):
-        self.output.write(string)
+        if self.output.isatty():
+            self.output.write(string)
