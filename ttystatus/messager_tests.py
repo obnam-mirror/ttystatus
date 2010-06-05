@@ -35,11 +35,22 @@ class MessagerTests(unittest.TestCase):
     def test_sets_output(self):
         self.assertEqual(self.messager.output, self.output)
         
-    def test_writes_nothing_if_output_is_not_a_terminal(self):
+    def test_raw_writes_nothing_if_output_is_not_a_terminal(self):
         self.messager.output = StringIO.StringIO()
-        self.messager.raw_write('foo')
+        self.messager._raw_write('foo')
         self.assertEqual(self.messager.output.getvalue(), '')
         
-    def test_writes_something_if_output_is_not_a_terminal(self):
-        self.messager.raw_write('foo')
+    def test_raw_writes_something_if_output_is_not_a_terminal(self):
+        self.messager._raw_write('foo')
         self.assertEqual(self.output.getvalue(), 'foo')
+        
+    def test_cached_write_writes_first_thing(self):
+        self.messager.write('foo')
+        self.assertEqual(self.output.getvalue(), 'foo')
+        
+    def test_cached_write_writes_once_within_a_second(self):
+        self.messager._now = lambda: (self.messager._period + 1)
+        self.messager.write('foo')
+        self.messager.write('bar')
+        self.assertEqual(self.output.getvalue(), 'foo')
+
