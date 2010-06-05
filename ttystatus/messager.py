@@ -18,6 +18,7 @@ import fcntl
 import signal
 import struct
 import sys
+import termios
 import time
 
 
