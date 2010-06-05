@@ -47,3 +47,7 @@ class Messager(object):
         if now - self._last_time >= self._period:
             self._raw_write(string)
             self._last_time = now
+            
+    def clear(self):
+        '''Remove current message from terminal.'''
+        self._raw_write('')

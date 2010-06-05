@@ -63,3 +63,9 @@ class MessagerTests(unittest.TestCase):
         self.messager.write('bar')
         self.assertEqual(self.output.getvalue(), 'foo\r   \rbar')
 
+    def test_clear_removes_message(self):
+        self.messager._now = lambda: self.messager._period + 1
+        self.messager.write('foo')
+        self.messager.clear()
+        self.assertEqual(self.output.getvalue(), 'foo\r   \r')
+
