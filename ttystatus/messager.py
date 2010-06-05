@@ -69,3 +69,7 @@ class Messager(object):
         self.clear()
         self.output.write('%s\n' % string)
         self._raw_write(old)
+        
+    def finish(self):
+        '''Finalize output.'''
+        self.clear()

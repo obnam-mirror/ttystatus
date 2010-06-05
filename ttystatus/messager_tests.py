@@ -74,3 +74,7 @@ class MessagerTests(unittest.TestCase):
         self.messager.notify('bar')
         self.assertEqual(self.output.getvalue(), 'foo\r   \rbar\nfoo')
 
+    def test_finish_removes_message(self):
+        self.messager.write('foo')
+        self.messager.finish()
+        self.assertEqual(self.output.getvalue(), 'foo\r   \r')
