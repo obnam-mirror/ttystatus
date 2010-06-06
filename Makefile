@@ -6,3 +6,4 @@ check:
 	
 clean:
 	rm -f .coverage ttystatus/*.py[co]
+	rm -rf build

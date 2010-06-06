@@ -1,3 +1,4 @@
 ./ttystatus/__init__.py
 ./example.py
 ./ttystatus/widget.py
+./setup.py

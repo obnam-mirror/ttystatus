@@ -14,12 +14,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+from distutils.core import setup
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
+import ttystatus
 
-from literal import Literal
-from string import String
-
+setup(
+    name='ttystatus',
+    version=ttystatus.version,
+    description='terminal progress bar and status output for command line',
+    author='Lars Wirzenius',
+    author_email='liw@liw.fi',
+#    url='http://liw.fi/ttystatus/',
+    packages=['ttystatus'],
+)
