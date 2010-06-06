@@ -65,12 +65,15 @@ class Messager(object):
         # Clear the terminal from old stuff, using the old width.
         self.clear()
         # Get new width.
-        self.width = self.get_terminal_width()
+        self.width = self._get_terminal_width()
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
         if self.output.isatty():
-            self.output.write(string)
+            try:
+                self.output.write(string)
+            except IOError:
+                pass # We ignore these.
 
     def _overwrite(self, string):
         '''Overwrite current message on terminal.'''
@@ -107,7 +110,10 @@ class Messager(object):
         
         old = self._last_msg
         self.clear()
-        self.output.write('%s\n' % string)
+        try:
+            self.output.write('%s\n' % string)
+        except IOError:
+            pass # We ignore these. No point in crashing if terminal is bad.
         self._overwrite(old)
         
     def finish(self):
