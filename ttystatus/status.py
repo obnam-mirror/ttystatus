@@ -48,8 +48,10 @@ class TerminalStatus(object):
     def __setitem__(self, key, value):
         '''Set value for key.'''
         self._values[key] = value
+        width = self._m.width
         for w in self._widgets:
-            w.update(self, 999)
+            w.update(self, width)
+            width -= len(str(w))
         self._m.write(''.join(str(w) for w in self._widgets))
     
     def increase(self, key, delta):

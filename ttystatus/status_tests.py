@@ -21,6 +21,8 @@ import ttystatus
 
 class DummyMessager(object):
 
+    width = 80
+
     def clear(self):
         pass
         
