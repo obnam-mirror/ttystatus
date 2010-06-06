@@ -14,7 +14,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from messager import Messager
-from widget import Widget
-from literal import Literal
-from status import TerminalStatus
+import unittest
+
+import ttystatus
+
+
+class TerminalStatusTests(unittest.TestCase):
+
+    def setUp(self):
+        self.ts = ttystatus.TerminalStatus()
+        
+    def test_has_no_widgets(self):
+        self.assertEqual(self.ts._widgets, [])
+        
+    def test_adds_widget(self):
+        w = ttystatus.Literal('foo')
+        self.ts.add(w)
+        self.assertEqual(self.ts._widgets, [w])

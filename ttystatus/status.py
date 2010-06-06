@@ -14,7 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from messager import Messager
-from widget import Widget
-from literal import Literal
-from status import TerminalStatus
+class TerminalStatus(object):
+
+    '''Show status and progress information on a terminal.'''
+    
+    def __init__(self):
+        self._widgets = []
+        
+    def add(self, widget):
+        '''Add a new widget to the status display.'''
+        self._widgets.append(widget)
