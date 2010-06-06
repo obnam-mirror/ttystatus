@@ -24,13 +24,17 @@ import ttystatus
 
 
 def main():
-    m = ttystatus.Messager(period=0.1)
+    ts = ttystatus.TerminalStatus(period=0.1)
+    ts.add(ttystatus.Literal('Finding symlinks: '))
+    ts.add(ttystatus.String('pathname'))
+
     for dirname, subdirs, basenames in os.walk(sys.argv[1]):
         for pathname in [os.path.join(dirname, x) for x in basenames]:
-            m.write(pathname)
+            ts['pathname'] = pathname
             if os.path.islink(pathname):
-                m.notify('Symlink! %s' % pathname)
-    m.finished()
+                ts.notify('Symlink! %s' % pathname)
+
+    ts.finish()
 
 
 if __name__ == '__main__':

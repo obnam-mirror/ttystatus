@@ -14,6 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import ttystatus
+
+
 class TerminalStatus(object):
 
     '''Show status and progress information on a terminal.
