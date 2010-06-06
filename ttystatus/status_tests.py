@@ -43,3 +43,10 @@ class TerminalStatusTests(unittest.TestCase):
     def test_sets_value(self):
         self.ts['foo'] = 'bar'
         self.assertEqual(self.ts['foo'], 'bar')
+        
+    def test_updates_widgets_when_value_is_set(self):
+        w = ttystatus.String('foo')
+        self.ts.add(w)
+        self.assertEqual(str(w), '')
+        self.ts['foo'] = 'bar'
+        self.assertEqual(str(w), 'bar')

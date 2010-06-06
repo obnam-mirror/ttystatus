@@ -15,6 +15,9 @@
 
 
 from messager import Messager
-from widget import Widget
-from literal import Literal
 from status import TerminalStatus
+from widget import Widget
+
+from literal import Literal
+from string import String
+

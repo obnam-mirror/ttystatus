@@ -46,3 +46,5 @@ class TerminalStatus(object):
     def __setitem__(self, key, value):
         '''Set value for key.'''
         self._values[key] = value
+        for w in self._widgets:
+            w.update(self, 999)
