@@ -65,6 +65,12 @@ class TerminalStatusTests(unittest.TestCase):
         self.assertEqual(str(w), '')
         self.ts['foo'] = 'bar'
         self.assertEqual(str(w), 'bar')
+
+    def test_increases_value(self):
+        self.ts['foo'] = 10
+        self.assertEqual(self.ts['foo'], 10)
+        self.ts.increase('foo', 10)
+        self.assertEqual(self.ts['foo'], 20)
         
     def test_has_notify_method(self):
         self.assertEqual(self.ts.notify('foo'), None)

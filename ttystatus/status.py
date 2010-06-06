@@ -52,6 +52,10 @@ class TerminalStatus(object):
             w.update(self, 999)
         self._m.write(''.join(str(w) for w in self._widgets))
     
+    def increase(self, key, delta):
+        '''Increase value for a key by a given amount.'''
+        self[key] = (self[key] or 0) + delta
+    
     def notify(self, msg):
         '''Show a message.'''
         self._m.notify(msg)
