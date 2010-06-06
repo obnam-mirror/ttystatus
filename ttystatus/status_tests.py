@@ -19,10 +19,25 @@ import unittest
 import ttystatus
 
 
+class DummyMessager(object):
+
+    def clear(self):
+        pass
+        
+    def write(self, string):
+        pass
+        
+    def notify(self, string):
+        pass
+        
+    def finish(self):
+        pass
+
+
 class TerminalStatusTests(unittest.TestCase):
 
     def setUp(self):
-        self.ts = ttystatus.TerminalStatus()
+        self.ts = ttystatus.TerminalStatus(messager=DummyMessager())
         
     def test_has_no_widgets(self):
         self.assertEqual(self.ts._widgets, [])
@@ -50,3 +65,10 @@ class TerminalStatusTests(unittest.TestCase):
         self.assertEqual(str(w), '')
         self.ts['foo'] = 'bar'
         self.assertEqual(str(w), 'bar')
+        
+    def test_has_notify_method(self):
+        self.assertEqual(self.ts.notify('foo'), None)
+        
+    def test_has_finish_method(self):
+        self.assertEqual(self.ts.finish(), None)
+

@@ -27,7 +27,8 @@ class TerminalStatus(object):
     
     '''
     
-    def __init__(self):
+    def __init__(self, output=None, period=None, messager=None):
+        self._m = messager or ttystatus.Messager(output=output, period=period)
         self.clear()
         
     def add(self, widget):
@@ -38,6 +39,7 @@ class TerminalStatus(object):
         '''Remove all widgets.'''
         self._widgets = []
         self._values = dict()
+        self._m.clear()
         
     def __getitem__(self, key):
         '''Return value for key, or the empty string.'''
@@ -48,3 +50,12 @@ class TerminalStatus(object):
         self._values[key] = value
         for w in self._widgets:
             w.update(self, 999)
+        self._m.write(''.join(str(w) for w in self._widgets))
+    
+    def notify(self, msg):
+        '''Show a message.'''
+        self._m.notify(msg)
+    
+    def finish(self):
+        '''Finish status display.'''
+        self._m.finish()
