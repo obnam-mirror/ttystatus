@@ -19,8 +19,12 @@ class TerminalStatus(object):
     '''Show status and progress information on a terminal.'''
     
     def __init__(self):
-        self._widgets = []
+        self.clear()
         
     def add(self, widget):
         '''Add a new widget to the status display.'''
         self._widgets.append(widget)
+        
+    def clear(self):
+        '''Remove all widgets.'''
+        self._widgets = []

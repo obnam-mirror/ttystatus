@@ -31,3 +31,8 @@ class TerminalStatusTests(unittest.TestCase):
         w = ttystatus.Literal('foo')
         self.ts.add(w)
         self.assertEqual(self.ts._widgets, [w])
+        
+    def test_removes_all_widgets(self):
+        self.ts.add(ttystatus.Literal('foo'))
+        self.ts.clear()
+        self.assertEqual(self.ts._widgets, [])
