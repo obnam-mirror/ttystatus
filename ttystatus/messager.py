@@ -72,8 +72,9 @@ class Messager(object):
         if self.output.isatty():
             try:
                 self.output.write(string)
-            except IOError:
-                pass # We ignore these.
+            except IOError: # pragma: no cover
+                # Ignored on purpose.
+                self.output.flush()
 
     def _overwrite(self, string):
         '''Overwrite current message on terminal.'''
@@ -112,8 +113,9 @@ class Messager(object):
         self.clear()
         try:
             self.output.write('%s\n' % string)
-        except IOError:
-            pass # We ignore these. No point in crashing if terminal is bad.
+        except IOError: # pragma: no cover
+            # We ignore these. No point in crashing if terminal is bad.
+            self.output.flush()
         self._overwrite(old)
         
     def finish(self):
