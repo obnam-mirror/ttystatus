@@ -36,3 +36,6 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts.add(ttystatus.Literal('foo'))
         self.ts.clear()
         self.assertEqual(self.ts._widgets, [])
+        
+    def test_returns_empty_string_for_unknown_value(self):
+        self.assertEqual(self.ts['foo'], '')

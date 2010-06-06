@@ -16,7 +16,16 @@
 
 class TerminalStatus(object):
 
-    '''Show status and progress information on a terminal.'''
+    '''Show status and progress information on a terminal.
+    
+    All output is provided via widgets of various kinds. Many widgets
+    format data that TerminalStatus stores. TerminalStatus provides a
+    dict interface for setting and retrieving data items. Unlike a real
+    dict, getting a value for a key that has not been set does not
+    result in a KeyError exception, but in the empty string being
+    returned.
+    
+    '''
     
     def __init__(self):
         self.clear()
@@ -28,3 +37,8 @@ class TerminalStatus(object):
     def clear(self):
         '''Remove all widgets.'''
         self._widgets = []
+        self._values = dict()
+        
+    def __getitem__(self, key):
+        '''Return value for key, or the empty string.'''
+        return self._values.get(key, '')
