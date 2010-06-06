@@ -42,3 +42,7 @@ class TerminalStatus(object):
     def __getitem__(self, key):
         '''Return value for key, or the empty string.'''
         return self._values.get(key, '')
+        
+    def __setitem__(self, key, value):
+        '''Set value for key.'''
+        self._values[key] = value

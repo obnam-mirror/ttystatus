@@ -39,3 +39,7 @@ class TerminalStatusTests(unittest.TestCase):
         
     def test_returns_empty_string_for_unknown_value(self):
         self.assertEqual(self.ts['foo'], '')
+        
+    def test_sets_value(self):
+        self.ts['foo'] = 'bar'
+        self.assertEqual(self.ts['foo'], 'bar')
