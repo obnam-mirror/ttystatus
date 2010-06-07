@@ -14,12 +14,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+import ttystatus
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
 
-from literal import Literal
-from string import String
-from pathname import Pathname
+class Pathname(ttystatus.Widget):
+
+    '''Display a pathname.
+    
+    If it won't fit completely, truncate from the beginning of the string.
+    
+    '''
+    
+    def __init__(self, key):
+        self._key = key
+        
+    def update(self, master, width):
+        v = master[self._key]
+        if len(v) > width:
+            ellipsis = '...'
+            if len(ellipsis) < width:
+                v = ellipsis + v[-(width - len(ellipsis)):]
+            else:
+                v = v[-width:]
+        self.value = v
