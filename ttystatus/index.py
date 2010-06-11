@@ -33,7 +33,7 @@ class Index(ttystatus.Widget):
         value = master[self.name]
         listvalue = master[self.listname]
         try:
-            index = listvalue.index(value)
+            index = listvalue.index(value) + 1
         except ValueError:
             pass
         else:

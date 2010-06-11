@@ -29,7 +29,7 @@ class IndexTests(unittest.TestCase):
         
     def test_gets_index_right(self):
         self.w.update({ 'foo': 'x', 'foos': ['a', 'x', 'b'] }, 999)
-        self.assertEqual(str(self.w), '1/3')
+        self.assertEqual(str(self.w), '2/3')
         
     def test_handles_value_not_in_list(self):
         self.w.update({ 'foo': 'xxx', 'foos': ['a', 'x', 'b'] }, 999)
