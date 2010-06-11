@@ -14,14 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+import ttystatus
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
 
-from literal import Literal
-from string import String
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
+class Counter(ttystatus.Widget):
+
+    '''Display a count of how many times a value has changed.'''
+    
+    def __init__(self, name):
+        self.name = name
+        self.prev = None
+        self.count = 0
+        self.value = '0'
+        
+    def update(self, master, width):
+        if master[self.name] != self.prev:
+            self.prev = master[self.name]
+            self.count += 1
+            self.value = str(self.count)
+
