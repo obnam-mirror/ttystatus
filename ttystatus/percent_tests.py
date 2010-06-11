@@ -14,16 +14,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+import unittest
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
+import ttystatus
 
-from literal import Literal
-from string import String
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
-from percent import PercentDone
+
+class PercentDoneTests(unittest.TestCase):
+
+    def setUp(self):
+        self.w = ttystatus.PercentDone('done', 'total', decimals=1)
+
+    def test_shows_zero_value_initially(self):
+        self.assertEqual(str(self.w), '0.0 %')
+
+    def test_sets_value(self):
+        self.w.update({ 'done': 50, 'total': 100 }, 999)
+        self.assertEqual(str(self.w), '50.0 %')
+

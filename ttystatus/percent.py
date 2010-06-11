@@ -14,16 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+import ttystatus
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
 
-from literal import Literal
-from string import String
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
-from percent import PercentDone
+class PercentDone(ttystatus.Widget):
+
+    '''Display percent of task done.'''
+    
+    def __init__(self, done_name, total_name, decimals=0):
+        self.done_name = done_name
+        self.total_name = total_name
+        self.decimals = decimals
+        self.value = self.format(0, 1)
+        
+    def format(self, done, total):
+        return '%.*f %%' % (self.decimals, 100.0 * float(done) / total)
+        
+    def update(self, master, width):
+        self.value = self.format(master[self.done_name], 
+                                 master[self.total_name])
