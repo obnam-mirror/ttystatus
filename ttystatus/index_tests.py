@@ -25,13 +25,13 @@ class IndexTests(unittest.TestCase):
         self.w = ttystatus.Index('foo', 'foos')
 
     def test_is_zero_initially(self):
-        self.assertEqual(str(self.w), '0')
+        self.assertEqual(str(self.w), '0/0')
         
     def test_gets_index_right(self):
         self.w.update({ 'foo': 'x', 'foos': ['a', 'x', 'b'] }, 999)
-        self.assertEqual(str(self.w), '1')
+        self.assertEqual(str(self.w), '1/3')
         
     def test_handles_value_not_in_list(self):
         self.w.update({ 'foo': 'xxx', 'foos': ['a', 'x', 'b'] }, 999)
-        self.assertEqual(str(self.w), '0')
+        self.assertEqual(str(self.w), '0/0')
 
