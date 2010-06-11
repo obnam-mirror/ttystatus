@@ -28,7 +28,13 @@ class PercentDone(ttystatus.Widget):
         self.value = self.format(0, 1)
         
     def format(self, done, total):
-        return '%.*f %%' % (self.decimals, 100.0 * float(done) / total)
+        try:
+            done = float(done)
+            total = float(total)
+        except ValueError:
+            return self.value
+        else:
+            return '%.*f %%' % (self.decimals, 100.0 * done / total)
         
     def update(self, master, width):
         self.value = self.format(master[self.done_name], 
