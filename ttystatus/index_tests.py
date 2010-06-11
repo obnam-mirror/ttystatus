@@ -14,15 +14,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+import unittest
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
+import ttystatus
 
-from literal import Literal
-from string import String
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
+
+class IndexTests(unittest.TestCase):
+
+    def setUp(self):
+        self.w = ttystatus.Index('foo', 'foos')
+
+    def test_is_zero_initially(self):
+        self.assertEqual(str(self.w), '0')
+        
+    def test_gets_index_right(self):
+        self.w.update({ 'foo': 'x', 'foos': ['a', 'x', 'b'] }, 999)
+        self.assertEqual(str(self.w), '1')
+        
+    def test_handles_value_not_in_list(self):
+        self.w.update({ 'foo': 'xxx', 'foos': ['a', 'x', 'b'] }, 999)
+        self.assertEqual(str(self.w), '0')
+

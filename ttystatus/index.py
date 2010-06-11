@@ -14,15 +14,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+import ttystatus
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
 
-from literal import Literal
-from string import String
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
+class Index(ttystatus.Widget):
+
+    '''Display the position of a value in a list of values.'''
+    
+    def __init__(self, name, listname):
+        self.name = name
+        self.listname = listname
+        self.value = '0'
+        
+    def update(self, master, width):
+        try:
+            self.value = str(master[self.listname].index(master[self.name]))
+        except ValueError:
+            pass
