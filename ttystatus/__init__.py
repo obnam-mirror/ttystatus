@@ -23,3 +23,4 @@ from widget import Widget
 from literal import Literal
 from string import String
 from pathname import Pathname
+from bytesize import ByteSize
