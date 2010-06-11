@@ -25,14 +25,37 @@ import ttystatus
 
 def main():
     ts = ttystatus.TerminalStatus(period=0.1)
-    ts.add(ttystatus.Literal('Finding symlinks: '))
-    ts.add(ttystatus.String('pathname'))
-
+    ts.add(ttystatus.Literal('Looking for files: '))
+    ts.add(ttystatus.Counter('pathname'))
+    ts.add(ttystatus.Literal(' found, currently in '))
+    ts.add(ttystatus.Pathname('dirname'))
+    
+    pathnames = []
     for dirname, subdirs, basenames in os.walk(sys.argv[1]):
-        for pathname in [os.path.join(dirname, x) for x in basenames]:
+        ts['dirname'] = dirname
+        for basename in basenames:
+            pathname = os.path.join(dirname, basename)
             ts['pathname'] = pathname
-            if os.path.islink(pathname):
-                ts.notify('Symlink! %s' % pathname)
+            pathnames.append(pathname)
+        
+    ts.clear()
+    ts.add(ttystatus.Literal('Finding symlinks: '))
+    ts.add(ttystatus.Index('pathname', 'pathnames'))
+    ts.add(ttystatus.Literal(' ('))
+    ts.add(ttystatus.PercentDone('done', 'total', decimals=2))
+    ts.add(ttystatus.Literal(' done) '))
+    ts.add(ttystatus.Counter('symlink'))
+    ts.add(ttystatus.Literal(' symlinks found'))
+    ts['pathnames'] = pathnames
+    ts['done'] = 0
+    ts['total'] = len(pathnames)
+
+    for pathname in pathnames:
+        ts['pathname'] = pathname
+        if os.path.islink(pathname):
+            ts['symlink'] = pathname
+            ts.notify('Symlink! %s' % pathname)
+        ts['done'] += 1
 
     ts.finish()
 
