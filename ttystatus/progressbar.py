@@ -14,17 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+import ttystatus
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
 
-from literal import Literal
-from string import String
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
-from percent import PercentDone
-from progressbar import ProgressBar
+class ProgressBar(ttystatus.Widget):
+
+    '''Display a progress bar.'''
+    
+    def __init__(self, done_name, total_name):
+        self.done_name = done_name
+        self.total_name = total_name
+        
+    def update(self, master, width):
+        done = float(master.get(self.done_name, 0))
+        total = float(master.get(self.total_name, 1))
+        fraction = done / total
+        n_stars = int(round(fraction * width))
+        n_dashes = int(width - n_stars)
+        self.value = ('#' * n_stars) + ('-' * n_dashes)
+
