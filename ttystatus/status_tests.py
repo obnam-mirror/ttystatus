@@ -61,6 +61,16 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts['foo'] = 'bar'
         self.assertEqual(self.ts['foo'], 'bar')
         
+    def test_gets_value(self):
+        self.ts['foo'] = 'bar'
+        self.assertEqual(self.ts.get('foo'), 'bar')
+        
+    def test_gets_default_value_for_nonexistent_key(self):
+        self.assertEqual(self.ts.get('foo', 'bar'), 'bar')
+        
+    def test_gets_None_for_nonexistent_key_without_default_value(self):
+        self.assertEqual(self.ts.get('foo'), None)
+        
     def test_updates_widgets_when_value_is_set(self):
         w = ttystatus.String('foo')
         self.ts.add(w)

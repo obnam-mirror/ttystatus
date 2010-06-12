@@ -48,6 +48,10 @@ class TerminalStatus(object):
         '''Return value for key, or the empty string.'''
         return self._values.get(key, '')
         
+    def get(self, key, default=None):
+        '''Like dict.get.'''
+        return self._values.get(key, default)
+        
     def __setitem__(self, key, value):
         '''Set value for key.'''
         self._values[key] = value
