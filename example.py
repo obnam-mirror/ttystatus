@@ -44,6 +44,7 @@ def main():
     ts.add(ttystatus.Literal(' ('))
     ts.add(ttystatus.PercentDone('done', 'total', decimals=2))
     ts.add(ttystatus.Literal(' done) '))
+    ts.add(ttystatus.ProgressBar('done', 'total'))
     ts.add(ttystatus.Counter('symlink'))
     ts.add(ttystatus.Literal(' symlinks found'))
     ts['pathnames'] = pathnames
