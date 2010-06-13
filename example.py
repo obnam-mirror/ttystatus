@@ -40,13 +40,15 @@ def main():
         
     ts.clear()
     ts.add(ttystatus.Literal('Finding symlinks: '))
+    ts.add(ttystatus.Counter('symlink'))
+    ts.add(ttystatus.Literal(' found; now at '))
     ts.add(ttystatus.Index('pathname', 'pathnames'))
     ts.add(ttystatus.Literal(' ('))
     ts.add(ttystatus.PercentDone('done', 'total', decimals=2))
     ts.add(ttystatus.Literal(' done) '))
+    ts.add(ttystatus.RemainingTime('done', 'total'))
+    ts.add(ttystatus.Literal(' '))
     ts.add(ttystatus.ProgressBar('done', 'total'))
-    ts.add(ttystatus.Counter('symlink'))
-    ts.add(ttystatus.Literal(' symlinks found'))
     ts['pathnames'] = pathnames
     ts['done'] = 0
     ts['total'] = len(pathnames)
@@ -55,7 +57,7 @@ def main():
         ts['pathname'] = pathname
         if os.path.islink(pathname):
             ts['symlink'] = pathname
-            ts.notify('Symlink! %s' % pathname)
+#            ts.notify('Symlink! %s' % pathname)
         ts['done'] += 1
 
     ts.finish()
