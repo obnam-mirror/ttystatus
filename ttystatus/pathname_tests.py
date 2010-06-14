@@ -30,6 +30,10 @@ class PathnameTests(unittest.TestCase):
     def test_updates(self):
         self.w.update({'foo': 'bar'}, 999)
         self.assertEqual(str(self.w), 'bar')
+
+    def test_handles_update_to_other_value(self):
+        self.w.update({'other': 1}, 999)
+        self.assertEqual(str(self.w), '')
         
     def test_truncates_from_beginning(self):
         self.w.update({'foo': 'foobar'}, 5)

@@ -29,7 +29,7 @@ class Pathname(ttystatus.Widget):
         self._key = key
         
     def update(self, master, width):
-        v = master[self._key]
+        v = master.get(self._key, '')
         if len(v) > width:
             ellipsis = '...'
             if len(ellipsis) < width:
