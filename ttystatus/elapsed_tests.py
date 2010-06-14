@@ -14,19 +14,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.1'
+import unittest
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
+import ttystatus
 
-from literal import Literal
-from string import String
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
-from percent import PercentDone
-from progressbar import ProgressBar
-from remtime import RemainingTime
-from elapsed import ElapsedTime
+
+class ElapsedtimeTests(unittest.TestCase):
+
+    def setUp(self):
+        self.w = ttystatus.ElapsedTime()
+
+    def test_shows_zero_initially(self):
+        self.assertEqual(str(self.w), '00h00m00s')
+
+    def test_shows_zero_after_first_update(self):
+        self.w.get_time = lambda: 1
+        self.w.update({}, 999)
+        self.assertEqual(str(self.w), '00h00m00s')
+
+    def test_shows_one_one_one_after_second_update(self):
+        self.w.get_time = lambda: 0
+        self.w.update({}, 999)
+        self.w.get_time = lambda: 60*60 + 60 + 1
+        self.w.update({}, 999)
+        self.assertEqual(str(self.w), '01h01m01s')
+
