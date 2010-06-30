@@ -35,3 +35,7 @@ class PercentDoneTests(unittest.TestCase):
         self.w.update({ 'done': '', 'total': '' }, 999)
         self.assertEqual(str(self.w), '0.0 %')
 
+    def test_handles_zero_total(self):
+        self.w.update({ 'done': '', 'total': 0 }, 999)
+        self.assertEqual(str(self.w), '0.0 %')
+

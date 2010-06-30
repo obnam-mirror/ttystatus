@@ -27,8 +27,11 @@ class ProgressBar(ttystatus.Widget):
         
     def update(self, master, width):
         done = float(master.get(self.done_name, 0))
-        total = float(master.get(self.total_name, 1))
-        fraction = done / total
+        total = float(master.get(self.total_name, 1) or 0)
+        if total == 0:
+            fraction = 0
+        else:
+            fraction = done / total
         n_stars = int(round(fraction * width))
         n_dashes = int(width - n_stars)
         self.value = ('#' * n_stars) + ('-' * n_dashes)

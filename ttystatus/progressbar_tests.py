@@ -27,6 +27,14 @@ class ProgressBarTests(unittest.TestCase):
     def test_sets_initial_value_to_empty(self):
         self.assertEqual(str(self.w), '')
 
+    def test_shows_zero_percent_for_empty_string_total(self):
+        self.w.update({ 'done': 1, 'total': '' }, 10)
+        self.assertEqual(str(self.w), '-' * 10)
+
+    def test_shows_zero_percent_for_zero_total(self):
+        self.w.update({ 'done': 1, 'total': 0 }, 10)
+        self.assertEqual(str(self.w), '-' * 10)
+
     def test_shows_zero_percent_correctly(self):
         self.w.update({ 'done': 0, 'total': 100 }, 10)
         self.assertEqual(str(self.w), '-' * 10)

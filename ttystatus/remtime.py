@@ -27,7 +27,8 @@ class RemainingTime(ttystatus.Widget):
         self.done_name = done_name
         self.total_name = total_name
         self.started = None
-        self.value = '--h--m--s'
+        self.default = '--h--m--s'
+        self.value = self.default
         
     def get_time(self): # pragma: no cover
         '''Return current time.
@@ -51,9 +52,12 @@ class RemainingTime(ttystatus.Widget):
             self.started = self.get_time()
         duration = self.get_time() - self.started
         if duration >= 1.0:
-            done = float(master[self.done_name])
-            total = float(master[self.total_name])
+            done = float(master.get(self.done_name, 0) or 0)
+            total = float(master.get(self.total_name, 0) or 0)
             speed = done / duration
             remaining = total - done
-            secs = remaining / speed
-            self.value = self.format(secs)
+            if speed > 0:
+                secs = remaining / speed
+                self.value = self.format(secs)
+            else:
+                self.value = self.default
