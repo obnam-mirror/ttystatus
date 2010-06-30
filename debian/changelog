@@ -1,3 +1,9 @@
+python-ttystatus (0.4) squeeze; urgency=low
+
+  * New release. Fixes handling of bad values for fields. 
+
+ -- Lars Wirzenius <liw@liw.fi>  Thu, 01 Jul 2010 09:06:56 +1200
+
 python-ttystatus (0.3) squeeze; urgency=low
 
   * Fix bug in ttystatus.Pathname widget: if value is not set in master,
