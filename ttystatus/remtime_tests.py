@@ -40,3 +40,8 @@ class RemainingTimeTests(unittest.TestCase):
         self.w.update({ 'done': 80, 'total': 100 }, 999)
         self.assertEqual(str(self.w), '00h00m05s')
 
+    def test_handles_zero_speed(self):
+        self.w.update({ 'done': 0, 'total': 100 }, 999)
+        self.w.get_time = lambda: 5.0
+        self.w.update({ 'done': 0, 'total': 100 }, 999)
+        self.assertEqual(str(self.w), '--h--m--s')
