@@ -45,3 +45,10 @@ class RemainingTimeTests(unittest.TestCase):
         self.w.get_time = lambda: 5.0
         self.w.update({ 'done': 0, 'total': 100 }, 999)
         self.assertEqual(str(self.w), '--h--m--s')
+
+    def test_handles_empty_strings_for_done_and_total(self):
+        self.w.update({ 'done': '', 'total': '' }, 999)
+        self.w.get_time = lambda: 5.0
+        self.w.update({ 'done': '', 'total': '' }, 999)
+        self.assertEqual(str(self.w), '--h--m--s')
+

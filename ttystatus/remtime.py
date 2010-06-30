@@ -52,8 +52,8 @@ class RemainingTime(ttystatus.Widget):
             self.started = self.get_time()
         duration = self.get_time() - self.started
         if duration >= 1.0:
-            done = float(master[self.done_name])
-            total = float(master[self.total_name])
+            done = float(master.get(self.done_name, 0) or 0)
+            total = float(master.get(self.total_name, 0) or 0)
             speed = done / duration
             remaining = total - done
             if speed > 0:
