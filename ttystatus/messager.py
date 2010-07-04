@@ -32,8 +32,11 @@ class Messager(object):
         self._last_msg = '' # What did we write last?
         self._last_time = 0 # When did we write last?
         self._cached_msg = '' # Last message from user, to write() method.
-        self.width = self._get_terminal_width() # Width of terminal
+        self.set_width(self._get_terminal_width()) # Width of terminal
         signal.signal(signal.SIGWINCH, self._sigwinch_handler)
+        
+    def set_width(self, actual_width):
+        self.width = actual_width - 1
         
     def _now(self):
         '''Return current time.'''
@@ -65,7 +68,7 @@ class Messager(object):
         # Clear the terminal from old stuff, using the old width.
         self.clear()
         # Get new width.
-        self.width = self._get_terminal_width()
+        self.set_width(self._get_terminal_width())
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
@@ -85,7 +88,7 @@ class Messager(object):
             
     def write(self, string):
         '''Write raw data, but only once per period.'''
-        string = string[:self.width - 1]
+        string = string[:self.width]
         now = self._now()
         if now - self._last_time >= self._period:
             self._overwrite(string)
