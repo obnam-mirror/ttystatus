@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.3'
+version = '0.4'
 
 from messager import Messager
 from status import TerminalStatus

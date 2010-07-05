@@ -1,0 +1,9 @@
+NEWS file for ttystatus
+=======================
+
+
+Version 0.4, released 2010-07-05
+--------------------------------
+
+* Bugfix: when the output won't fit, and the last widget is a `Pathname`,
+  the last character is no longer chopped off.
