@@ -24,16 +24,13 @@ class Widget(object):
     via __str__.
     
     Widgets must have an attribute 'interesting_keys', listing the
-    keys it is interested in.
+    keys it is interested in, and 'value', for the formatted value.
     
     '''
 
     def __str__(self):
         '''Return current value to be displayed for this widget.'''
-        if hasattr(self, 'value'):
-            return self.value
-        else:
-            return ''
+        return self.value
 
     def update(self, master, width):
         '''Update displayed value for widget, from values in master.
