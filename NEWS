@@ -2,6 +2,16 @@ NEWS file for ttystatus
 =======================
 
 
+Version 0.5, released 2010-07-07
+--------------------------------
+
+* Speed optimization: widgets are now only updated when the values they're
+  interested are updated, and widgets are now only formatted when the result
+  is actually going to be printed. For long-running processes with 
+  frequent updates, this saves a lot of unnecessary computation.
+* Debian packaging fix: Add Python-Version headers.
+
+
 Version 0.4, released 2010-07-05
 --------------------------------
 
