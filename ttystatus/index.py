@@ -25,7 +25,7 @@ class Index(ttystatus.Widget):
         self.name = name
         self.listname = listname
         self.value = self.format(0, 0)
-        self.interesting_keys = set([name, listname])
+        self.interesting_keys = [name, listname]
         
     def format(self, index, listlen):
         return '%d/%d' % (index, listlen)

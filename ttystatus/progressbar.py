@@ -24,7 +24,7 @@ class ProgressBar(ttystatus.Widget):
     def __init__(self, done_name, total_name):
         self.done_name = done_name
         self.total_name = total_name
-        self.interesting_keys = set([done_name, total_name])
+        self.interesting_keys = [done_name, total_name]
         
     def update(self, master, width):
         done = float(master.get(self.done_name, 0))

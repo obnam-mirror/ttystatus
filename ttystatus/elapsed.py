@@ -26,7 +26,7 @@ class ElapsedTime(ttystatus.Widget):
     def __init__(self):
         self.started = None
         self.value = self.format(0)
-        self.interesting_keys = set()
+        self.interesting_keys = []
         
     def get_time(self): # pragma: no cover
         '''Wrapper around time.time() for unit tests to override.'''

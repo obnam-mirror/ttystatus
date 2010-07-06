@@ -23,5 +23,5 @@ class Literal(ttystatus.Widget):
     
     def __init__(self, string):
         self.value = string
-        self.interesting_keys = set()
+        self.interesting_keys = []
 

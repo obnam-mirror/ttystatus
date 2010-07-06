@@ -29,7 +29,7 @@ class RemainingTime(ttystatus.Widget):
         self.started = None
         self.default = '--h--m--s'
         self.value = self.default
-        self.interesting_keys = set([done_name, total_name])
+        self.interesting_keys = [done_name, total_name]
         
     def get_time(self): # pragma: no cover
         '''Return current time.

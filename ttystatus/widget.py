@@ -23,6 +23,9 @@ class Widget(object):
     master TerminalStatus widget. They return the formatted string
     via __str__.
     
+    Widgets must have an attribute 'interesting_keys', listing the
+    keys it is interested in.
+    
     '''
 
     def __str__(self):
@@ -31,10 +34,6 @@ class Widget(object):
             return self.value
         else:
             return ''
-
-    def interested_in(self, key):
-        '''Are we interested in this specific value?'''
-        return key in self.interesting_keys
 
     def update(self, master, width):
         '''Update displayed value for widget, from values in master.
