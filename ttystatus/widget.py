@@ -23,14 +23,39 @@ class Widget(object):
     master TerminalStatus widget. They return the formatted string
     via __str__.
     
+    A widget's value may be derived from values stored in the TerminalStatus
+    widget (called master). Each such value has a key. Computing a widget's
+    value is a two-step process: when the values associated with keys
+    are updated, the widget's update() method is called to notify it of
+    this. update() may compute intermediate values, such as maintain a
+    counter of the number of changes. It should avoid costly operations
+    that are only needed when the widget's formatted value is needed.
+    Those should go into the format() method instead. Thus, update() would
+    update a counter, format() would create a string representing the
+    counter.
+    
+    This is necessary because actual on-screen updates only happen
+    every so often, not every time a value in the master changes, and
+    often the string formatting part is expensive.
+    
     Widgets must have an attribute 'interesting_keys', listing the
-    keys it is interested in, and 'value', for the formatted value.
+    keys it is interested in.
     
     '''
 
     def __str__(self):
         '''Return current value to be displayed for this widget.'''
-        return self.value
+        return self.format()
+
+    def format(self):
+        '''Format the current value.
+        
+        This will be called only when the value actually needs to be
+        formatted.
+        
+        '''
+        
+        return ''
 
     def update(self, master, width):
         '''Update displayed value for widget, from values in master.

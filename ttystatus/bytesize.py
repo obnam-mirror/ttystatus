@@ -23,10 +23,10 @@ class ByteSize(ttystatus.Widget):
     
     def __init__(self, name):
         self.name = name
-        self.value = self.format(0)
         self.interesting_keys = [name]
+        self._bytes = 0
         
-    def format(self, bytes):
+    def format(self):
         units = (
             (1024**4, 2, 'TiB'),
             (1024**3, 2, 'GiB'),
@@ -35,11 +35,11 @@ class ByteSize(ttystatus.Widget):
         )
         
         for factor, decimals, unit in units:
-            if bytes >= factor:
+            if self._bytes >= factor:
                 return '%.*f %s' % (decimals,
-                                    float(bytes) / float(factor), 
+                                    float(self._bytes) / float(factor), 
                                     unit)
-        return '%d B' % bytes
+        return '%d B' % self._bytes
         
     def update(self, master, width):
-        self.value = self.format(master[self.name])
+        self._bytes = master[self.name]

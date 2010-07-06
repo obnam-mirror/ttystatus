@@ -29,6 +29,7 @@ class RemainingTimeTests(unittest.TestCase):
         self.assertEqual(str(self.w), '--h--m--s')
 
     def test_estimates_and_formats_correctly(self):
+        self.assertEqual(str(self.w), '--h--m--s')
         self.w.update({ 'done': 0, 'total': 100 }, 999)
         self.w.get_time = lambda: 5.0
         self.w.update({ 'done': 5, 'total': 100 }, 999)

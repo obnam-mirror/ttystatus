@@ -25,6 +25,9 @@ class String(ttystatus.Widget):
         self._key = key
         self.interesting_keys = [key]
         self.value = ''
+
+    def format(self):
+        return self.value
         
     def update(self, master, width):
         self.value = master[self._key]

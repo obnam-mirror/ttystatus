@@ -25,3 +25,5 @@ class Literal(ttystatus.Widget):
         self.value = string
         self.interesting_keys = []
 
+    def format(self):
+        return self.value

@@ -28,14 +28,20 @@ class Pathname(ttystatus.Widget):
     def __init__(self, key):
         self._key = key
         self.interesting_keys = [key]
-        self.value = ''
+        self.pathname = ''
+        self.width = 0
+
+    def format(self):
+        v = self.pathname
+        if len(v) > self.width:
+            ellipsis = '...'
+            if len(ellipsis) < self.width:
+                v = ellipsis + v[-(self.width - len(ellipsis)):]
+            else:
+                v = v[-self.width:]
+        return v
         
     def update(self, master, width):
-        v = master.get(self._key, '')
-        if len(v) > width:
-            ellipsis = '...'
-            if len(ellipsis) < width:
-                v = ellipsis + v[-(width - len(ellipsis)):]
-            else:
-                v = v[-width:]
-        self.value = v
+        self.pathname = master.get(self._key, '')
+        self.width = width
+
