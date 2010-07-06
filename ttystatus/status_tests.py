@@ -25,6 +25,9 @@ class DummyMessager(object):
 
     def clear(self):
         pass
+
+    def time_to_write(self):
+        return True
         
     def write(self, string):
         pass

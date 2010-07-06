@@ -85,14 +85,17 @@ class Messager(object):
             self._raw_write('\r' + (' ' * len(self._last_msg)) + '\r')
         self._raw_write(string)
         self._last_msg = string
+
+    def time_to_write(self):
+        '''Is it time to write now?'''
+        return self._now() - self._last_time >= self._period
             
     def write(self, string):
         '''Write raw data, but only once per period.'''
         string = string[:self.width]
-        now = self._now()
-        if now - self._last_time >= self._period:
+        if self.time_to_write():
             self._overwrite(string)
-            self._last_time = now
+            self._last_time = self._now()
         self._cached_msg = string
             
     def clear(self):
