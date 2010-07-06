@@ -25,7 +25,7 @@ class ElapsedTime(ttystatus.Widget):
     
     def __init__(self):
         self.started = None
-        self.interesting_keys = [] # FIXME: Need to declare interest in all keys?
+        self.interesting_keys = None
         self.secs = 0
         
     def get_time(self): # pragma: no cover

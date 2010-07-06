@@ -37,14 +37,18 @@ class TerminalStatus(object):
     def add(self, widget):
         '''Add a new widget to the status display.'''
         self._widgets.append(widget)
-        for key in widget.interesting_keys:
-            self._interests[key] = self._interests.get(key, []) + [widget]
+        if widget.interesting_keys is None:
+            self._wildcards += [widget]
+        else:
+            for key in widget.interesting_keys:
+                self._interests[key] = self._interests.get(key, []) + [widget]
         
     def clear(self):
         '''Remove all widgets.'''
         self._widgets = []
         self._values = dict()
         self._interests = dict()
+        self._wildcards = list()
         self._m.clear()
 
     def __getitem__(self, key):
@@ -59,7 +63,7 @@ class TerminalStatus(object):
         '''Set value for key.'''
         self._values[key] = value
         width = self._m.width
-        for w in self._interests.get(key, []):
+        for w in self._interests.get(key, []) + self._wildcards:
             w.update(self, width)
             width -= len(str(w))
         if self._m.time_to_write():

@@ -52,6 +52,22 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts.add(w)
         self.assertEqual(self.ts._widgets, [w])
         
+    def test_adds_widget_as_interested_in_keys(self):
+        class W(ttystatus.Widget):
+            def __init__(self):
+                self.interesting_keys = ['foo']
+        w = W()
+        self.ts.add(w)
+        self.assert_(w in self.ts._interests['foo'])
+
+    def test_adds_widget_to_wildcards(self):
+        class W(ttystatus.Widget):
+            def __init__(self):
+                self.interesting_keys = None
+        w = W()
+        self.ts.add(w)
+        self.assert_(w in self.ts._wildcards)
+        
     def test_removes_all_widgets(self):
         self.ts.add(ttystatus.Literal('foo'))
         self.ts.clear()
