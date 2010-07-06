@@ -24,6 +24,7 @@ class ByteSize(ttystatus.Widget):
     def __init__(self, name):
         self.name = name
         self.value = self.format(0)
+        self.interesting_keys = set([name])
         
     def format(self, bytes):
         units = (

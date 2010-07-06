@@ -26,6 +26,7 @@ class PercentDone(ttystatus.Widget):
         self.total_name = total_name
         self.decimals = decimals
         self.value = self.format(0, 1)
+        self.interesting_keys = set([done_name, total_name])
         
     def format(self, done, total):
         try:

@@ -23,6 +23,7 @@ class String(ttystatus.Widget):
     
     def __init__(self, key):
         self._key = key
+        self.interesting_keys = set([key])
         
     def update(self, master, width):
         self.value = master[self._key]

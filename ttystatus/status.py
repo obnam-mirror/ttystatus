@@ -43,7 +43,7 @@ class TerminalStatus(object):
         self._widgets = []
         self._values = dict()
         self._m.clear()
-        
+
     def __getitem__(self, key):
         '''Return value for key, or the empty string.'''
         return self._values.get(key, '')
@@ -57,8 +57,9 @@ class TerminalStatus(object):
         self._values[key] = value
         width = self._m.width
         for w in self._widgets:
-            w.update(self, width)
-            width -= len(str(w))
+            if w.interested_in(key):
+                w.update(self, width)
+                width -= len(str(w))
         self._m.write(''.join(str(w) for w in self._widgets))
     
     def increase(self, key, delta):

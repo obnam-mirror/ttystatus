@@ -26,6 +26,7 @@ class Counter(ttystatus.Widget):
         self.prev = None
         self.count = 0
         self.value = '0'
+        self.interesting_keys = set([name])
         
     def update(self, master, width):
         if master[self.name] != self.prev:

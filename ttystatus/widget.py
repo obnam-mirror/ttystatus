@@ -32,6 +32,10 @@ class Widget(object):
         else:
             return ''
 
+    def interested_in(self, key):
+        '''Are we interested in this specific value?'''
+        return key in self.interesting_keys
+
     def update(self, master, width):
         '''Update displayed value for widget, from values in master.
         
