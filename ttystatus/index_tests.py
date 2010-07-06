@@ -33,5 +33,5 @@ class IndexTests(unittest.TestCase):
         
     def test_handles_value_not_in_list(self):
         self.w.update({ 'foo': 'xxx', 'foos': ['a', 'x', 'b'] }, 999)
-        self.assertEqual(str(self.w), '0/0')
+        self.assertEqual(str(self.w), '0/3')
 

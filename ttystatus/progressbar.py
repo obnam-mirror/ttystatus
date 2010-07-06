@@ -24,15 +24,28 @@ class ProgressBar(ttystatus.Widget):
     def __init__(self, done_name, total_name):
         self.done_name = done_name
         self.total_name = total_name
-        
-    def update(self, master, width):
-        done = float(master.get(self.done_name, 0))
-        total = float(master.get(self.total_name, 1) or 0)
+        self.interesting_keys = [done_name, total_name]
+        self.done = 0
+        self.total = 1
+        self.width = 0
+
+    def format(self):
+        try:
+            done = float(self.done)
+            total = float(self.total)
+        except ValueError:
+            done = 0
+            total = 1
         if total == 0:
             fraction = 0
         else:
             fraction = done / total
-        n_stars = int(round(fraction * width))
-        n_dashes = int(width - n_stars)
-        self.value = ('#' * n_stars) + ('-' * n_dashes)
+        n_stars = int(round(fraction * self.width))
+        n_dashes = int(self.width - n_stars)
+        return ('#' * n_stars) + ('-' * n_dashes)
+        
+    def update(self, master, width):
+        self.done = master[self.done_name]
+        self.total = master[self.total_name]
+        self.width = width
 

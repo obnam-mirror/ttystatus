@@ -46,6 +46,18 @@ class MessagerTests(unittest.TestCase):
     def test_raw_writes_something_if_output_is_not_a_terminal(self):
         self.messager._raw_write('foo')
         self.assertEqual(self.output.getvalue(), 'foo')
+
+    def test_knows_it_is_time_to_write_at_start(self):
+        self.assert_(self.messager.time_to_write())
+
+    def test_knows_it_is_not_time_to_write_right_after_previous_one(self):
+        self.messager._last_time = self.messager._now()
+        self.assertFalse(self.messager.time_to_write())
+
+    def test_knows_it_is_time_to_write_after_a_period(self):
+        self.messager._last_time = (self.messager._now() - 
+                                    self.messager._period*2)
+        self.assert_(self.messager.time_to_write())
         
     def test_cached_write_writes_first_thing(self):
         self.messager.write('foo')

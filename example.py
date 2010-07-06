@@ -25,7 +25,8 @@ import ttystatus
 
 def main():
     ts = ttystatus.TerminalStatus(period=0.1)
-    ts.add(ttystatus.Literal('Looking for files: '))
+    ts.add(ttystatus.ElapsedTime())
+    ts.add(ttystatus.Literal(' Looking for files: '))
     ts.add(ttystatus.Counter('pathname'))
     ts.add(ttystatus.Literal(' found, currently in '))
     ts.add(ttystatus.Pathname('dirname'))
@@ -39,7 +40,8 @@ def main():
             pathnames.append(pathname)
         
     ts.clear()
-    ts.add(ttystatus.Literal('Finding symlinks: '))
+    ts.add(ttystatus.ElapsedTime())
+    ts.add(ttystatus.Literal(' Finding symlinks: '))
     ts.add(ttystatus.Counter('symlink'))
     ts.add(ttystatus.Literal(' found; now at '))
     ts.add(ttystatus.Index('pathname', 'pathnames'))

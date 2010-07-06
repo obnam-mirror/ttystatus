@@ -25,13 +25,15 @@ class ElapsedTime(ttystatus.Widget):
     
     def __init__(self):
         self.started = None
-        self.value = self.format(0)
+        self.interesting_keys = None
+        self.secs = 0
         
     def get_time(self): # pragma: no cover
         '''Wrapper around time.time() for unit tests to override.'''
         return time.time()
 
-    def format(self, secs):
+    def format(self):
+        secs = self.secs
         hours = secs / 3600
         secs %= 3600
         mins = secs / 60
@@ -41,6 +43,4 @@ class ElapsedTime(ttystatus.Widget):
     def update(self, master, width):
         if self.started is None:
             self.started = self.get_time()
-        secs = self.get_time() - self.started
-        self.value = self.format(secs)
-
+        self.secs = self.get_time() - self.started
