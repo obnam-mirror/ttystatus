@@ -1,3 +1,10 @@
+python-ttystatus (0.6) squeeze; urgency=low
+
+  * New release.
+    - add ByteSpeed widget.
+
+ -- Lars Wirzenius <liw@liw.fi>  Tue, 13 Jul 2010 07:51:43 +1200
+
 python-ttystatus (0.5) squeeze; urgency=low
 
   * New release.
