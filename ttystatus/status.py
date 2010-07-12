@@ -49,6 +49,7 @@ class TerminalStatus(object):
         self._values = dict()
         self._interests = dict()
         self._wildcards = list()
+        self._latest_width = None
         self._m.clear()
 
     def __getitem__(self, key):
@@ -63,7 +64,12 @@ class TerminalStatus(object):
         '''Set value for key.'''
         self._values[key] = value
         width = self._m.width
-        for w in self._interests.get(key, []) + self._wildcards:
+        if width != self._latest_width:
+            widgets = self._widgets
+            self._latest_width = width
+        else:
+            widgets = self._interests.get(key, []) + self._wildcards
+        for w in widgets:
             w.update(self, width)
             width -= len(str(w))
         if self._m.time_to_write():
