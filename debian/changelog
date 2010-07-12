@@ -2,6 +2,7 @@ python-ttystatus (0.6) squeeze; urgency=low
 
   * New release.
     - add ByteSpeed widget.
+  * debian/control: Add build-dependency on python-coverage-test-runner.
 
  -- Lars Wirzenius <liw@liw.fi>  Tue, 13 Jul 2010 07:51:43 +1200
 
