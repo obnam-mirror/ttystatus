@@ -72,8 +72,7 @@ class TerminalStatus(object):
         for w in widgets:
             w.update(self, width)
             width -= len(str(w))
-        if self._m.time_to_write():
-            self._m.write(''.join(str(w) for w in self._widgets))
+        self._m.write(''.join(str(w) for w in self._widgets))
     
     def increase(self, key, delta):
         '''Increase value for a key by a given amount.'''
