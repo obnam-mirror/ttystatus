@@ -2,6 +2,12 @@ NEWS file for ttystatus
 =======================
 
 
+Version 0.7, released 2010-10-09
+--------------------------------
+
+* Fix bug that failed to show the last few updates when .finish() was called.
+
+
 Version 0.6, released 2010-07-13
 --------------------------------
 
