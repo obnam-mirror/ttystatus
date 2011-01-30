@@ -1,3 +1,10 @@
+python-ttystatus (0.8) squeeze; urgency=low
+
+  * New upstream release.
+    - write to /dev/tty by default
+
+ -- Lars Wirzenius <liw@liw.fi>  Sun, 30 Jan 2011 19:23:28 +0000
+
 python-ttystatus (0.7) squeeze; urgency=low
 
   * New upstream version. Bugfix. 

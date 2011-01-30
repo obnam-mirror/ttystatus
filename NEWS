@@ -2,6 +2,12 @@ NEWS file for ttystatus
 =======================
 
 
+Version 0.8, released 2011-01-30
+--------------------------------
+
+* Write status output to /dev/tty by default.
+
+
 Version 0.7, released 2010-10-09
 --------------------------------
 
