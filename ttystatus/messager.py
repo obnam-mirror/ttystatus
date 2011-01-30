@@ -76,13 +76,13 @@ class Messager(object):
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
+        
         if self._enabled and self.output and self.output.isatty():
             try:
                 self.output.write(string)
+                self.output.flush()
             except IOError: # pragma: no cover
-                # Ignored on purpose.
-                pass
-            self.output.flush()
+                self._enabled = False
 
     def _overwrite(self, string):
         '''Overwrite current message on terminal.'''
