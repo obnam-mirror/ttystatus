@@ -28,13 +28,16 @@ class Messager(object):
     
     def __init__(self, output=None, period=None):
         self._enabled = True
-        self.output = output or sys.stderr
+        self.output = output or self._open_tty()
         self._period = 1.0 if period is None else period
         self._last_msg = '' # What did we write last?
         self._last_time = 0 # When did we write last?
         self._cached_msg = '' # Last message from user, to write() method.
         self.set_width(self._get_terminal_width()) # Width of terminal
         signal.signal(signal.SIGWINCH, self._sigwinch_handler)
+
+    def _open_tty(self): # pragma: no cover
+        return open('/dev/tty', 'w')
         
     def set_width(self, actual_width):
         self.width = actual_width - 1
@@ -73,12 +76,13 @@ class Messager(object):
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
-        if self._enabled and self.output.isatty():
+        if self._enabled and self.output and self.output.isatty():
             try:
                 self.output.write(string)
             except IOError: # pragma: no cover
                 # Ignored on purpose.
-                self.output.flush()
+                pass
+            self.output.flush()
 
     def _overwrite(self, string):
         '''Overwrite current message on terminal.'''
