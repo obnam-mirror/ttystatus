@@ -104,3 +104,15 @@ class MessagerTests(unittest.TestCase):
         self.messager.set_width(4)
         self.messager.write('foobar')
         self.assertEqual(self.output.getvalue(), 'foo')
+
+    def test_disables_output(self):
+        self.messager.disable()
+        self.messager.write('foo')
+        self.assertEqual(self.output.getvalue(), '')
+
+    def test_enables_output(self):
+        self.messager.disable()
+        self.messager.enable()
+        self.messager.write('foo')
+        self.assertEqual(self.output.getvalue(), 'foo')
+

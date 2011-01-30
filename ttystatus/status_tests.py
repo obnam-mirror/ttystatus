@@ -26,6 +26,7 @@ class DummyMessager(object):
     
     def __init__(self):
         self.written = StringIO.StringIO()
+        self.enabled = True
 
     def clear(self):
         pass
@@ -41,6 +42,12 @@ class DummyMessager(object):
         
     def finish(self):
         pass
+        
+    def enable(self):
+        self.enabled = True
+        
+    def disable(self):
+        self.enabled = False
 
 
 class TerminalStatusTests(unittest.TestCase):
@@ -113,14 +120,12 @@ class TerminalStatusTests(unittest.TestCase):
     def test_has_finish_method(self):
         self.assertEqual(self.ts.finish(), None)
 
-    def test_writes_output_by_default(self):
-        self.ts.add(ttystatus.String('foo'))
-        self.ts['foo'] = 'bar'
-        self.assertEqual(self.ts._m.written.getvalue(), 'bar')
-
-    def test_disables_output(self):
-        self.ts.add(ttystatus.String('foo'))
+    def test_disable_calls_messager_disable(self):
         self.ts.disable()
-        self.ts['foo'] = 'bar'
-        self.assertEqual(self.ts._m.written.getvalue(), '')
+        self.assertFalse(self.ts._m.enabled)
+
+    def test_enable_calls_messager_enable(self):
+        self.ts.disable()
+        self.ts.enable()
+        self.assert_(self.ts._m.enabled)
 

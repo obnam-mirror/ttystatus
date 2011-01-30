@@ -88,6 +88,9 @@ class TerminalStatus(object):
         
     def disable(self):
         '''Disable all output.'''
+        self._m.disable()
         
     def enable(self):
         '''Enable output if it has been disabled.'''
+        self._m.enable()
+

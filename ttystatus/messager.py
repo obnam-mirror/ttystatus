@@ -27,6 +27,7 @@ class Messager(object):
     '''Write messages to the terminal.'''
     
     def __init__(self, output=None, period=None):
+        self._enabled = True
         self.output = output or sys.stderr
         self._period = 1.0 if period is None else period
         self._last_msg = '' # What did we write last?
@@ -72,7 +73,7 @@ class Messager(object):
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
-        if self.output.isatty():
+        if self._enabled and self.output.isatty():
             try:
                 self.output.write(string)
             except IOError: # pragma: no cover
@@ -128,3 +129,12 @@ class Messager(object):
         '''Finalize output.'''
         self._overwrite(self._cached_msg)
         self._raw_write('\n')
+        
+    def disable(self):
+        '''Disable all output.'''
+        self._enabled = False
+        
+    def enable(self):
+        '''Enable output to happen.'''
+        self._enabled = True
+
