@@ -85,3 +85,9 @@ class TerminalStatus(object):
     def finish(self):
         '''Finish status display.'''
         self._m.finish()
+        
+    def disable(self):
+        '''Disable all output.'''
+        
+    def enable(self):
+        '''Enable output if it has been disabled.'''

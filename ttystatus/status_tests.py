@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import StringIO
 import unittest
 
 import ttystatus
@@ -22,6 +23,9 @@ import ttystatus
 class DummyMessager(object):
 
     width = 80
+    
+    def __init__(self):
+        self.written = StringIO.StringIO()
 
     def clear(self):
         pass
@@ -30,7 +34,7 @@ class DummyMessager(object):
         return True
         
     def write(self, string):
-        pass
+        self.written.write(string)
         
     def notify(self, string):
         pass
@@ -108,4 +112,15 @@ class TerminalStatusTests(unittest.TestCase):
         
     def test_has_finish_method(self):
         self.assertEqual(self.ts.finish(), None)
+
+    def test_writes_output_by_default(self):
+        self.ts.add(ttystatus.String('foo'))
+        self.ts['foo'] = 'bar'
+        self.assertEqual(self.ts._m.written.getvalue(), 'bar')
+
+    def test_disables_output(self):
+        self.ts.add(ttystatus.String('foo'))
+        self.ts.disable()
+        self.ts['foo'] = 'bar'
+        self.assertEqual(self.ts._m.written.getvalue(), '')
 
