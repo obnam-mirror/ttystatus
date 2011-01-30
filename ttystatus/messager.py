@@ -119,15 +119,16 @@ class Messager(object):
         to a terminal.
         
         '''
-        
-        old = self._last_msg
-        self.clear()
-        try:
-            self.output.write('%s\n' % string)
-        except IOError: # pragma: no cover
-            # We ignore these. No point in crashing if terminal is bad.
-            self.output.flush()
-        self._overwrite(old)
+
+        if self._enabled:
+            old = self._last_msg
+            self.clear()
+            try:
+                self.output.write('%s\n' % string)
+            except IOError: # pragma: no cover
+                # We ignore these. No point in crashing if terminal is bad.
+                self.output.flush()
+            self._overwrite(old)
         
     def finish(self):
         '''Finalize output.'''

@@ -2,6 +2,12 @@ NEWS file for ttystatus
 =======================
 
 
+Version 0.8.1, released 2011-01-30
+--------------------------------
+
+* Do not write notifications if output is disabled.
+
+
 Version 0.8, released 2011-01-30
 --------------------------------
 

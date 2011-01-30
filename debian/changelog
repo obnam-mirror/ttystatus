@@ -1,3 +1,10 @@
+python-ttystatus (0.8.1) squeeze; urgency=low
+
+  * New upstream release.
+    - don't write notifications is output is disabled
+
+ -- Lars Wirzenius <liw@liw.fi>  Sun, 30 Jan 2011 19:58:22 +0000
+
 python-ttystatus (0.8) squeeze; urgency=low
 
   * New upstream release.
