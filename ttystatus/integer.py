@@ -1,4 +1,4 @@
-# Copyright 2010  Lars Wirzenius
+# Copyright 2011  Lars Wirzenius
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,21 +14,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.8.1'
+import ttystatus
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
 
-from literal import Literal
-from string import String
-from integer import Integer
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
-from percent import PercentDone
-from progressbar import ProgressBar
-from remtime import RemainingTime
-from elapsed import ElapsedTime
-from bytespeed import ByteSpeed
+class Integer(ttystatus.Widget):
+
+    '''Display a value as an integer.'''
+    
+    def __init__(self, key):
+        self._key = key
+        self.interesting_keys = [key]
+        self.value = '#'
+
+    def format(self):
+        return self.value
+        
+    def update(self, master, width):
+        try:
+            self.value = str(int(master[self._key]))
+        except ValueError:
+            self.value = '#'
+

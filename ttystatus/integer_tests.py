@@ -14,21 +14,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-version = '0.8.1'
+import unittest
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
+import ttystatus
 
-from literal import Literal
-from string import String
-from integer import Integer
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
-from percent import PercentDone
-from progressbar import ProgressBar
-from remtime import RemainingTime
-from elapsed import ElapsedTime
-from bytespeed import ByteSpeed
+
+class IntegerTests(unittest.TestCase):
+
+    def setUp(self):
+        self.w = ttystatus.Integer('foo')
+
+    def test_is_error_initially(self):
+        self.assertEqual(str(self.w), '#')
+        
+    def test_updates(self):
+        self.w.update({'foo': 123}, 999)
+        self.assertEqual(str(self.w), '123')
+        
+    def test_becomes_error_symbol_if_value_is_not_integer(self):
+        self.w.update({'foo': 'bar'}, 999)
+        self.assertEqual(str(self.w), '#')
+
