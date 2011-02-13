@@ -1,3 +1,10 @@
+python-ttystatus (0.9) squeeze; urgency=low
+
+  * New upstream release.
+    - add ttystatus.Integer
+
+ -- Lars Wirzenius <liw@liw.fi>  Sun, 13 Feb 2011 09:17:36 +0000
+
 python-ttystatus (0.8.1) squeeze; urgency=low
 
   * New upstream release.
