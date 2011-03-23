@@ -2,6 +2,13 @@ NEWS file for ttystatus
 =======================
 
 
+Version 0.10, released 2011-03-23
+---------------------------------
+
+* Fix handling of /dev/tty not being avilable. This can happen, e.g., when
+  things are run from cron.
+
+
 Version 0.9, released 2011-02-13
 --------------------------------
 
