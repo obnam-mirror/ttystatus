@@ -38,6 +38,12 @@ class MessagerTests(unittest.TestCase):
     def test_sets_output(self):
         self.assertEqual(self.messager.output, self.output)
         
+    def test_handles_no_tty(self):
+        def notty():
+            raise IOError()
+        m = ttystatus.Messager(open_tty=notty)
+        self.assertEqual(m.output, None)
+        
     def test_raw_writes_nothing_if_output_is_not_a_terminal(self):
         self.messager.output = StringIO.StringIO()
         self.messager._raw_write('foo')

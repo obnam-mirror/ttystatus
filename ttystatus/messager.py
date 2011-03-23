@@ -26,9 +26,15 @@ class Messager(object):
 
     '''Write messages to the terminal.'''
     
-    def __init__(self, output=None, period=None):
+    def __init__(self, output=None, period=None, open_tty=None):
         self._enabled = True
-        self.output = output or self._open_tty()
+        if output:
+            self.output = output
+        else:
+            try:
+                self.output = (open_tty or self._open_tty)()
+            except IOError:
+                self.output = None
         self._period = 1.0 if period is None else period
         self._last_msg = '' # What did we write last?
         self._last_time = 0 # When did we write last?
@@ -57,6 +63,8 @@ class Messager(object):
         '''
         
         default_width = 80
+        if self.output is None:
+            return default_width
         try:
             s = struct.pack('HHHH', 0, 0, 0, 0)
             x = fcntl.ioctl(self.output.fileno(), termios.TIOCGWINSZ, s)
