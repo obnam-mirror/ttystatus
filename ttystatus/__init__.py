@@ -32,3 +32,5 @@ from progressbar import ProgressBar
 from remtime import RemainingTime
 from elapsed import ElapsedTime
 from bytespeed import ByteSpeed
+
+__all__ = locals()
