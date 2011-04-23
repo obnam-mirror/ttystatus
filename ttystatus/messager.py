@@ -140,8 +140,9 @@ class Messager(object):
         
     def finish(self):
         '''Finalize output.'''
-        self._overwrite(self._cached_msg)
-        self._raw_write('\n')
+        if self._last_msg or self._cached_msg:
+            self._overwrite(self._cached_msg)
+            self._raw_write('\n')
         
     def disable(self):
         '''Disable all output.'''
