@@ -1,29 +1,29 @@
-# Copyright 2010  Lars Wirzenius
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+`ttystatus` -- a terminal status library
+========================================
+
+``ttystatus`` is a Python library for showing progress reporting and status
+updates on terminals, for (Unix) command line programs. Output is 
+automatically adapted to the width of the terminal: truncated if it does
+not fit, and re-sized if the terminal size changes.
+
+Output is provided via widgets. Each widgets formats some data into
+a suitable form for output. It gets the data either via its initializer,
+or from key/value pairs maintained by the master object. The values are
+set by the user. Every time a value is updated, widgets get updated
+(although the terminal is only updated every so often to give user time
+to actually read the output).
 
 
-'''An example program for ttystatus.'''
+Example
+-------
 
+Here's an example program that searches for symlinks in a directory tree::
 
-import os
-import sys
+    import os
+    import sys
 
-import ttystatus
+    import ttystatus
 
-
-def main():
     ts = ttystatus.TerminalStatus(period=0.1)
     ts.add(ttystatus.ElapsedTime())
     ts.add(ttystatus.Literal(' Looking for files: '))
@@ -64,6 +64,19 @@ def main():
 
     ts.finish()
 
+(See also the file ``example.py`` in the source distribution.)
 
-if __name__ == '__main__':
-    main()
+Reference manual
+================
+
+.. automodule:: ttystatus
+   :members:
+   :undoc-members:
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
