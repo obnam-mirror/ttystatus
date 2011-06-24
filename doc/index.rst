@@ -5,7 +5,7 @@
 Reference manual
 ================
 
-.. automodule: ttystatus
+.. automodule:: ttystatus
    :members:
    :undoc-members:
 
