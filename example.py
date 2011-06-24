@@ -59,7 +59,7 @@ def main():
         ts['pathname'] = pathname
         if os.path.islink(pathname):
             ts['symlink'] = pathname
-#            ts.notify('Symlink! %s' % pathname)
+            ts.notify('Symlink! %s' % pathname)
         ts['done'] += 1
 
     ts.finish()
