@@ -41,6 +41,7 @@ class Messager(object):
         self._cached_msg = '' # Last message from user, to write() method.
         self.set_width(self._get_terminal_width()) # Width of terminal
         signal.signal(signal.SIGWINCH, self._sigwinch_handler)
+        signal.siginterrupt(signal.SIGWINCH, False)
 
     def _open_tty(self): # pragma: no cover
         return open('/dev/tty', 'w')
