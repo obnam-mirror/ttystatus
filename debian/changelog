@@ -1,3 +1,11 @@
+python-ttystatus (0.12) squeeze; urgency=low
+
+  * New upstream release.
+  * debian/control: Add build dependency on python-sphinx.
+  * debian/pycompat: Useless, so removed.
+
+ -- Lars Wirzenius <liw@liw.fi>  Sun, 24 Jul 2011 10:52:05 +0100
+
 python-ttystatus (0.11) squeeze; urgency=low
 
   * New upstream version.

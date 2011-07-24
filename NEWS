@@ -2,6 +2,14 @@ NEWS file for ttystatus
 =======================
 
 
+Version 0.12, released 2011-07-24
+---------------------------------
+
+* API documentation is now done with Sphinx.
+* The SIGWINCH signal is now marked as a re-starting one, so that socket I/O
+  is not interrupted when an application uses ttystatus and the terminal is
+  resized.
+
 Version 0.11, released 2011-04-23
 ---------------------------------
 
