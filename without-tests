@@ -2,3 +2,4 @@
 ./example.py
 ./ttystatus/widget.py
 ./setup.py
+./doc/conf.py
