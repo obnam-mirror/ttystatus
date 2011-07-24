@@ -20,7 +20,7 @@ import ttystatus
 
 setup(
     name='ttystatus',
-    version=ttystatus.version,
+    version=ttystatus.__version__,
     description='terminal progress bar and status output for command line',
     author='Lars Wirzenius',
     author_email='liw@liw.fi',
