@@ -1,3 +1,11 @@
+python-ttystatus (0.13-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+  * First upload to Debian. (Closes: #636443)
+  * Debian packaging changed to be a native package.
+
+ -- Lars Wirzenius <liw@liw.fi>  Wed, 03 Aug 2011 08:09:57 +0100
+
 python-ttystatus (0.12) squeeze; urgency=low
 
   * New upstream release.
