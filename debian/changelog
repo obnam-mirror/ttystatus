@@ -1,8 +1,10 @@
-python-ttystatus (0.13-1) UNRELEASED; urgency=low
+python-ttystatus (0.13-1) unstable; urgency=low
 
   * New upstream release.
   * First upload to Debian. (Closes: #636443)
-  * Debian packaging changed to be a native package.
+  * Debian packaging changed to be a non-native package.
+  * debian/rules and debian/control changed to use dh_python2.
+  * debian/copyright converted to use DEP5.
 
  -- Lars Wirzenius <liw@liw.fi>  Wed, 03 Aug 2011 08:09:57 +0100
 

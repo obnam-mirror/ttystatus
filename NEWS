@@ -2,6 +2,12 @@ NEWS file for ttystatus
 =======================
 
 
+Version 0.13, released 2011-08-18
+---------------------------------
+
+* No upstream changes, but released with a new upstream version so that
+  Debian packaging does not need to get convoluted.
+
 Version 0.12, released 2011-07-24
 ---------------------------------
 
