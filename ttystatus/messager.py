@@ -135,7 +135,7 @@ class Messager(object):
             try:
                 f.write('%s\n' % string)
                 f.flush()
-            except IOError: # pragma: no cover
+            except IOError:
                 # We ignore these. No point in crashing if terminal is bad.
                 pass
             self._overwrite(old)

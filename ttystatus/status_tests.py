@@ -37,7 +37,7 @@ class DummyMessager(object):
     def write(self, string):
         self.written.write(string)
         
-    def notify(self, string):
+    def notify(self, string, f):
         pass
         
     def finish(self):
@@ -116,6 +116,9 @@ class TerminalStatusTests(unittest.TestCase):
         
     def test_has_notify_method(self):
         self.assertEqual(self.ts.notify('foo'), None)
+        
+    def test_has_error_method(self):
+        self.assertEqual(self.ts.error('foo'), None)
         
     def test_has_finish_method(self):
         self.assertEqual(self.ts.finish(), None)

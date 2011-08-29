@@ -93,9 +93,18 @@ class MessagerTests(unittest.TestCase):
         self.assertEqual(self.output.getvalue(), 'foo\r   \r')
 
     def test_notify_removes_message_and_puts_it_back_afterwards(self):
+        f = StringIO.StringIO()
         self.messager.write('foo')
-        self.messager.notify('bar')
-        self.assertEqual(self.output.getvalue(), 'foo\r   \rbar\nfoo')
+        self.messager.notify('bar', f)
+        self.assertEqual(self.output.getvalue(), 'foo\r   \rfoo')
+        self.assertEqual(f.getvalue(), 'bar\n')
+
+    def test_notify_does_not_mind_ioerror(self):
+        f = open('/dev/full', 'w')
+        self.messager.write('foo')
+        self.messager.notify('bar', f)
+        self.assertEqual(self.output.getvalue(), 'foo\r   \rfoo')
+        f.close()
 
     def test_finish_flushes_unwritten_message(self):
         self.messager._now = lambda: 0
