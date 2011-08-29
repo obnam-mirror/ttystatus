@@ -133,10 +133,11 @@ class Messager(object):
             old = self._last_msg
             self.clear()
             try:
-                self.output.write('%s\n' % string)
+                sys.stdout.write('%s\n' % string)
+                sys.stdout.flush()
             except IOError: # pragma: no cover
                 # We ignore these. No point in crashing if terminal is bad.
-                self.output.flush()
+                pass
             self._overwrite(old)
         
     def finish(self):
