@@ -116,7 +116,7 @@ class Messager(object):
         '''Remove current message from terminal.'''
         self._overwrite('')
         
-    def notify(self, string):
+    def notify(self, string, f):
         '''Show a notification message string to the user.
         
         Notifications are meant for error messages and other things
@@ -133,8 +133,8 @@ class Messager(object):
             old = self._last_msg
             self.clear()
             try:
-                sys.stdout.write('%s\n' % string)
-                sys.stdout.flush()
+                f.write('%s\n' % string)
+                f.flush()
             except IOError: # pragma: no cover
                 # We ignore these. No point in crashing if terminal is bad.
                 pass

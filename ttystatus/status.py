@@ -14,6 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
 import ttystatus
 
 
@@ -80,7 +82,11 @@ class TerminalStatus(object):
     
     def notify(self, msg):
         '''Show a message.'''
-        self._m.notify(msg)
+        self._m.notify(msg, sys.stdout)
+
+    def error(self, msg):
+        '''Write an error message.'''
+        self._m.notify(msg, sys.stderr)
     
     def finish(self):
         '''Finish status display.'''
