@@ -60,6 +60,8 @@ def main():
         if os.path.islink(pathname):
             ts['symlink'] = pathname
             ts.notify('Symlink! %s' % pathname)
+        elif 'error' in pathname:
+            ts.error('Error in pathname: %s' % pathname)
         ts['done'] += 1
 
     ts.finish()
