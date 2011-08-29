@@ -1,6 +1,12 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.14, released XXXXXXXXXX
+---------------------------------
+
+* Notifications are written to the standard output, not the terminal.
+* A method for printing error messages is provided. They are printed to
+  the standard error.
 
 Version 0.13, released 2011-08-18
 ---------------------------------
