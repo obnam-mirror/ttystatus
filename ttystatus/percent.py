@@ -36,6 +36,8 @@ class PercentDone(ttystatus.Widget):
         except ValueError:
             done = 0
             total = 1
+        if total < 0.001:
+            total = 1
         return '%.*f %%' % (self.decimals, 100.0 * done / total)
         
     def update(self, master, width):
