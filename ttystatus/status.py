@@ -50,7 +50,8 @@ class TerminalStatus(object):
         
         The format string is taken literally, except that ``%%`` is a
         literal percent character, and ``%Foo(a,b,c)`` is a widget
-        of type ``Foo`` with parameters a, b, and c.
+        of type ``Foo`` with parameters a, b, and c. For example:
+        ``format("hello, %String(name)")``.
         
         '''
         for widget in ttystatus.fmt.parse(format_string):
