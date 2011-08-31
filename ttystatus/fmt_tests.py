@@ -25,4 +25,5 @@ class FormatTests(unittest.TestCase):
         self.assertEqual(type(ttystatus.fmt.widgets), list)
         for widget in ttystatus.fmt.widgets:
             self.assert_(isinstance(widget, ttystatus.Widget))
+            self.assertNotEqual(widget, ttystatus.Widget)
 
