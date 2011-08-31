@@ -1,4 +1,4 @@
-# Copyright 2010  Lars Wirzenius
+# Copyright 2011  Lars Wirzenius
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,25 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-__version__ = '0.13'
+import ttystatus
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
 
-from literal import Literal
-from string import String
-from integer import Integer
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
-from percent import PercentDone
-from progressbar import ProgressBar
-from remtime import RemainingTime
-from elapsed import ElapsedTime
-from bytespeed import ByteSpeed
-
-import fmt
-
-__all__ = locals()
+widgets = [getattr(ttystatus, x)
+           for x in dir(ttystatus)
+           if isinstance(getattr(ttystatus, x), ttystatus.Widget) and
+              getattr(ttystatus, x) != ttystatus.Widget]
