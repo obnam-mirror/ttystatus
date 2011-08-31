@@ -46,7 +46,13 @@ class TerminalStatus(object):
                 self._interests[key] = self._interests.get(key, []) + [widget]
 
     def format(self, format_string):
-        '''Add new widgets based on format string.'''
+        '''Add new widgets based on format string.
+        
+        The format string is taken literally, except that ``%%`` is a
+        literal percent character, and ``%Foo(a,b,c)`` is a widget
+        of type ``Foo`` with parameters a, b, and c.
+        
+        '''
         for widget in ttystatus.fmt.parse(format_string):
             self.add(widget)
         
