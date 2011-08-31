@@ -25,11 +25,8 @@ import ttystatus
 
 def main():
     ts = ttystatus.TerminalStatus(period=0.1)
-    ts.add(ttystatus.ElapsedTime())
-    ts.add(ttystatus.Literal(' Looking for files: '))
-    ts.add(ttystatus.Counter('pathname'))
-    ts.add(ttystatus.Literal(' found, currently in '))
-    ts.add(ttystatus.Pathname('dirname'))
+    ts.format('%ElapsedTime() Looking for files: %Counter(pathname) found, '
+              'currently in %Pathname(dirname)')
     
     pathnames = []
     for dirname, subdirs, basenames in os.walk(sys.argv[1]):
