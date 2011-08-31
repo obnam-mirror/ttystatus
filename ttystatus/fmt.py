@@ -45,12 +45,12 @@ def parse(fmt):
     while fmt:
         m = pat.match(fmt)
         if m:
-            klass = getattr(ttystatus, m.group('class'))
-            argnames = m.group('args').split(',')
-            argnames = [x for x in argnames if x]
             if prefix:
                 result.append(ttystatus.Literal(prefix))    
                 prefix = ''
+            klass = getattr(ttystatus, m.group('class'))
+            argnames = m.group('args').split(',')
+            argnames = [x for x in argnames if x]
             result.append(klass(*argnames))
             fmt = fmt[m.end():]
         elif fmt.startswith('%%'):
