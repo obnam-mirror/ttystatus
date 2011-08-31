@@ -44,6 +44,11 @@ class TerminalStatus(object):
         else:
             for key in widget.interesting_keys:
                 self._interests[key] = self._interests.get(key, []) + [widget]
+
+    def format(self, format_string):
+        '''Add new widgets based on format string.'''
+        for widget in ttystatus.fmt.parse(format_string):
+            self.add(widget)
         
     def clear(self):
         '''Remove all widgets.'''

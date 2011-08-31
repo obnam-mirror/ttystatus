@@ -78,6 +78,12 @@ class TerminalStatusTests(unittest.TestCase):
         w = W()
         self.ts.add(w)
         self.assert_(w in self.ts._wildcards)
+
+    def test_adds_widgets_from_format_string(self):
+        self.ts.format('hello, %String(name)')
+        self.assertEqual(len(self.ts._widgets), 2)
+        self.assertEqual(type(self.ts._widgets[0]), ttystatus.Literal)
+        self.assertEqual(type(self.ts._widgets[1]), ttystatus.String)
         
     def test_removes_all_widgets(self):
         self.ts.add(ttystatus.Literal('foo'))
