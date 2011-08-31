@@ -44,6 +44,18 @@ class TerminalStatus(object):
         else:
             for key in widget.interesting_keys:
                 self._interests[key] = self._interests.get(key, []) + [widget]
+
+    def format(self, format_string):
+        '''Add new widgets based on format string.
+        
+        The format string is taken literally, except that ``%%`` is a
+        literal percent character, and ``%Foo(a,b,c)`` is a widget
+        of type ``Foo`` with parameters a, b, and c. For example:
+        ``format("hello, %String(name)")``.
+        
+        '''
+        for widget in ttystatus.fmt.parse(format_string):
+            self.add(widget)
         
     def clear(self):
         '''Remove all widgets.'''

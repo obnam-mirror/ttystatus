@@ -33,4 +33,6 @@ from remtime import RemainingTime
 from elapsed import ElapsedTime
 from bytespeed import ByteSpeed
 
+import fmt
+
 __all__ = locals()
