@@ -1,6 +1,11 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.15, released UNRELEASED
+---------------------------------
+
+* Bugfix: the String widget now handles non-string values.
+
 Version 0.14, released 2011-08-31
 ---------------------------------
 
