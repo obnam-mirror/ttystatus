@@ -78,16 +78,15 @@ class TerminalStatus(object):
         '''Set value for key.'''
         self._values[key] = value
         if self._m.time_to_write():
-            width = self._m.width
-            if width != self._latest_width:
-                widgets = self._widgets
-                self._latest_width = width
-            else:
-                widgets = self._interests.get(key, []) + self._wildcards
-            for w in widgets:
-                w.update(self, width)
-                width -= len(str(w))
-            self._m.write(''.join(str(w) for w in self._widgets))
+            self._format()
+
+    def _format(self):
+        '''Format and output all widgets.'''
+        width = self._m.width
+        for w in self._widgets:
+            w.update(self, width)
+            width -= len(str(w))
+        self._m.write(''.join(str(w) for w in self._widgets))
     
     def increase(self, key, delta):
         '''Increase value for a key by a given amount.'''
@@ -103,6 +102,7 @@ class TerminalStatus(object):
     
     def finish(self):
         '''Finish status display.'''
+        self._format()
         self._m.finish()
         
     def disable(self):
