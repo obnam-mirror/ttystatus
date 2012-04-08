@@ -1,7 +1,7 @@
 NEWS file for ttystatus
 =======================
 
-Version 0.16, released UNRELEASED
+Version 0.16, released 2012-04-08
 ---------------------------------
 
 * Speed up by avoiding to format widgets until it's time to update.
