@@ -26,7 +26,7 @@ class Counter(ttystatus.Widget):
         self.prev = None
         self.count = 0
 
-    def __str__(self):
+    def render(self):
         return str(self.count)
         
     def update(self, master):

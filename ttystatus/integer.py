@@ -25,7 +25,7 @@ class Integer(ttystatus.Widget):
         self._key = key
         self.value = None
 
-    def __str__(self):
+    def render(self):
         try:
             return str(int(self.value))
         except (TypeError, ValueError):

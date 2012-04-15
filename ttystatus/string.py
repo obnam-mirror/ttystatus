@@ -25,7 +25,7 @@ class String(ttystatus.Widget):
         self._key = key
         self.value = ''
 
-    def __str__(self):
+    def render(self):
         return str(self.value)
         
     def update(self, master):

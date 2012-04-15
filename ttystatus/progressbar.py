@@ -28,7 +28,7 @@ class ProgressBar(ttystatus.Widget):
         self.total = 1
         self.width = width
 
-    def __str__(self):
+    def render(self):
         try:
             done = float(self.done)
             total = float(self.total)

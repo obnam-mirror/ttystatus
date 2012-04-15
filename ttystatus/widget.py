@@ -26,12 +26,15 @@ class Widget(object):
     
     * the widget `update` method is called by TerminalStatus whenever
       any of the values change
-    * the widget `__str__` method is called by TerminalStatus when it is
+    * the widget `render` method is called by TerminalStatus when it is
       time to display things
-    
+
     '''
     
     def __str__(self):
+        raise NotImplementedError()
+    
+    def render(self):
         '''Format the current value.
         
         This will be called only when the value actually needs to be

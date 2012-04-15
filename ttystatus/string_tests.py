@@ -25,12 +25,12 @@ class StringTests(unittest.TestCase):
         self.s = ttystatus.String('foo')
 
     def test_is_empty_initially(self):
-        self.assertEqual(str(self.s), '')
+        self.assertEqual(self.s.render(), '')
         
     def test_updates(self):
         self.s.update({'foo': 'bar'})
-        self.assertEqual(str(self.s), 'bar')
+        self.assertEqual(self.s.render(), 'bar')
         
     def test_handles_non_string_value(self):
         self.s.update({'foo': 123})
-        self.assertEqual(str(self.s), '123')
+        self.assertEqual(self.s.render(), '123')

@@ -28,7 +28,7 @@ class ByteSize(ttystatus.Widget):
     def update(self, ts):
         self._bytes = ts[self.name]
         
-    def __str__(self):
+    def render(self):
         units = (
             (1024**4, 2, 'TiB'),
             (1024**3, 2, 'GiB'),

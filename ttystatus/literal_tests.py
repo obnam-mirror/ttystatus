@@ -23,4 +23,4 @@ class LiteralTests(unittest.TestCase):
 
     def test_sets_value_correctly(self):
         literal = ttystatus.Literal('foo')
-        self.assertEqual(str(literal), 'foo')
+        self.assertEqual(literal.render(), 'foo')

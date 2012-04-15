@@ -25,13 +25,13 @@ class IntegerTests(unittest.TestCase):
         self.w = ttystatus.Integer('foo')
 
     def test_is_error_initially(self):
-        self.assertEqual(str(self.w), '#')
+        self.assertEqual(self.w.render(), '#')
         
     def test_updates(self):
         self.w.update({'foo': 123})
-        self.assertEqual(str(self.w), '123')
+        self.assertEqual(self.w.render(), '123')
         
     def test_becomes_error_symbol_if_value_is_not_integer(self):
         self.w.update({'foo': 'bar'})
-        self.assertEqual(str(self.w), '#')
+        self.assertEqual(self.w.render(), '#')
 

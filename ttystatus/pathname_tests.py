@@ -25,12 +25,12 @@ class PathnameTests(unittest.TestCase):
         self.w = ttystatus.Pathname('foo')
 
     def test_is_empty_initially(self):
-        self.assertEqual(str(self.w), '')
+        self.assertEqual(self.w.render(), '')
         
     def test_updates(self):
         self.w.update({'foo': 'bar'})
-        self.assertEqual(str(self.w), 'bar')
+        self.assertEqual(self.w.render(), 'bar')
 
     def test_handles_update_to_other_value(self):
         self.w.update({'other': 1})
-        self.assertEqual(str(self.w), '')
+        self.assertEqual(self.w.render(), '')

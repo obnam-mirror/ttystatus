@@ -27,7 +27,7 @@ class Index(ttystatus.Widget):
         self.value = None
         self.listvalue = []
         
-    def __str__(self):
+    def render(self):
         try:
             index = self.listvalue.index(self.value) + 1
         except ValueError:

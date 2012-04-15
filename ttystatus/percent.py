@@ -28,7 +28,7 @@ class PercentDone(ttystatus.Widget):
         self.done = 0
         self.total = 1
         
-    def __str__(self):
+    def render(self):
         try:
             done = float(self.done)
             total = float(self.total)

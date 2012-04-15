@@ -33,7 +33,7 @@ class ByteSpeed(ttystatus.Widget):
         
         return time.time()
         
-    def __str__(self):
+    def render(self):
         units = (
             (1024**4, 2, 'TiB/s'),
             (1024**3, 2, 'GiB/s'),

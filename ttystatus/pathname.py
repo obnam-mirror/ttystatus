@@ -29,7 +29,7 @@ class Pathname(ttystatus.Widget):
         self._key = key
         self.pathname = ''
 
-    def __str__(self):
+    def render(self):
         return self.pathname
         
     def update(self, master):
