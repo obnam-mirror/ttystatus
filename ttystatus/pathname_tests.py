@@ -28,12 +28,17 @@ class PathnameTests(unittest.TestCase):
         self.assertFalse(self.w.static_width)
 
     def test_is_empty_initially(self):
-        self.assertEqual(self.w.render(0), '')
+        self.assertEqual(self.w.render(10), '')
         
     def test_updates(self):
         self.w.update({'foo': 'bar'})
-        self.assertEqual(self.w.render(0), 'bar')
+        self.assertEqual(self.w.render(10), 'bar')
 
     def test_handles_update_to_other_value(self):
         self.w.update({'other': 1})
-        self.assertEqual(self.w.render(0), '')
+        self.assertEqual(self.w.render(10), '')
+
+    def test_truncates_from_beginning(self):
+        self.w.update({'foo': '/this/is/a/path'})
+        self.assertEqual(self.w.render(6), 'a/path')
+

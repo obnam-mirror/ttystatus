@@ -31,8 +31,8 @@ class Pathname(ttystatus.Widget):
         self._key = key
         self.pathname = ''
 
-    def render(self, render):
-        return self.pathname
+    def render(self, width):
+        return self.pathname[-width:]
         
     def update(self, master):
         self.pathname = master.get(self._key, '')
