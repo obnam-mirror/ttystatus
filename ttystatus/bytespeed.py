@@ -22,6 +22,8 @@ import ttystatus
 class ByteSpeed(ttystatus.Widget):
 
     '''Display data size in bytes, KiB, etc.'''
+
+    static_width = False
     
     def __init__(self, name):
         self.name = name
@@ -33,7 +35,7 @@ class ByteSpeed(ttystatus.Widget):
         
         return time.time()
         
-    def render(self):
+    def render(self, width):
         units = (
             (1024**4, 2, 'TiB/s'),
             (1024**3, 2, 'GiB/s'),

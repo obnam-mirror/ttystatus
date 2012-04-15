@@ -24,31 +24,34 @@ class ByteSpeedTests(unittest.TestCase):
     def setUp(self):
         self.w = ttystatus.ByteSpeed('foo')
 
+    def test_is_not_static_width(self):
+        self.assertFalse(self.w.static_width)
+
     def test_formats_zero_speed_without_update(self):
-        self.assertEqual(self.w.render(), '0 B/s')
+        self.assertEqual(self.w.render(0), '0 B/s')
 
     def test_formats_zero_bytes_correctly(self):
         self.w.update({ 'foo': 0 })
-        self.assertEqual(self.w.render(), '0 B/s')
+        self.assertEqual(self.w.render(0), '0 B/s')
 
     def test_formats_one_byte_per_second_correctly(self):
         self.w.now = lambda: 1
         self.w.update({ 'foo': 0 })
         self.w.now = lambda: 2
         self.w.update({ 'foo': 1 })
-        self.assertEqual(self.w.render(), '1 B/s')
+        self.assertEqual(self.w.render(0), '1 B/s')
 
     def test_formats_ten_bytes_per_second_correctly(self):
         self.w.now = lambda: 1
         self.w.update({ 'foo': 0 })
         self.w.now = lambda: 11
         self.w.update({ 'foo': 100 })
-        self.assertEqual(self.w.render(), '10 B/s')
+        self.assertEqual(self.w.render(0), '10 B/s')
 
     def test_formats_ten_tibs_per_second_correctly(self):
         self.w.now = lambda: 1
         self.w.update({ 'foo': 0 })
         self.w.now = lambda: 2
         self.w.update({ 'foo': 10 * 1024**4 })
-        self.assertEqual(self.w.render(), '10.00 TiB/s')
+        self.assertEqual(self.w.render(0), '10.00 TiB/s')
 

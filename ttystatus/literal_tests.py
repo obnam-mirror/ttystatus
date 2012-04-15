@@ -21,6 +21,11 @@ import ttystatus
 
 class LiteralTests(unittest.TestCase):
 
+    def setUp(self):
+        self.w = ttystatus.Literal('foo')
+
+    def test_is_static_width(self):
+        self.assertTrue(self.w.static_width)
+
     def test_sets_value_correctly(self):
-        literal = ttystatus.Literal('foo')
-        self.assertEqual(literal.render(), 'foo')
+        self.assertEqual(self.w.render(0), 'foo')

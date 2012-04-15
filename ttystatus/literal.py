@@ -24,5 +24,5 @@ class Literal(ttystatus.Widget):
     def __init__(self, string):
         self.value = string
 
-    def render(self):
+    def render(self, width):
         return self.value

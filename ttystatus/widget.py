@@ -28,14 +28,29 @@ class Widget(object):
       any of the values change
     * the widget `render` method is called by TerminalStatus when it is
       time to display things
+      
+    Widgets may have a static size, or their size may vary. The
+    ``static_width`` property reveals this. This affects rendering:
+    static sized widgets are rendered at their one static size; variable
+    sized widgets are shrunk, if necessary, to make everything fit into
+    the available space. If it's not possible to shrink enough, widgets
+    are rendered from beginning until the space is full: variable sized
+    widgets are rendered as small as possible in this case.
 
     '''
+    
+    static_width = True
     
     def __str__(self):
         raise NotImplementedError()
     
-    def render(self):
+    def render(self, width):
         '''Format the current value.
+
+        ``width`` is the available width for the widget. It need not use
+        all of it. If it's not possible for the widget to render itself
+        small enough to fit into the given width, it may return a larger
+        string, but the caller will probably truncate it.
         
         This will be called only when the value actually needs to be
         formatted.

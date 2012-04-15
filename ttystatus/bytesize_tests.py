@@ -24,34 +24,37 @@ class ByteSizeTests(unittest.TestCase):
     def setUp(self):
         self.w = ttystatus.ByteSize('foo')
 
+    def test_is_not_static_width(self):
+        self.assertFalse(self.w.static_width)
+
     def test_formats_zero_bytes_without_update(self):
-        self.assertEqual(self.w.render(), '0 B')
+        self.assertEqual(self.w.render(0), '0 B')
 
     def test_formats_zero_bytes_correctly(self):
         self.w.update({ 'foo': 0 })
-        self.assertEqual(self.w.render(), '0 B')
+        self.assertEqual(self.w.render(0), '0 B')
 
     def test_formats_one_bytes_correctly(self):
         self.w.update({ 'foo': 1 })
-        self.assertEqual(self.w.render(), '1 B')
+        self.assertEqual(self.w.render(0), '1 B')
 
     def test_formats_1023_bytes_correctly(self):
         self.w.update({ 'foo': 1023 })
-        self.assertEqual(self.w.render(), '1023 B')
+        self.assertEqual(self.w.render(0), '1023 B')
 
     def test_formats_1024_bytes_correctly(self):
         self.w.update({ 'foo': 1024 })
-        self.assertEqual(self.w.render(), '1.0 KiB')
+        self.assertEqual(self.w.render(0), '1.0 KiB')
 
     def test_formats_1_MiB_bytes_correctly(self):
         self.w.update({ 'foo': 1024**2 })
-        self.assertEqual(self.w.render(), '1.00 MiB')
+        self.assertEqual(self.w.render(0), '1.00 MiB')
 
     def test_formats_1_GiB_bytes_correctly(self):
         self.w.update({ 'foo': 1024**3 })
-        self.assertEqual(self.w.render(), '1.00 GiB')
+        self.assertEqual(self.w.render(0), '1.00 GiB')
 
     def test_formats_1_TiB_bytes_correctly(self):
         self.w.update({ 'foo': 1024**4 })
-        self.assertEqual(self.w.render(), '1.00 TiB')
+        self.assertEqual(self.w.render(0), '1.00 TiB')
 

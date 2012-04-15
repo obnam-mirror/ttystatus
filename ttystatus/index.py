@@ -21,13 +21,15 @@ class Index(ttystatus.Widget):
 
     '''Display the position of a value in a list of values.'''
     
+    static_width = False
+
     def __init__(self, name, listname):
         self.name = name
         self.listname = listname
         self.value = None
         self.listvalue = []
         
-    def render(self):
+    def render(self, render):
         try:
             index = self.listvalue.index(self.value) + 1
         except ValueError:

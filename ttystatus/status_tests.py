@@ -94,9 +94,9 @@ class TerminalStatusTests(unittest.TestCase):
     def test_updates_widgets_when_value_is_set(self):
         w = ttystatus.String('foo')
         self.ts.add(w)
-        self.assertEqual(w.render(), '')
+        self.assertEqual(w.render(0), '')
         self.ts['foo'] = 'bar'
-        self.assertEqual(w.render(), 'bar')
+        self.assertEqual(w.render(0), 'bar')
 
     def test_increases_value(self):
         self.ts['foo'] = 10
@@ -128,5 +128,5 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts.add(w)
         for i in range(n):
             self.ts['value'] = i
-        self.assertEqual(w.render(), str(n))
+        self.assertEqual(w.render(0), str(n))
 

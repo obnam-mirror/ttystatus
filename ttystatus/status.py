@@ -76,7 +76,7 @@ class TerminalStatus(object):
 
     def _render(self):
         '''Format and output all widgets.'''
-        self._m.write(''.join(w.render() for w in self._widgets))
+        self._m.write(''.join(w.render(1) for w in self._widgets))
     
     def increase(self, key, delta):
         '''Increase value for a key by a given amount.'''

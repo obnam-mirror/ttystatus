@@ -24,18 +24,21 @@ class PercentDoneTests(unittest.TestCase):
     def setUp(self):
         self.w = ttystatus.PercentDone('done', 'total', decimals=1)
 
+    def test_is_not_static_width(self):
+        self.assertFalse(self.w.static_width)
+
     def test_shows_zero_value_initially(self):
-        self.assertEqual(self.w.render(), '0.0 %')
+        self.assertEqual(self.w.render(0), '0.0 %')
 
     def test_sets_value(self):
         self.w.update({ 'done': 50, 'total': 100 })
-        self.assertEqual(self.w.render(), '50.0 %')
+        self.assertEqual(self.w.render(0), '50.0 %')
 
     def test_handles_empty_strings_as_values(self):
         self.w.update({ 'done': '', 'total': '' })
-        self.assertEqual(self.w.render(), '0.0 %')
+        self.assertEqual(self.w.render(0), '0.0 %')
 
     def test_handles_zero_total(self):
         self.w.update({ 'done': 0, 'total': 0 })
-        self.assertEqual(self.w.render(), '0.0 %')
+        self.assertEqual(self.w.render(0), '0.0 %')
 

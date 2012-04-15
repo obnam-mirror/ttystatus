@@ -31,7 +31,7 @@ class ElapsedTime(ttystatus.Widget):
         '''Wrapper around time.time() for unit tests to override.'''
         return time.time()
 
-    def render(self):
+    def render(self, width):
         secs = self.secs
         hours = secs / 3600
         secs %= 3600

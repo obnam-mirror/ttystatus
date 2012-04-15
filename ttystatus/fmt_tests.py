@@ -32,13 +32,13 @@ class FormatTests(unittest.TestCase):
         x = ttystatus.fmt.parse('hello, world')
         self.assertEqual(len(x), 1)
         self.assertEqual(type(x[0]), ttystatus.Literal)
-        self.assertEqual(x[0].render(), 'hello, world')
+        self.assertEqual(x[0].render(0), 'hello, world')
 
     def test_parses_escaped_pecent(self):
         x = ttystatus.fmt.parse('%%')
         self.assertEqual(len(x), 1)
         self.assertEqual(type(x[0]), ttystatus.Literal)
-        self.assertEqual(x[0].render(), '%')
+        self.assertEqual(x[0].render(0), '%')
 
     def test_parses_parameterless_widget(self):
         x = ttystatus.fmt.parse('%ElapsedTime()')
@@ -60,12 +60,12 @@ class FormatTests(unittest.TestCase):
         self.assertEqual(len(x), 4)
 
         self.assertEqual(type(x[0]), ttystatus.Literal)
-        self.assertEqual(x[0].render(), 'hello, ')
+        self.assertEqual(x[0].render(0), 'hello, ')
 
         self.assertEqual(type(x[1]), ttystatus.String)
 
         self.assertEqual(type(x[2]), ttystatus.Literal)
-        self.assertEqual(x[2].render(), ': ')
+        self.assertEqual(x[2].render(0), ': ')
 
         self.assertEqual(type(x[3]), ttystatus.ElapsedTime)
 

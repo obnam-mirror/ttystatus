@@ -24,12 +24,14 @@ class Pathname(ttystatus.Widget):
     If it won't fit completely, truncate from the beginning of the string.
     
     '''
+
+    static_width = False
     
     def __init__(self, key):
         self._key = key
         self.pathname = ''
 
-    def render(self):
+    def render(self, render):
         return self.pathname
         
     def update(self, master):

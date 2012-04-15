@@ -20,6 +20,8 @@ import ttystatus
 class PercentDone(ttystatus.Widget):
 
     '''Display percent of task done.'''
+
+    static_width = False
     
     def __init__(self, done_name, total_name, decimals=0):
         self.done_name = done_name
@@ -28,7 +30,7 @@ class PercentDone(ttystatus.Widget):
         self.done = 0
         self.total = 1
         
-    def render(self):
+    def render(self, render):
         try:
             done = float(self.done)
             total = float(self.total)

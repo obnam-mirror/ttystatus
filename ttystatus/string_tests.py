@@ -24,13 +24,16 @@ class StringTests(unittest.TestCase):
     def setUp(self):
         self.s = ttystatus.String('foo')
 
+    def test_is_not_static_width(self):
+        self.assertFalse(self.s.static_width)
+
     def test_is_empty_initially(self):
-        self.assertEqual(self.s.render(), '')
+        self.assertEqual(self.s.render(0), '')
         
     def test_updates(self):
         self.s.update({'foo': 'bar'})
-        self.assertEqual(self.s.render(), 'bar')
+        self.assertEqual(self.s.render(0), 'bar')
         
     def test_handles_non_string_value(self):
         self.s.update({'foo': 123})
-        self.assertEqual(self.s.render(), '123')
+        self.assertEqual(self.s.render(0), '123')

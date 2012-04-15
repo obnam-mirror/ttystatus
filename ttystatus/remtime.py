@@ -41,7 +41,7 @@ class RemainingTime(ttystatus.Widget):
         
         return time.time()
         
-    def render(self):
+    def render(self, render):
         if self.started is None:
             self.started = self.get_time()
         duration = self.get_time() - self.started
