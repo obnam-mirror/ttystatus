@@ -147,3 +147,14 @@ class TerminalStatusTests(unittest.TestCase):
         text = self.ts._render()
         self.assertEqual(text, 'foob')
 
+    def test_renders_variable_size_width_according_to_space_keep_static(self):
+        w1 = ttystatus.Literal('foo')
+        w2 = ttystatus.ProgressBar('done', 'total')
+        w3 = ttystatus.Literal('bar')
+        self.ts.add(w1)
+        self.ts.add(w2)
+        self.ts.add(w3)
+        self.ts._m.width = 9
+        text = self.ts._render()
+        self.assertEqual(text, 'foo---bar')
+
