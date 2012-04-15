@@ -138,3 +138,12 @@ class TerminalStatusTests(unittest.TestCase):
         text = self.ts._render()
         self.assertEqual(len(text), self.ts._m.width)
 
+    def test_renders_from_beginning_if_there_is_not_enough_space(self):
+        w1 = ttystatus.Literal('foo')
+        w2 = ttystatus.Literal('bar')
+        self.ts.add(w1)
+        self.ts.add(w2)
+        self.ts._m.width = 4
+        text = self.ts._render()
+        self.assertEqual(text, 'foob')
+

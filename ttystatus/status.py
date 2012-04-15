@@ -91,7 +91,7 @@ class TerminalStatus(object):
                 texts[i] = w.render(remaining)
                 remaining -= len(texts[i])
 
-        return ''.join(texts)
+        return (''.join(texts))[:self._m.width]
 
     def _write(self):
         '''Render and output current state of all widgets.'''
