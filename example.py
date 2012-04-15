@@ -47,7 +47,7 @@ def main():
     ts.add(ttystatus.Literal(' done) '))
     ts.add(ttystatus.RemainingTime('done', 'total'))
     ts.add(ttystatus.Literal(' '))
-    ts.add(ttystatus.ProgressBar('done', 'total', 16))
+    ts.add(ttystatus.ProgressBar('done', 'total'))
     ts['pathnames'] = pathnames
     ts['done'] = 0
     ts['total'] = len(pathnames)
