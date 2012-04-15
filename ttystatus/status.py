@@ -72,9 +72,9 @@ class TerminalStatus(object):
         for w in self._widgets:
             w.update(self)
         if self._m.time_to_write():
-            self._format()
+            self._render()
 
-    def _format(self):
+    def _render(self):
         '''Format and output all widgets.'''
         self._m.write(''.join(str(w) for w in self._widgets))
     
@@ -92,7 +92,7 @@ class TerminalStatus(object):
     
     def finish(self):
         '''Finish status display.'''
-        self._format()
+        self._render()
         self._m.finish()
         
     def disable(self):
