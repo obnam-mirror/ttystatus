@@ -130,3 +130,11 @@ class TerminalStatusTests(unittest.TestCase):
             self.ts['value'] = i
         self.assertEqual(w.render(0), str(n))
 
+    def test_renders_everything_when_there_is_space(self):
+        w1 = ttystatus.Literal('foo')
+        w2 = ttystatus.ProgressBar('done', 'total')
+        self.ts.add(w1)
+        self.ts.add(w2)
+        text = self.ts._render()
+        self.assertEqual(len(text), self.ts._m.width)
+
