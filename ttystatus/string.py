@@ -20,14 +20,15 @@ import ttystatus
 class String(ttystatus.Widget):
 
     '''Display a value as a string.'''
+
+    static_width = False
     
     def __init__(self, key):
         self._key = key
-        self.interesting_keys = [key]
         self.value = ''
 
-    def format(self):
+    def render(self, render):
         return str(self.value)
         
-    def update(self, master, width):
+    def update(self, master):
         self.value = master[self._key]

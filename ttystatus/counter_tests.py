@@ -24,20 +24,23 @@ class CounterTests(unittest.TestCase):
     def setUp(self):
         self.w = ttystatus.Counter('foo')
 
+    def test_is_not_static_width(self):
+        self.assertFalse(self.w.static_width)
+
     def test_counts_zero_initially(self):
-        self.assertEqual(str(self.w), '0')
+        self.assertEqual(self.w.render(0), '0')
 
     def test_counts_one_change(self):
-        self.w.update({ 'foo': 'a' }, 999)
-        self.assertEqual(str(self.w), '1')
+        self.w.update({ 'foo': 'a' })
+        self.assertEqual(self.w.render(0), '1')
 
     def test_counts_two_changes(self):
-        self.w.update({ 'foo': 'a' }, 999)
-        self.w.update({ 'foo': 'b' }, 999)
-        self.assertEqual(str(self.w), '2')
+        self.w.update({ 'foo': 'a' })
+        self.w.update({ 'foo': 'b' })
+        self.assertEqual(self.w.render(0), '2')
 
     def test_does_not_count_if_value_does_not_change(self):
-        self.w.update({ 'foo': 'a' }, 999)
-        self.w.update({ 'foo': 'a' }, 999)
-        self.assertEqual(str(self.w), '1')
+        self.w.update({ 'foo': 'a' })
+        self.w.update({ 'foo': 'a' })
+        self.assertEqual(self.w.render(0), '1')
 

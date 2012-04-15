@@ -18,37 +18,39 @@ class Widget(object):
 
     '''Base class for ttystatus widgets.
     
-    Widgets are responsible for formatting part of the output. They
-    get a value or values either directly from the user, or from the
-    master TerminalStatus widget. They return the formatted string
-    via __str__.
+    Widgets display stuff on screen. The value may depend on data provided
+    by the user (at creation time), or may be computed from one or more
+    values in the TerminalStatus object to which the widget object belongs.
     
-    A widget's value may be derived from values stored in the TerminalStatus
-    widget (called master). Each such value has a key. Computing a widget's
-    value is a two-step process: when the values associated with keys
-    are updated, the widget's update() method is called to notify it of
-    this. update() may compute intermediate values, such as maintain a
-    counter of the number of changes. It should avoid costly operations
-    that are only needed when the widget's formatted value is needed.
-    Those should go into the format() method instead. Thus, update() would
-    update a counter, format() would create a string representing the
-    counter.
+    There are two steps:
     
-    This is necessary because actual on-screen updates only happen
-    every so often, not every time a value in the master changes, and
-    often the string formatting part is expensive.
-    
-    Widgets must have an attribute 'interesting_keys', listing the
-    keys it is interested in.
-    
+    * the widget `update` method is called by TerminalStatus whenever
+      any of the values change
+    * the widget `render` method is called by TerminalStatus when it is
+      time to display things
+      
+    Widgets may have a static size, or their size may vary. The
+    ``static_width`` property reveals this. This affects rendering:
+    static sized widgets are rendered at their one static size; variable
+    sized widgets are shrunk, if necessary, to make everything fit into
+    the available space. If it's not possible to shrink enough, widgets
+    are rendered from beginning until the space is full: variable sized
+    widgets are rendered as small as possible in this case.
+
     '''
-
+    
+    static_width = True
+    
     def __str__(self):
-        '''Return current value to be displayed for this widget.'''
-        return self.format()
-
-    def format(self):
+        raise NotImplementedError()
+    
+    def render(self, width):
         '''Format the current value.
+
+        ``width`` is the available width for the widget. It need not use
+        all of it. If it's not possible for the widget to render itself
+        small enough to fit into the given width, it may return a larger
+        string, but the caller will probably truncate it.
         
         This will be called only when the value actually needs to be
         formatted.
@@ -57,11 +59,6 @@ class Widget(object):
         
         return ''
 
-    def update(self, master, width):
-        '''Update displayed value for widget, from values in master.
-        
-        'width' gives the width for which the widget should aim to fit.
-        It is OK if it does not: for some widgets there is no way to
-        adjust to a smaller size.
-        
-        '''
+    def update(self, terminal_status):
+        '''React to changes in values stored in a TerminalStatus.'''
+

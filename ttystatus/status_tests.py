@@ -63,22 +63,6 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts.add(w)
         self.assertEqual(self.ts._widgets, [w])
         
-    def test_adds_widget_as_interested_in_keys(self):
-        class W(ttystatus.Widget):
-            def __init__(self):
-                self.interesting_keys = ['foo']
-        w = W()
-        self.ts.add(w)
-        self.assert_(w in self.ts._interests['foo'])
-
-    def test_adds_widget_to_wildcards(self):
-        class W(ttystatus.Widget):
-            def __init__(self):
-                self.interesting_keys = None
-        w = W()
-        self.ts.add(w)
-        self.assert_(w in self.ts._wildcards)
-
     def test_adds_widgets_from_format_string(self):
         self.ts.format('hello, %String(name)')
         self.assertEqual(len(self.ts._widgets), 2)
@@ -110,9 +94,9 @@ class TerminalStatusTests(unittest.TestCase):
     def test_updates_widgets_when_value_is_set(self):
         w = ttystatus.String('foo')
         self.ts.add(w)
-        self.assertEqual(str(w), '')
+        self.assertEqual(w.render(0), '')
         self.ts['foo'] = 'bar'
-        self.assertEqual(str(w), 'bar')
+        self.assertEqual(w.render(0), 'bar')
 
     def test_increases_value(self):
         self.ts['foo'] = 10
@@ -137,4 +121,40 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts.disable()
         self.ts.enable()
         self.assert_(self.ts._m.enabled)
+
+    def test_counts_correctly_even_without_rendering(self):
+        w = ttystatus.Counter('value')
+        n = 42
+        self.ts.add(w)
+        for i in range(n):
+            self.ts['value'] = i
+        self.assertEqual(w.render(0), str(n))
+
+    def test_renders_everything_when_there_is_space(self):
+        w1 = ttystatus.Literal('foo')
+        w2 = ttystatus.ProgressBar('done', 'total')
+        self.ts.add(w1)
+        self.ts.add(w2)
+        text = self.ts._render()
+        self.assertEqual(len(text), self.ts._m.width)
+
+    def test_renders_from_beginning_if_there_is_not_enough_space(self):
+        w1 = ttystatus.Literal('foo')
+        w2 = ttystatus.Literal('bar')
+        self.ts.add(w1)
+        self.ts.add(w2)
+        self.ts._m.width = 4
+        text = self.ts._render()
+        self.assertEqual(text, 'foob')
+
+    def test_renders_variable_size_width_according_to_space_keep_static(self):
+        w1 = ttystatus.Literal('foo')
+        w2 = ttystatus.ProgressBar('done', 'total')
+        w3 = ttystatus.Literal('bar')
+        self.ts.add(w1)
+        self.ts.add(w2)
+        self.ts.add(w3)
+        self.ts._m.width = 9
+        text = self.ts._render()
+        self.assertEqual(text, 'foo---bar')
 

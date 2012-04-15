@@ -21,17 +21,18 @@ class Integer(ttystatus.Widget):
 
     '''Display a value as an integer.'''
     
+    static_width = False
+
     def __init__(self, key):
         self._key = key
-        self.interesting_keys = [key]
-        self.value = '#'
+        self.value = None
 
-    def format(self):
-        return self.value
-        
-    def update(self, master, width):
+    def render(self, width):
         try:
-            self.value = str(int(master[self._key]))
-        except ValueError:
-            self.value = '#'
+            return str(int(self.value))
+        except (TypeError, ValueError):
+            return '#'
+        
+    def update(self, master):
+        self.value = master[self._key]
 

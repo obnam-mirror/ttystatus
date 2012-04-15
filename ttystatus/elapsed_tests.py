@@ -24,18 +24,21 @@ class ElapsedtimeTests(unittest.TestCase):
     def setUp(self):
         self.w = ttystatus.ElapsedTime()
 
+    def test_is_static_width(self):
+        self.assertTrue(self.w.static_width)
+
     def test_shows_zero_initially(self):
-        self.assertEqual(str(self.w), '00h00m00s')
+        self.assertEqual(self.w.render(0), '00h00m00s')
 
     def test_shows_zero_after_first_update(self):
         self.w.get_time = lambda: 1
-        self.w.update({}, 999)
-        self.assertEqual(str(self.w), '00h00m00s')
+        self.w.update({})
+        self.assertEqual(self.w.render(0), '00h00m00s')
 
     def test_shows_one_one_one_after_second_update(self):
         self.w.get_time = lambda: 0
-        self.w.update({}, 999)
+        self.w.update({})
         self.w.get_time = lambda: 60*60 + 60 + 1
-        self.w.update({}, 999)
-        self.assertEqual(str(self.w), '01h01m01s')
+        self.w.update({})
+        self.assertEqual(self.w.render(0), '01h01m01s')
 

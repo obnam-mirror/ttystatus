@@ -21,16 +21,17 @@ class Counter(ttystatus.Widget):
 
     '''Display a count of how many times a value has changed.'''
     
+    static_width = False
+
     def __init__(self, name):
         self.name = name
         self.prev = None
         self.count = 0
-        self.interesting_keys = [name]
 
-    def format(self):
+    def render(self, width):
         return str(self.count)
         
-    def update(self, master, width):
+    def update(self, master):
         if master[self.name] != self.prev:
             self.prev = master[self.name]
             self.count += 1

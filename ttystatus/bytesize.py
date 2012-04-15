@@ -20,13 +20,17 @@ import ttystatus
 class ByteSize(ttystatus.Widget):
 
     '''Display data size in bytes, KiB, etc.'''
+
+    static_width = False
     
     def __init__(self, name):
         self.name = name
-        self.interesting_keys = [name]
         self._bytes = 0
+
+    def update(self, ts):
+        self._bytes = ts[self.name]
         
-    def format(self):
+    def render(self, width):
         units = (
             (1024**4, 2, 'TiB'),
             (1024**3, 2, 'GiB'),
@@ -40,6 +44,4 @@ class ByteSize(ttystatus.Widget):
                                     float(self._bytes) / float(factor), 
                                     unit)
         return '%d B' % self._bytes
-        
-    def update(self, master, width):
-        self._bytes = master[self.name]
+

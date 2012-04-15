@@ -24,14 +24,17 @@ class IntegerTests(unittest.TestCase):
     def setUp(self):
         self.w = ttystatus.Integer('foo')
 
+    def test_is_not_static_width(self):
+        self.assertFalse(self.w.static_width)
+
     def test_is_error_initially(self):
-        self.assertEqual(str(self.w), '#')
+        self.assertEqual(self.w.render(0), '#')
         
     def test_updates(self):
-        self.w.update({'foo': 123}, 999)
-        self.assertEqual(str(self.w), '123')
+        self.w.update({'foo': 123})
+        self.assertEqual(self.w.render(0), '123')
         
     def test_becomes_error_symbol_if_value_is_not_integer(self):
-        self.w.update({'foo': 'bar'}, 999)
-        self.assertEqual(str(self.w), '#')
+        self.w.update({'foo': 'bar'})
+        self.assertEqual(self.w.render(0), '#')
 

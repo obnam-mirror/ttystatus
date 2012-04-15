@@ -20,16 +20,16 @@ import ttystatus
 class ProgressBar(ttystatus.Widget):
 
     '''Display a progress bar.'''
+
+    static_width = False
     
     def __init__(self, done_name, total_name):
         self.done_name = done_name
         self.total_name = total_name
-        self.interesting_keys = [done_name, total_name]
         self.done = 0
         self.total = 1
-        self.width = 0
 
-    def format(self):
+    def render(self, width):
         try:
             done = float(self.done)
             total = float(self.total)
@@ -40,12 +40,10 @@ class ProgressBar(ttystatus.Widget):
             fraction = 0
         else:
             fraction = done / total
-        n_stars = int(round(fraction * self.width))
-        n_dashes = int(self.width - n_stars)
+        n_stars = int(round(fraction * width))
+        n_dashes = int(width - n_stars)
         return ('#' * n_stars) + ('-' * n_dashes)
         
-    def update(self, master, width):
+    def update(self, master):
         self.done = master[self.done_name]
         self.total = master[self.total_name]
-        self.width = width
-

@@ -39,11 +39,6 @@ class TerminalStatus(object):
     def add(self, widget):
         '''Add a new widget to the status display.'''
         self._widgets.append(widget)
-        if widget.interesting_keys is None:
-            self._wildcards += [widget]
-        else:
-            for key in widget.interesting_keys:
-                self._interests[key] = self._interests.get(key, []) + [widget]
 
     def format(self, format_string):
         '''Add new widgets based on format string.
@@ -61,9 +56,6 @@ class TerminalStatus(object):
         '''Remove all widgets.'''
         self._widgets = []
         self._values = dict()
-        self._interests = dict()
-        self._wildcards = list()
-        self._latest_width = None
         self._m.clear()
 
     def __getitem__(self, key):
@@ -77,17 +69,34 @@ class TerminalStatus(object):
     def __setitem__(self, key, value):
         '''Set value for key.'''
         self._values[key] = value
-        if self._m.time_to_write():
-            self._format()
-
-    def _format(self):
-        '''Format and output all widgets.'''
-        width = self._m.width
         for w in self._widgets:
-            w.update(self, width)
-            width -= len(str(w))
-        self._m.write(''.join(str(w) for w in self._widgets))
-    
+            w.update(self)
+        if self._m.time_to_write():
+            self._write()
+
+    def _render(self):
+        '''Render current state of all widgets.'''
+        
+        remaining = self._m.width
+
+        texts = [None] * len(self._widgets)
+
+        for i, w in enumerate(self._widgets):
+            if w.static_width:
+                texts[i] = w.render(0)
+                remaining -= len(texts[i])
+                
+        for i, w in enumerate(self._widgets):
+            if not w.static_width:
+                texts[i] = w.render(remaining)
+                remaining -= len(texts[i])
+
+        return (''.join(texts))[:self._m.width]
+
+    def _write(self):
+        '''Render and output current state of all widgets.'''
+        self._m.write(self._render())
+
     def increase(self, key, delta):
         '''Increase value for a key by a given amount.'''
         self[key] = (self[key] or 0) + delta
@@ -102,7 +111,7 @@ class TerminalStatus(object):
     
     def finish(self):
         '''Finish status display.'''
-        self._format()
+        self._write()
         self._m.finish()
         
     def disable(self):

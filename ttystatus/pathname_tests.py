@@ -24,30 +24,21 @@ class PathnameTests(unittest.TestCase):
     def setUp(self):
         self.w = ttystatus.Pathname('foo')
 
+    def test_is_not_static_width(self):
+        self.assertFalse(self.w.static_width)
+
     def test_is_empty_initially(self):
-        self.assertEqual(str(self.w), '')
+        self.assertEqual(self.w.render(10), '')
         
     def test_updates(self):
-        self.w.update({'foo': 'bar'}, 999)
-        self.assertEqual(str(self.w), 'bar')
+        self.w.update({'foo': 'bar'})
+        self.assertEqual(self.w.render(10), 'bar')
 
     def test_handles_update_to_other_value(self):
-        self.w.update({'other': 1}, 999)
-        self.assertEqual(str(self.w), '')
-        
+        self.w.update({'other': 1})
+        self.assertEqual(self.w.render(10), '')
+
     def test_truncates_from_beginning(self):
-        self.w.update({'foo': 'foobar'}, 5)
-        self.assertEqual(str(self.w), '...ar')
-        
-    def test_does_not_truncate_for_exact_fit(self):
-        self.w.update({'foo': 'foobar'}, 6)
-        self.assertEqual(str(self.w), 'foobar')
-        
-    def test_does_not_add_ellipsis_if_it_will_not_fit(self):
-        self.w.update({'foo': 'foobar'}, 3)
-        self.assertEqual(str(self.w), 'bar')
-        
-    def test_adds_ellipsis_if_it_just_fits(self):
-        self.w.update({'foo': 'foobar'}, 4)
-        self.assertEqual(str(self.w), '...r')
+        self.w.update({'foo': '/this/is/a/path'})
+        self.assertEqual(self.w.render(6), 'a/path')
 
