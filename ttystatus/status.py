@@ -69,13 +69,13 @@ class TerminalStatus(object):
     def __setitem__(self, key, value):
         '''Set value for key.'''
         self._values[key] = value
+        for w in self._widgets:
+            w.update(self)
         if self._m.time_to_write():
             self._format()
 
     def _format(self):
         '''Format and output all widgets.'''
-        for w in self._widgets:
-            w.update(self)
         self._m.write(''.join(str(w) for w in self._widgets))
     
     def increase(self, key, delta):
