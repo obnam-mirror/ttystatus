@@ -23,7 +23,6 @@ class Literal(ttystatus.Widget):
     
     def __init__(self, string):
         self.value = string
-        self.interesting_keys = []
 
-    def format(self):
+    def __str__(self):
         return self.value

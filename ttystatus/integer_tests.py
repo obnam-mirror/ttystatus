@@ -28,10 +28,10 @@ class IntegerTests(unittest.TestCase):
         self.assertEqual(str(self.w), '#')
         
     def test_updates(self):
-        self.w.update({'foo': 123}, 999)
+        self.w.update({'foo': 123})
         self.assertEqual(str(self.w), '123')
         
     def test_becomes_error_symbol_if_value_is_not_integer(self):
-        self.w.update({'foo': 'bar'}, 999)
+        self.w.update({'foo': 'bar'})
         self.assertEqual(str(self.w), '#')
 

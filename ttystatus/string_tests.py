@@ -28,9 +28,9 @@ class StringTests(unittest.TestCase):
         self.assertEqual(str(self.s), '')
         
     def test_updates(self):
-        self.s.update({'foo': 'bar'}, 999)
+        self.s.update({'foo': 'bar'})
         self.assertEqual(str(self.s), 'bar')
         
     def test_handles_non_string_value(self):
-        self.s.update({'foo': 123}, 999)
+        self.s.update({'foo': 123})
         self.assertEqual(str(self.s), '123')

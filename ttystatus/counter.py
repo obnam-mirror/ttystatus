@@ -25,12 +25,11 @@ class Counter(ttystatus.Widget):
         self.name = name
         self.prev = None
         self.count = 0
-        self.interesting_keys = [name]
 
-    def format(self):
+    def __str__(self):
         return str(self.count)
         
-    def update(self, master, width):
+    def update(self, master):
         if master[self.name] != self.prev:
             self.prev = master[self.name]
             self.count += 1

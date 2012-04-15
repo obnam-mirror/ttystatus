@@ -21,15 +21,14 @@ class ProgressBar(ttystatus.Widget):
 
     '''Display a progress bar.'''
     
-    def __init__(self, done_name, total_name):
+    def __init__(self, done_name, total_name, width):
         self.done_name = done_name
         self.total_name = total_name
-        self.interesting_keys = [done_name, total_name]
         self.done = 0
         self.total = 1
-        self.width = 0
+        self.width = width
 
-    def format(self):
+    def __str__(self):
         try:
             done = float(self.done)
             total = float(self.total)
@@ -44,8 +43,6 @@ class ProgressBar(ttystatus.Widget):
         n_dashes = int(self.width - n_stars)
         return ('#' * n_stars) + ('-' * n_dashes)
         
-    def update(self, master, width):
+    def update(self, master):
         self.done = master[self.done_name]
         self.total = master[self.total_name]
-        self.width = width
-

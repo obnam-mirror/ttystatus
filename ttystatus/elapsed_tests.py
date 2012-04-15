@@ -29,13 +29,13 @@ class ElapsedtimeTests(unittest.TestCase):
 
     def test_shows_zero_after_first_update(self):
         self.w.get_time = lambda: 1
-        self.w.update({}, 999)
+        self.w.update({})
         self.assertEqual(str(self.w), '00h00m00s')
 
     def test_shows_one_one_one_after_second_update(self):
         self.w.get_time = lambda: 0
-        self.w.update({}, 999)
+        self.w.update({})
         self.w.get_time = lambda: 60*60 + 60 + 1
-        self.w.update({}, 999)
+        self.w.update({})
         self.assertEqual(str(self.w), '01h01m01s')
 

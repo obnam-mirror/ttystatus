@@ -25,7 +25,6 @@ class ByteSpeed(ttystatus.Widget):
     
     def __init__(self, name):
         self.name = name
-        self.interesting_keys = [name]
         self._bytes = 0
         self._started = None
         
@@ -34,7 +33,7 @@ class ByteSpeed(ttystatus.Widget):
         
         return time.time()
         
-    def format(self):
+    def __str__(self):
         units = (
             (1024**4, 2, 'TiB/s'),
             (1024**3, 2, 'GiB/s'),
@@ -55,7 +54,7 @@ class ByteSpeed(ttystatus.Widget):
                                     unit)
         return '%.0f B/s' % speed
         
-    def update(self, master, width):
+    def update(self, master):
         if self._started is None:
             self._started = self.now()
         self._bytes = master[self.name]

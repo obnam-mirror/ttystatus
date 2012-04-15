@@ -28,27 +28,27 @@ class ByteSpeedTests(unittest.TestCase):
         self.assertEqual(str(self.w), '0 B/s')
 
     def test_formats_zero_bytes_correctly(self):
-        self.w.update({ 'foo': 0 }, 999)
+        self.w.update({ 'foo': 0 })
         self.assertEqual(str(self.w), '0 B/s')
 
     def test_formats_one_byte_per_second_correctly(self):
         self.w.now = lambda: 1
-        self.w.update({ 'foo': 0 }, 999)
+        self.w.update({ 'foo': 0 })
         self.w.now = lambda: 2
-        self.w.update({ 'foo': 1 }, 999)
+        self.w.update({ 'foo': 1 })
         self.assertEqual(str(self.w), '1 B/s')
 
     def test_formats_ten_bytes_per_second_correctly(self):
         self.w.now = lambda: 1
-        self.w.update({ 'foo': 0 }, 999)
+        self.w.update({ 'foo': 0 })
         self.w.now = lambda: 11
-        self.w.update({ 'foo': 100 }, 999)
+        self.w.update({ 'foo': 100 })
         self.assertEqual(str(self.w), '10 B/s')
 
     def test_formats_ten_tibs_per_second_correctly(self):
         self.w.now = lambda: 1
-        self.w.update({ 'foo': 0 }, 999)
+        self.w.update({ 'foo': 0 })
         self.w.now = lambda: 2
-        self.w.update({ 'foo': 10 * 1024**4 }, 999)
+        self.w.update({ 'foo': 10 * 1024**4 })
         self.assertEqual(str(self.w), '10.00 TiB/s')
 

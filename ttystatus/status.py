@@ -39,11 +39,6 @@ class TerminalStatus(object):
     def add(self, widget):
         '''Add a new widget to the status display.'''
         self._widgets.append(widget)
-        if widget.interesting_keys is None:
-            self._wildcards += [widget]
-        else:
-            for key in widget.interesting_keys:
-                self._interests[key] = self._interests.get(key, []) + [widget]
 
     def format(self, format_string):
         '''Add new widgets based on format string.
@@ -61,9 +56,6 @@ class TerminalStatus(object):
         '''Remove all widgets.'''
         self._widgets = []
         self._values = dict()
-        self._interests = dict()
-        self._wildcards = list()
-        self._latest_width = None
         self._m.clear()
 
     def __getitem__(self, key):
@@ -82,10 +74,8 @@ class TerminalStatus(object):
 
     def _format(self):
         '''Format and output all widgets.'''
-        width = self._m.width
         for w in self._widgets:
-            w.update(self, width)
-            width -= len(str(w))
+            w.update(self)
         self._m.write(''.join(str(w) for w in self._widgets))
     
     def increase(self, key, delta):

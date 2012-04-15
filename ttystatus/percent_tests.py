@@ -28,14 +28,14 @@ class PercentDoneTests(unittest.TestCase):
         self.assertEqual(str(self.w), '0.0 %')
 
     def test_sets_value(self):
-        self.w.update({ 'done': 50, 'total': 100 }, 999)
+        self.w.update({ 'done': 50, 'total': 100 })
         self.assertEqual(str(self.w), '50.0 %')
 
     def test_handles_empty_strings_as_values(self):
-        self.w.update({ 'done': '', 'total': '' }, 999)
+        self.w.update({ 'done': '', 'total': '' })
         self.assertEqual(str(self.w), '0.0 %')
 
     def test_handles_zero_total(self):
-        self.w.update({ 'done': 0, 'total': 0 }, 999)
+        self.w.update({ 'done': 0, 'total': 0 })
         self.assertEqual(str(self.w), '0.0 %')
 

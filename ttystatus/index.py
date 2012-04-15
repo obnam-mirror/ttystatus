@@ -24,18 +24,17 @@ class Index(ttystatus.Widget):
     def __init__(self, name, listname):
         self.name = name
         self.listname = listname
-        self.interesting_keys = [name, listname]
         self.value = None
         self.listvalue = []
         
-    def format(self):
+    def __str__(self):
         try:
             index = self.listvalue.index(self.value) + 1
         except ValueError:
             index = 0
         return '%d/%d' % (index, len(self.listvalue))
         
-    def update(self, master, width):
+    def update(self, master):
         self.value = master[self.name]
         self.listvalue = master[self.listname]
 

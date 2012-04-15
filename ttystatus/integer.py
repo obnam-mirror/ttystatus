@@ -23,13 +23,12 @@ class Integer(ttystatus.Widget):
     
     def __init__(self, key):
         self._key = key
-        self.interesting_keys = [key]
         self.value = '#'
 
-    def format(self):
+    def __str__(self):
         return self.value
         
-    def update(self, master, width):
+    def update(self, master):
         try:
             self.value = str(int(master[self._key]))
         except ValueError:

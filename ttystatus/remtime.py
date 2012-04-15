@@ -28,7 +28,6 @@ class RemainingTime(ttystatus.Widget):
         self.total_name = total_name
         self.started = None
         self.default = '--h--m--s'
-        self.interesting_keys = [done_name, total_name]
         self.done = 0
         self.total = 1
         
@@ -42,7 +41,7 @@ class RemainingTime(ttystatus.Widget):
         
         return time.time()
         
-    def format(self):
+    def __str__(self):
         if self.started is None:
             self.started = self.get_time()
         duration = self.get_time() - self.started
@@ -58,6 +57,6 @@ class RemainingTime(ttystatus.Widget):
                 return '%02dh%02dm%02ds' % (hours, mins, secs)
         return self.default
             
-    def update(self, master, width):
+    def update(self, master):
         self.done = master[self.done_name]
         self.total = master[self.total_name]
