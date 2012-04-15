@@ -122,3 +122,11 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts.enable()
         self.assert_(self.ts._m.enabled)
 
+    def test_counts_correctly_even_without_rendering(self):
+        w = ttystatus.Counter('value')
+        n = 42
+        self.ts.add(w)
+        for i in range(n):
+            self.ts['value'] = i
+        self.assertEqual(str(w), str(n))
+
