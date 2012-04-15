@@ -23,14 +23,14 @@ class Integer(ttystatus.Widget):
     
     def __init__(self, key):
         self._key = key
-        self.value = '#'
+        self.value = None
 
     def __str__(self):
-        return self.value
+        try:
+            return str(int(self.value))
+        except (TypeError, ValueError):
+            return '#'
         
     def update(self, master):
-        try:
-            self.value = str(int(master[self._key]))
-        except ValueError:
-            self.value = '#'
+        self.value = master[self._key]
 
