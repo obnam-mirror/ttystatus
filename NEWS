@@ -1,6 +1,13 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.18, released UNRELEASED
+---------------------------------
+
+* `ByteSpeed` can now show average speed over a short period of time
+  (which approximates current speed), instead of over the whole duration 
+  of the program.
+
 Version 0.17, released 2012-04-15
 ---------------------------------
 

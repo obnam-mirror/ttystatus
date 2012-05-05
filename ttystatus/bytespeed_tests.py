@@ -31,6 +31,9 @@ class ByteSpeedTests(unittest.TestCase):
         self.assertEqual(self.w.render(0), '0 B/s')
 
     def test_formats_zero_bytes_correctly(self):
+        self.w.now = lambda: 1
+        self.w.update({ 'foo': 0 })
+        self.w.now = lambda: 2
         self.w.update({ 'foo': 0 })
         self.assertEqual(self.w.render(0), '0 B/s')
 
@@ -54,4 +57,24 @@ class ByteSpeedTests(unittest.TestCase):
         self.w.now = lambda: 2
         self.w.update({ 'foo': 10 * 1024**4 })
         self.assertEqual(self.w.render(0), '10.00 TiB/s')
+
+    def test_keeps_only_two_data_points_with_infinite_duration(self):
+        for when in range(100):
+            self.w.now = lambda: when
+            self.w.update({ 'foo': 0 })
+        self.assertEqual(self.w.render(0), '0 B/s')
+
+    def test_shows_current_speed_when_requested(self):
+        items = [
+            (0, 0),
+            (1, 1024),
+            (10, 1024),
+            (11, 1024),
+        ]
+
+        w = ttystatus.ByteSpeed('foo', duration=5)
+        for when, bytes in items:
+            w.now = lambda: when
+            w.update({ 'foo': bytes })
+        self.assertEqual(w.render(0), '0 B/s')
 

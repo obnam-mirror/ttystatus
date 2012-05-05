@@ -1,4 +1,4 @@
-# Copyright 2010  Lars Wirzenius
+# Copyright 2010, 2012  Lars Wirzenius
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,14 +25,13 @@ class ByteSpeed(ttystatus.Widget):
 
     static_width = False
     
-    def __init__(self, name):
+    def __init__(self, name, duration=None):
         self.name = name
-        self._bytes = 0
-        self._started = None
+        self._duration = None if duration is None else float(duration)
+        self._data_points = []
         
-    def now(self):
+    def now(self): # pragma: no cover
         '''Wrapper around time.time for unit tests to overrride.'''
-        
         return time.time()
         
     def render(self, width):
@@ -43,11 +42,14 @@ class ByteSpeed(ttystatus.Widget):
             (1024**1, 1, 'KiB/s'),
         )
         
-        if self._started is None:
+        if len(self._data_points) < 2:
             return '0 B/s'
         
-        duration = self.now() - self._started
-        speed = self._bytes / duration
+        oldest_bytes, started = self._data_points[0]
+        latest_bytes, dummy = self._data_points[-1]
+        bytes = latest_bytes - oldest_bytes
+        duration = self.now() - started
+        speed = bytes / duration
         
         for factor, decimals, unit in units:
             if speed >= factor:
@@ -57,6 +59,14 @@ class ByteSpeed(ttystatus.Widget):
         return '%.0f B/s' % speed
         
     def update(self, master):
-        if self._started is None:
-            self._started = self.now()
-        self._bytes = master[self.name]
+        bytes = master[self.name]
+        now = self.now()
+        self._data_points.append((bytes, now))
+        if self._duration is None:
+            if len(self._data_points) > 2:
+                del self._data_points[1:-1]
+        else:
+            cutoff = now - self._duration
+            while self._data_points[0][1] < cutoff:
+                del self._data_points[0]
+
