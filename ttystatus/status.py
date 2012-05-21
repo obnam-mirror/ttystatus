@@ -104,7 +104,7 @@ class TerminalStatus(object):
 
     def _write(self):
         '''Render and output current state of all widgets.'''
-        self._m.write(self._render(), force=True)
+        self._m.write(self._render())
 
     def increase(self, key, delta):
         '''Increase value for a key by a given amount.'''

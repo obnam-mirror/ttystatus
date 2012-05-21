@@ -68,17 +68,6 @@ class MessagerTests(unittest.TestCase):
     def test_cached_write_writes_first_thing(self):
         self.messager.write('foo')
         self.assertEqual(self.output.getvalue(), 'foo')
-        
-    def test_cached_write_does_not_writes_first_thing_if_at_epoch(self):
-        self.messager._now = lambda: 0
-        self.messager.write('foo')
-        self.assertEqual(self.output.getvalue(), '')
-        
-    def test_cached_write_writes_once_within_a_second(self):
-        self.messager._now = lambda: self.messager._period + 1
-        self.messager.write('foo')
-        self.messager.write('bar')
-        self.assertEqual(self.output.getvalue(), 'foo')
 
     def test_write_removes_old_message(self):
         self.messager._now = self.fast_time
@@ -110,7 +99,7 @@ class MessagerTests(unittest.TestCase):
         self.messager._now = lambda: 0
         self.messager.write('foo')
         self.messager.finish()
-        self.assertEqual(self.output.getvalue(), 'foo\n')
+        self.assertEqual(self.output.getvalue(), 'foo\r   \rfoo\n')
         
     def test_has_width(self):
         self.assertEqual(self.messager.width, 79)
