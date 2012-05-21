@@ -73,6 +73,15 @@ class TerminalStatus(object):
             w.update(self)
         if self._m.time_to_write():
             self._write()
+            
+    def flush(self):
+        '''Force an update of current state to the screen.
+        
+        This happens even if it is not yet time to output the screen.
+        
+        '''
+        
+        self._write()
 
     def _render(self):
         '''Render current state of all widgets.'''

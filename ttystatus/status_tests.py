@@ -113,6 +113,14 @@ class TerminalStatusTests(unittest.TestCase):
     def test_has_finish_method(self):
         self.assertEqual(self.ts.finish(), None)
 
+    def test_flushes(self):
+        self.ts._m.time_to_write = lambda: False
+        self.ts.format('%String(foo)')
+        self.ts['foo'] = 'foo'
+        self.assertEqual(self.ts._m.written.getvalue(), '')
+        self.ts.flush()
+        self.assertEqual(self.ts._m.written.getvalue(), 'foo')
+
     def test_disable_calls_messager_disable(self):
         self.ts.disable()
         self.assertFalse(self.ts._m.enabled)

@@ -1,6 +1,11 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.19, released UNRELEASED
+---------------------------------
+
+* Added a `TerminalStatus.flush` method, to allow forcing an update.
+
 Version 0.18, released 2012-05-08
 ---------------------------------
 
