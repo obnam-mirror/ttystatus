@@ -116,7 +116,7 @@ class TerminalStatus(object):
 
     def error(self, msg):
         '''Write an error message.'''
-        self._m.notify(msg, sys.stderr)
+        self._m.notify(msg, sys.stderr, force=True)
     
     def finish(self):
         '''Finish status display.'''

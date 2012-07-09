@@ -115,7 +115,7 @@ class Messager(object):
         '''Remove current message from terminal.'''
         self._overwrite('')
         
-    def notify(self, string, f):
+    def notify(self, string, f, force=False):
         '''Show a notification message string to the user.
         
         Notifications are meant for error messages and other things
@@ -128,7 +128,7 @@ class Messager(object):
         
         '''
 
-        if self._enabled:
+        if self._enabled or force:
             old = self._last_msg
             self.clear()
             try:
