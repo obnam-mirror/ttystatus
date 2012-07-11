@@ -37,7 +37,7 @@ class DummyMessager(object):
     def write(self, string):
         self.written.write(string)
         
-    def notify(self, string, f):
+    def notify(self, string, f, force=False):
         pass
         
     def finish(self):
