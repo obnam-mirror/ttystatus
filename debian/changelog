@@ -1,3 +1,9 @@
+python-ttystatus (0.20-1) UNRELEASED; urgency=low
+
+  * New upstream version.
+
+ -- Lars Wirzenius <liw@liw.fi>  Tue, 18 Sep 2012 20:41:55 +0100
+
 python-ttystatus (0.19-1) unstable; urgency=low
 
   * New upstream version.
