@@ -1,7 +1,7 @@
 NEWS file for ttystatus
 =======================
 
-Version 0.20, released 2012-09-22
+Version 0.20, released 2012-09-23
 ---------------------------------
 
 * `TerminalStatus.error` now always outputs. Error messages are too valuable
