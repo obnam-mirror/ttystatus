@@ -25,8 +25,6 @@ Installation
 You will need some other stuff to run automatic tests:
 
 * http://liw.fi/coverage-test-runner/ for unit tests.
-* http://liw.fi/extrautils/ for Debian packaging 
-  (setuppy-debian-versions-match).
 
 
 Hacking
