@@ -13,6 +13,9 @@ set by the user. Every time a value is updated, widgets get updated
 (although the terminal is only updated every so often to give user time
 to actually read the output).
 
+The output from ttystatus goes to the terminal (`/dev/tty`) and is
+restricted to a single line.
+
 See example.py for an example of how to use the library.
 
 
