@@ -82,6 +82,7 @@ class Messager(object):
         self.clear()
         # Get new width.
         self.set_width(self._get_terminal_width())
+        self._overwrite(self._last_msg)
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
