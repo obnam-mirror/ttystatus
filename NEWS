@@ -1,7 +1,7 @@
 NEWS file for ttystatus
 =======================
 
-Version X.Y, released UNRELEASED
+Version 0.22, released 2013-03-12
 ---------------------------------
 
 * When the terminal size changes, ttystatus will now update the display
