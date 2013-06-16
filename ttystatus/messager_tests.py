@@ -30,7 +30,7 @@ class MessagerTests(unittest.TestCase):
 
     def setUp(self):
         self.output = DummyTerminal()
-        self.messager = ttystatus.Messager(output=self.output)
+        self.messager = ttystatus.Messager(output=self.output, fake_width=True)
 
     def fast_time(self):
         return self.messager._last_time + self.messager._period

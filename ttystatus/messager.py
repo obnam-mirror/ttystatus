@@ -15,7 +15,6 @@
 
 
 import fcntl
-import signal
 import struct
 import sys
 import termios
@@ -26,7 +25,8 @@ class Messager(object):
 
     '''Write messages to the terminal.'''
     
-    def __init__(self, output=None, period=None, open_tty=None):
+    def __init__(self, output=None, period=None, open_tty=None,
+                 fake_width=False):
         self._enabled = True
         if output:
             self.output = output
@@ -39,9 +39,8 @@ class Messager(object):
         self._last_msg = '' # What did we write last?
         self._last_time = 0 # When did we write last?
         self._cached_msg = '' # Last message from user, to write() method.
+        self._fake_width = fake_width
         self.set_width(self._get_terminal_width()) # Width of terminal
-        signal.signal(signal.SIGWINCH, self._sigwinch_handler)
-        signal.siginterrupt(signal.SIGWINCH, False)
 
     def _open_tty(self): # pragma: no cover
         return open('/dev/tty', 'w')
@@ -62,8 +61,12 @@ class Messager(object):
         Borrowed and adapted from bzrlib.
         
         '''
-        
+
         default_width = 80
+        if self._fake_width:
+            if hasattr(self, 'width'):
+                return self.width
+            return default_width
         if self.output is None:
             return default_width
         try:
@@ -77,12 +80,14 @@ class Messager(object):
                 return default_width
             raise
 
-    def _sigwinch_handler(self, signum, frame): # pragma: no cover
-        # Clear the terminal from old stuff, using the old width.
-        self.clear()
-        # Get new width.
-        self.set_width(self._get_terminal_width())
-        self._overwrite(self._last_msg)
+    def update_width(self): # pragma: no cover
+        new_width = self._get_terminal_width()
+        if new_width != self.width:
+            # Clear the terminal from old stuff, using the old width.
+            self.clear()
+            # Get new width.
+            self.set_width(new_width)
+            self._overwrite(self._last_msg)
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
@@ -107,6 +112,7 @@ class Messager(object):
             
     def write(self, string):
         '''Write raw data, always.'''
+        self.update_width()
         string = string[:self.width]
         self._overwrite(string)
         self._last_time = self._now()

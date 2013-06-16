@@ -1,6 +1,14 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.23, released UNRELEASED
+---------------------------------
+
+* No longer use the SIGWINCH handler, since that causes problems when
+  applications do certain kinds of I/O and the signal interrupts it.
+  Libraries shouldn't install signal handlers like this. Instead,
+  query the terminal width whenever making updates.
+
 Version 0.22, released 2013-03-12
 ---------------------------------
 
