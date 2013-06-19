@@ -1,7 +1,7 @@
 NEWS file for ttystatus
 =======================
 
-Version 0.23, released UNRELEASED
+Version 0.23, released 2013-06-19
 ---------------------------------
 
 * No longer use the SIGWINCH handler, since that causes problems when
