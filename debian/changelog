@@ -2,6 +2,9 @@ python-ttystatus (0.24-1) UNRELEASED; urgency=low
 
   * New upstream version.
   * debian/control: Make long description longer, more useful.
+  * debian/control: Move Homepage: to source stanza.
+  * debian/control: Update Standards-Version to 3.9.5. No further
+    changes required.
 
  -- Lars Wirzenius <liw@liw.fi>  Tue, 18 Mar 2014 21:46:57 +0000
 

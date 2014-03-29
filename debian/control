@@ -1,8 +1,9 @@
 Source: python-ttystatus
 Maintainer: Lars Wirzenius <liw@liw.fi>
+Homepage: http://liw.fi/ttystatus/
 Section: python
 Priority: optional
-Standards-Version: 3.9.3
+Standards-Version: 3.9.5
 Build-Depends: debhelper (>= 7.3.8), python (>= 2.6.6-3~), 
     python-coverage-test-runner, python-sphinx
 X-Python-Version: >= 2.6
@@ -10,7 +11,6 @@ X-Python-Version: >= 2.6
 Package: python-ttystatus
 Architecture: all
 Depends: ${python:Depends}, ${misc:Depends}, python (>= 2.6)
-Homepage: http://liw.fi/ttystatus/
 Description: terminal progress bar and status output for Python
  ttystatus is a Python library for showing progress reporting and status
  updates on terminals, for (Unix) command line programs. Output is 
