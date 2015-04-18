@@ -5,6 +5,7 @@ check:
 	python -m CoverageTestRunner --ignore-missing-from=without-tests
 	rm .coverage
 	pep8 ttystatus
+	pylint --rcfile=pylint.conf ttystatus
 
 clean:
 	rm -f .coverage ttystatus/*.py[co]
