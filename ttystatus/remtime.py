@@ -1,15 +1,15 @@
 # Copyright 2010  Lars Wirzenius
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -22,7 +22,7 @@ import ttystatus
 class RemainingTime(ttystatus.Widget):
 
     '''Display an estimate of the remaining time.'''
-    
+
     def __init__(self, done_name, total_name):
         self.done_name = done_name
         self.total_name = total_name
@@ -30,17 +30,17 @@ class RemainingTime(ttystatus.Widget):
         self.default = '--h--m--s'
         self.done = 0
         self.total = 1
-        
-    def get_time(self): # pragma: no cover
+
+    def get_time(self):  # pragma: no cover
         '''Return current time.
-        
+
         This is just a wrapper around time.time() so that it is easier
         to override during unit tests.
-        
+
         '''
-        
+
         return time.time()
-        
+
     def render(self, render):
         if self.started is None:
             self.started = self.get_time()
@@ -56,7 +56,7 @@ class RemainingTime(ttystatus.Widget):
                 secs %= 60
                 return '%02dh%02dm%02ds' % (hours, mins, secs)
         return self.default
-            
+
     def update(self, master):
         self.done = master[self.done_name]
         self.total = master[self.total_name]
