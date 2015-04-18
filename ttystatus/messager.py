@@ -16,7 +16,6 @@
 
 import fcntl
 import struct
-import sys
 import termios
 import time
 

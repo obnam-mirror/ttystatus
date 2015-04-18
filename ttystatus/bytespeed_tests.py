@@ -73,7 +73,7 @@ class ByteSpeedTests(unittest.TestCase):
         ]
 
         w = ttystatus.ByteSpeed('foo', duration=5)
-        for when, bytes in items:
+        for when, num_bytes in items:
             w.now = lambda: when
-            w.update({'foo': bytes})
+            w.update({'foo': num_bytes})
         self.assertEqual(w.render(0), '0 B/s')

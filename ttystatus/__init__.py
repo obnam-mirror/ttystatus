@@ -16,23 +16,23 @@
 
 __version__ = '0.23'
 
-from messager import Messager
-from status import TerminalStatus
-from widget import Widget
+from .messager import Messager
+from .status import TerminalStatus
+from .widget import Widget
 
-from literal import Literal
-from string import String
-from integer import Integer
-from pathname import Pathname
-from bytesize import ByteSize
-from counter import Counter
-from index import Index
-from percent import PercentDone
-from progressbar import ProgressBar
-from remtime import RemainingTime
-from elapsed import ElapsedTime
-from bytespeed import ByteSpeed
+from .literal import Literal
+from .string import String
+from .integer import Integer
+from .pathname import Pathname
+from .bytesize import ByteSize
+from .counter import Counter
+from .index import Index
+from .percent import PercentDone
+from .progressbar import ProgressBar
+from .remtime import RemainingTime
+from .elapsed import ElapsedTime
+from .bytespeed import ByteSpeed
 
-import fmt
+from .fmt import parse
 
 __all__ = locals()

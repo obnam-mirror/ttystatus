@@ -47,9 +47,9 @@ class ByteSpeed(ttystatus.Widget):
 
         oldest_bytes, started = self._data_points[0]
         latest_bytes, dummy = self._data_points[-1]
-        bytes = latest_bytes - oldest_bytes
+        num_bytes = latest_bytes - oldest_bytes
         duration = self.now() - started
-        speed = bytes / duration
+        speed = num_bytes / duration
 
         for factor, decimals, unit in units:
             if speed >= factor:
@@ -59,9 +59,9 @@ class ByteSpeed(ttystatus.Widget):
         return '%.0f B/s' % speed
 
     def update(self, master):
-        bytes = master[self.name]
+        num_bytes = master[self.name]
         now = self.now()
-        self._data_points.append((bytes, now))
+        self._data_points.append((num_bytes, now))
         if self._duration is None:
             if len(self._data_points) > 2:
                 del self._data_points[1:-1]

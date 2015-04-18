@@ -41,9 +41,6 @@ class Widget(object):
 
     static_width = True
 
-    def __str__(self):
-        raise NotImplementedError()
-
     def render(self, width):
         '''Format the current value.
 

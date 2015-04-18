@@ -24,8 +24,8 @@ def _find_widgets():
     names = dir(ttystatus)
     objs = [getattr(ttystatus, x) for x in names]
     classes = [o for o in objs if inspect.isclass(o)]
-    widgets = [c for c in classes if issubclass(c, ttystatus.Widget)]
-    subclasses = [w for w in widgets if w != ttystatus.Widget]
+    widget_classes = [c for c in classes if issubclass(c, ttystatus.Widget)]
+    subclasses = [w for w in widget_classes if w != ttystatus.Widget]
     return subclasses
 
 widgets = _find_widgets()

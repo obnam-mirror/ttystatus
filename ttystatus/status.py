@@ -49,7 +49,7 @@ class TerminalStatus(object):
         ``format("hello, %String(name)")``.
 
         '''
-        for widget in ttystatus.fmt.parse(format_string):
+        for widget in ttystatus.parse(format_string):
             self.add(widget)
 
     def clear(self):
