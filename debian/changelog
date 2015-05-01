@@ -5,6 +5,7 @@ python-ttystatus (0.24-1) UNRELEASED; urgency=low
   * debian/control: Move Homepage: to source stanza.
   * debian/control: Update Standards-Version to 3.9.5. No further
     changes required.
+  * Add build-dependency on pep8 and pylint.
 
  -- Lars Wirzenius <liw@liw.fi>  Tue, 18 Mar 2014 21:46:57 +0000
 
