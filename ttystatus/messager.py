@@ -61,23 +61,21 @@ class Messager(object):
 
         '''
 
-        default_width = 80
+        width = 80
         if self._fake_width:
             if hasattr(self, 'width'):
-                return self.width
-            return default_width
-        if self.output is None:
-            return default_width
-        try:
-            s = struct.pack('HHHH', 0, 0, 0, 0)
-            x = fcntl.ioctl(self.output.fileno(), termios.TIOCGWINSZ, s)
-            return struct.unpack('HHHH', x)[1]
-        except IOError:
-            return default_width
-        except AttributeError:
-            if not hasattr(self.output, 'fileno'):
-                return default_width
-            raise
+                width = self.width
+        elif self.output is not None:
+            # StringIO might not have fileno. We use StringIO for tests.
+            fileno = getattr(self.output, 'fileno', None)
+            if fileno is not None:
+                try:
+                    s = struct.pack('HHHH', 0, 0, 0, 0)
+                    x = fcntl.ioctl(fileno(), termios.TIOCGWINSZ, s)
+                    width = struct.unpack('HHHH', x)[1]
+                except IOError:
+                    pass
+        return width
 
     def update_width(self):  # pragma: no cover
         new_width = self._get_terminal_width()
