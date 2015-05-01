@@ -5,7 +5,10 @@ check:
 	python -m CoverageTestRunner --ignore-missing-from=without-tests
 	rm .coverage
 	pep8 ttystatus
-	pylint --rcfile=pylint.conf ttystatus
+	if command -v pylint && pylint --version | grep '^pylint [1-9]'; \
+        then \
+		PYTHONPATH=. pylint --rcfile=pylint.conf ttystatus; \
+        fi
 
 clean:
 	rm -f .coverage ttystatus/*.py[co]
