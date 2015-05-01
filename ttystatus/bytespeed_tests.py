@@ -55,7 +55,7 @@ class ByteSpeedTests(unittest.TestCase):
         self.w.now = lambda: 1
         self.w.update({'foo': 0})
         self.w.now = lambda: 2
-        self.w.update({'foo': 10 * 1024**4})
+        self.w.update({'foo': 10 * 1024 ** 4})
         self.assertEqual(self.w.render(0), '10.00 TiB/s')
 
     def test_keeps_only_two_data_points_with_infinite_duration(self):

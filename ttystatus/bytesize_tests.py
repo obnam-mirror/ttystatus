@@ -47,13 +47,13 @@ class ByteSizeTests(unittest.TestCase):
         self.assertEqual(self.w.render(0), '1.0 KiB')
 
     def test_formats_1_MiB_bytes_correctly(self):
-        self.w.update({'foo': 1024**2})
+        self.w.update({'foo': 1024 ** 2})
         self.assertEqual(self.w.render(0), '1.00 MiB')
 
     def test_formats_1_GiB_bytes_correctly(self):
-        self.w.update({'foo': 1024**3})
+        self.w.update({'foo': 1024 ** 3})
         self.assertEqual(self.w.render(0), '1.00 GiB')
 
     def test_formats_1_TiB_bytes_correctly(self):
-        self.w.update({'foo': 1024**4})
+        self.w.update({'foo': 1024 ** 4})
         self.assertEqual(self.w.render(0), '1.00 TiB')

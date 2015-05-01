@@ -61,8 +61,8 @@ class MessagerTests(unittest.TestCase):
         self.assertFalse(self.messager.time_to_write())
 
     def test_knows_it_is_time_to_write_after_a_period(self):
-        self.messager._last_time = (self.messager._now() -
-                                    self.messager._period*2)
+        self.messager._last_time = (
+            self.messager._now() - self.messager._period * 2)
         self.assert_(self.messager.time_to_write())
 
     def test_cached_write_writes_first_thing(self):

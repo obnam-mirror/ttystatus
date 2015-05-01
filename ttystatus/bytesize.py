@@ -32,10 +32,10 @@ class ByteSize(ttystatus.Widget):
 
     def render(self, width):
         units = (
-            (1024**4, 2, 'TiB'),
-            (1024**3, 2, 'GiB'),
-            (1024**2, 2, 'MiB'),
-            (1024**1, 1, 'KiB'),
+            (1024 ** 4, 2, 'TiB'),
+            (1024 ** 3, 2, 'GiB'),
+            (1024 ** 2, 2, 'MiB'),
+            (1024 ** 1, 1, 'KiB'),
         )
 
         for factor, decimals, unit in units:
