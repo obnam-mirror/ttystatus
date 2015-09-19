@@ -13,9 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-__version__ = '0.23'
-
 from .messager import Messager
 from .status import TerminalStatus
 from .widget import Widget
@@ -34,5 +31,9 @@ from .elapsed import ElapsedTime
 from .bytespeed import ByteSpeed
 
 from .fmt import parse
+
+
+__version__ = '0.23'
+
 
 __all__ = locals()
