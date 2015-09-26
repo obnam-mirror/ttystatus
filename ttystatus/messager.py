@@ -109,17 +109,22 @@ class Messager(object):
             self._first_output = False
 
         if rows:
+            up = curses.tparm(curses.tigetstr('cuu'), 1)
+            down = curses.tparm(curses.tigetstr('cud'), 1)
+            cr = curses.tigetstr('cr')
+            el = curses.tigetstr('el')
+
             raw_parts.extend([
-                curses.tparm(curses.tigetstr('cuu'), len(rows) - 1),  # go up
-                curses.tigetstr('cr'),  # beginning of line
-                curses.tigetstr('el'),  # erase to end of line
+                up * (len(rows) - 1),
+                cr,
+                el,
                 rows[0][:self.width],
             ])
             for row in rows[1:]:
                 raw_parts.extend([
-                    curses.tparm(curses.tigetstr('cud'), 1),  # down one line
-                    curses.tigetstr('cr'),  # beginning of line
-                    curses.tigetstr('el'),  # erase to end of line
+                    down,
+                    cr,
+                    el,
                     row[:self.width],
                 ])
 
@@ -131,24 +136,32 @@ class Messager(object):
     def clear(self):
         '''Remove current message from terminal.'''
 
+        if self._first_output:
+            return
+
         rows = self._cached_msg.split('\n')
 
         raw_parts = []
 
         if rows:
+            up = curses.tparm(curses.tigetstr('cuu'), 1)
+            down = curses.tparm(curses.tigetstr('cud'), 1)
+            cr = curses.tigetstr('cr')
+            el = curses.tigetstr('el')
+
             raw_parts.extend([
-                curses.tparm(curses.tigetstr('cuu'), len(rows) - 1),  # go up
-                curses.tigetstr('cr'),  # beginning of line
-                curses.tigetstr('el'),  # erase to end of line
+                up * (len(rows) - 1),
+                cr,
+                el,
             ])
             for row in rows[1:]:
                 raw_parts.extend([
-                    curses.tparm(curses.tigetstr('cud'), 1),  # down one line
-                    curses.tigetstr('cr'),  # beginning of line
-                    curses.tigetstr('el'),  # erase to end of line
+                    down,
+                    cr,
+                    el,
                 ])
             raw_parts.extend([
-                curses.tparm(curses.tigetstr('cuu'), len(rows) - 1),  # go up
+                up * (len(rows) - 1),
             ])
 
         raw = ''.join(raw_parts)
