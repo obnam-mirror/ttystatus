@@ -49,8 +49,6 @@ def main():
                     data = f.read(num_bytes)
                     checksum.update(data)
                     ts['bytes-read'] += len(data)
-                if checksum.hexdigest().startswith('0'):
-                    ts.notify('%s %s' % (checksum.hexdigest(), filename))
         
     ts.finish()
 
