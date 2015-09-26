@@ -38,7 +38,11 @@ class TerminalStatus(object):
 
     def add(self, widget):
         '''Add a new widget to the status display.'''
-        self._widgets.append(widget)
+        self._widget_rows[-1].append(widget)
+
+    def start_new_line(self):
+        '''Start a new line of widgets.'''
+        self._widget_rows.append([])
 
     def format(self, format_string):
         '''Add new widgets based on format string.
@@ -49,12 +53,16 @@ class TerminalStatus(object):
         ``format("hello, %String(name)")``.
 
         '''
-        for widget in ttystatus.parse(format_string):
-            self.add(widget)
+
+        for i, line in enumerate(format_string.split('\n')):
+            if i > 0:
+                self.start_new_line()
+            for widget in ttystatus.parse(line):
+                self.add(widget)
 
     def clear(self):
         '''Remove all widgets.'''
-        self._widgets = []
+        self._widget_rows = [[]]
         self._values = dict()
         self._m.clear()
 
@@ -69,8 +77,9 @@ class TerminalStatus(object):
     def __setitem__(self, key, value):
         '''Set value for key.'''
         self._values[key] = value
-        for w in self._widgets:
-            w.update(self)
+        for row in self._widget_rows:
+            for w in row:
+                w.update(self)
         if self._m.time_to_write():
             self._write()
 
@@ -86,16 +95,19 @@ class TerminalStatus(object):
     def _render(self):
         '''Render current state of all widgets.'''
 
+        return '\n'.join(self._render_row(row) for row in self._widget_rows)
+
+    def _render_row(self, widget_row):
         remaining = self._m.width
 
-        texts = [None] * len(self._widgets)
+        texts = [None] * len(widget_row)
 
-        for i, w in enumerate(self._widgets):
+        for i, w in enumerate(widget_row):
             if w.static_width:
                 texts[i] = w.render(0)
                 remaining -= len(texts[i])
 
-        for i, w in enumerate(self._widgets):
+        for i, w in enumerate(widget_row):
             if not w.static_width:
                 texts[i] = w.render(remaining)
                 remaining -= len(texts[i])

@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import curses
 import fcntl
 import struct
 import termios
@@ -35,14 +36,16 @@ class Messager(object):
             except IOError:
                 self.output = None
         self._period = 1.0 if period is None else period
-        self._last_msg = ''    # What did we write last?
         self._last_time = 0    # When did we write last?
         self._cached_msg = ''  # Last message from user, to write() method.
+        self._first_output = True  # is our next output the first one?
         self._fake_width = fake_width
         self.set_width(self._get_terminal_width())  # Width of terminal
 
     def _open_tty(self):  # pragma: no cover
-        return open('/dev/tty', 'w')
+        f = open('/dev/tty', 'wb')
+        curses.setupterm(None, f.fileno())
+        return f
 
     def set_width(self, actual_width):
         self.width = actual_width - 1
@@ -78,13 +81,7 @@ class Messager(object):
         return width
 
     def update_width(self):  # pragma: no cover
-        new_width = self._get_terminal_width()
-        if new_width != self.width:
-            # Clear the terminal from old stuff, using the old width.
-            self.clear()
-            # Get new width.
-            self.set_width(new_width)
-            self._overwrite(self._last_msg)
+        self.set_width(self._get_terminal_width())
 
     def _raw_write(self, string):
         '''Write raw data if output is terminal.'''
@@ -96,13 +93,6 @@ class Messager(object):
             except IOError:  # pragma: no cover
                 self._enabled = False
 
-    def _overwrite(self, string):
-        '''Overwrite current message on terminal.'''
-        if self._last_msg:
-            self._raw_write('\r' + (' ' * len(self._last_msg)) + '\r')
-        self._raw_write(string)
-        self._last_msg = string
-
     def time_to_write(self):
         '''Is it time to write now?'''
         return self._now() - self._last_time >= self._period
@@ -110,14 +100,59 @@ class Messager(object):
     def write(self, string):
         '''Write raw data, always.'''
         self.update_width()
-        string = string[:self.width]
-        self._overwrite(string)
-        self._last_time = self._now()
+        rows = string.split('\n')
+
+        raw_parts = []
+
+        if self._first_output:
+            raw_parts.append('\n' * (len(rows) - 1))
+            self._first_output = False
+
+        if rows:
+            raw_parts.extend([
+                curses.tparm(curses.tigetstr('cuu'), len(rows) - 1),  # go up
+                curses.tigetstr('cr'),  # beginning of line
+                curses.tigetstr('el'),  # erase to end of line
+                rows[0][:self.width],
+            ])
+            for row in rows[1:]:
+                raw_parts.extend([
+                    curses.tparm(curses.tigetstr('cud'), 1),  # down one line
+                    curses.tigetstr('cr'),  # beginning of line
+                    curses.tigetstr('el'),  # erase to end of line
+                    row[:self.width],
+                ])
+
+        raw = ''.join(raw_parts)
+        self._raw_write(raw)
         self._cached_msg = string
+        self._last_time = self._now()
 
     def clear(self):
         '''Remove current message from terminal.'''
-        self._overwrite('')
+
+        rows = self._cached_msg.split('\n')
+
+        raw_parts = []
+
+        if rows:
+            raw_parts.extend([
+                curses.tparm(curses.tigetstr('cuu'), len(rows) - 1),  # go up
+                curses.tigetstr('cr'),  # beginning of line
+                curses.tigetstr('el'),  # erase to end of line
+            ])
+            for row in rows[1:]:
+                raw_parts.extend([
+                    curses.tparm(curses.tigetstr('cud'), 1),  # down one line
+                    curses.tigetstr('cr'),  # beginning of line
+                    curses.tigetstr('el'),  # erase to end of line
+                ])
+            raw_parts.extend([
+                curses.tparm(curses.tigetstr('cuu'), len(rows) - 1),  # go up
+            ])
+
+        raw = ''.join(raw_parts)
+        self._raw_write(raw)
 
     def notify(self, string, f, force=False):
         '''Show a notification message string to the user.
@@ -133,7 +168,6 @@ class Messager(object):
         '''
 
         if self._enabled or force:
-            old = self._last_msg
             self.clear()
             try:
                 f.write('%s\n' % string)
@@ -141,12 +175,13 @@ class Messager(object):
             except IOError:
                 # We ignore these. No point in crashing if terminal is bad.
                 pass
-            self._overwrite(old)
+            self._first_output = True
+            self.write(self._cached_msg)
 
     def finish(self):
         '''Finalize output.'''
-        if self._last_msg or self._cached_msg:
-            self._overwrite(self._cached_msg)
+        if self._cached_msg:
+            self.write(self._cached_msg)
             self._raw_write('\n')
 
     def disable(self):
