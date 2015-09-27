@@ -56,23 +56,23 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts = ttystatus.TerminalStatus(messager=DummyMessager())
 
     def test_has_no_widgets(self):
-        self.assertEqual(self.ts._widgets, [])
+        self.assertEqual(self.ts.widgets, [])
 
     def test_adds_widget(self):
         w = ttystatus.Literal('foo')
         self.ts.add(w)
-        self.assertEqual(self.ts._widgets, [w])
+        self.assertEqual(self.ts.widgets, [w])
 
     def test_adds_widgets_from_format_string(self):
         self.ts.format('hello, %String(name)')
-        self.assertEqual(len(self.ts._widgets), 2)
-        self.assertEqual(type(self.ts._widgets[0]), ttystatus.Literal)
-        self.assertEqual(type(self.ts._widgets[1]), ttystatus.String)
+        self.assertEqual(len(self.ts.widgets), 2)
+        self.assertEqual(type(self.ts.widgets[0]), ttystatus.Literal)
+        self.assertEqual(type(self.ts.widgets[1]), ttystatus.String)
 
     def test_removes_all_widgets(self):
         self.ts.add(ttystatus.Literal('foo'))
         self.ts.clear()
-        self.assertEqual(self.ts._widgets, [])
+        self.assertEqual(self.ts.widgets, [])
 
     def test_returns_empty_string_for_unknown_value(self):
         self.assertEqual(self.ts['foo'], '')

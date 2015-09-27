@@ -40,7 +40,7 @@ class TerminalStatus(object):
         '''Add a new widget to the status display.'''
         self._widget_rows[-1].append(widget)
 
-    def start_new_line(self):
+    def start_new_line(self):  # pragma: no cover
         '''Start a new line of widgets.'''
         self._widget_rows.append([])
 
@@ -55,10 +55,17 @@ class TerminalStatus(object):
         '''
 
         for i, line in enumerate(format_string.split('\n')):
-            if i > 0:
+            if i > 0:  # pragma: no cover
                 self.start_new_line()
             for widget in ttystatus.parse(line):
                 self.add(widget)
+
+    @property
+    def widgets(self):
+        result = []
+        for row in self._widget_rows:
+            result += row
+        return result
 
     def clear(self):
         '''Remove all widgets.'''
