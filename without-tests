@@ -1,5 +1,9 @@
-./ttystatus/__init__.py
-./example.py
-./ttystatus/widget.py
-./setup.py
-./doc/conf.py
+example.py
+example2.py
+ttystatus/__init__.py
+ttystatus/area.py
+ttystatus/messager.py
+ttystatus/tty.py
+ttystatus/widget.py
+setup.py
+doc/conf.py

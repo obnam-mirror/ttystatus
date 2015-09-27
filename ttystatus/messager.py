@@ -14,162 +14,88 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import curses
-import fcntl
-import struct
-import termios
 import time
+
+import ttystatus
 
 
 class Messager(object):
 
-    '''Write messages to the terminal.'''
+    '''Manages messages to the terminal.
 
-    def __init__(self, output=None, period=None, open_tty=None,
-                 fake_width=False):
-        self._enabled = True
-        if output:
-            self.output = output
-        else:
-            try:
-                self.output = (open_tty or self._open_tty)()
-            except IOError:
-                self.output = None
+    This includes disabling messages, allowing notifications, and
+    becalming the flow of messages to avoid writing too fast. The
+    speed is a performance thing: writing too much message text can
+    slow an application down a lot (too much work for terminal
+    emulators), and doesn't actually help the user in any way.
+
+    '''
+
+    def __init__(self, period=None):
         self._period = 1.0 if period is None else period
-        self._last_time = 0    # When did we write last?
-        self._cached_msg = ''  # Last message from user, to write() method.
-        self._first_output = True  # is our next output the first one?
-        self._fake_width = fake_width
-        self.set_width(self._get_terminal_width())  # Width of terminal
 
-    def _open_tty(self):  # pragma: no cover
-        f = open('/dev/tty', 'wb')
-        curses.setupterm(None, f.fileno())
-        return f
+        self._enabled = True
 
-    def set_width(self, actual_width):
-        self.width = actual_width - 1
+        self._cached_message = None  # The latest message from caller.
+        self._displayed_message = None  # The latest message displayed.
+        self._previous_write_at = 0  # When the latest message was written.
+
+        self._terminal = ttystatus.PhysicalTerminal()
+        try:
+            self._terminal.open_tty()
+        except IOError:
+            self._enabled = False
+
+        self._area = ttystatus.AreaManager()
+        self._area.set_terminal(self._terminal)
+
+    def disable(self):
+        '''Disable all output except notifications.'''
+        self._enabled = False
+
+    def enable(self):
+        '''Enable output to happen.'''
+        self._enabled = True
+
+    def time_to_write(self):
+        '''Is it time to write now?'''
+        return self._now() - self._previous_write_at >= self._period
 
     def _now(self):
         '''Return current time.'''
         # This is a wrapper around time.time(), for testing.
         return time.time()
 
-    def _get_terminal_width(self):  # pragma: no cover
-        '''Return width of terminal in characters.
+    def get_max_line_length(self):
+        return self._area.get_max_line_length()
 
-        If this fails, assume 80.
+    def write(self, message):
+        '''Write message to terminal.
 
-        Borrowed and adapted from bzrlib.
+        Message may be multiple lines.
 
         '''
 
-        width = 80
-        if self._fake_width:
-            if hasattr(self, 'width'):
-                width = self.width
-        elif self.output is not None:
-            # StringIO might not have fileno. We use StringIO for tests.
-            fileno = getattr(self.output, 'fileno', None)
-            if fileno is not None:
-                try:
-                    s = struct.pack('HHHH', 0, 0, 0, 0)
-                    x = fcntl.ioctl(fileno(), termios.TIOCGWINSZ, s)
-                    width = struct.unpack('HHHH', x)[1]
-                except IOError:
-                    pass
-        return width
-
-    def update_width(self):  # pragma: no cover
-        self.set_width(self._get_terminal_width())
-
-    def _raw_write(self, string):
-        '''Write raw data if output is terminal.'''
-
-        if self._enabled and self.output and self.output.isatty():
-            try:
-                self.output.write(string)
-                self.output.flush()
-            except IOError:  # pragma: no cover
-                self._enabled = False
-
-    def time_to_write(self):
-        '''Is it time to write now?'''
-        return self._now() - self._last_time >= self._period
-
-    def write(self, string):
-        '''Write raw data, always.'''
-        if not string:
-            return
-        self.update_width()
-        rows = string.split('\n')
-
-        raw_parts = []
-
-        if self._first_output:
-            raw_parts.append('\n' * (len(rows) - 1))
-            self._first_output = False
-
-        if rows:
-            up = curses.tparm(curses.tigetstr('cuu'), 1)
-            down = curses.tparm(curses.tigetstr('cud'), 1)
-            cr = curses.tigetstr('cr')
-            el = curses.tigetstr('el')
-
-            raw_parts.extend([
-                up * (len(rows) - 1),
-                cr,
-                el,
-                rows[0][:self.width],
-            ])
-            for row in rows[1:]:
-                raw_parts.extend([
-                    down,
-                    cr,
-                    el,
-                    row[:self.width],
-                ])
-
-        raw = ''.join(raw_parts)
-        self._raw_write(raw)
-        self._cached_msg = string
-        self._last_time = self._now()
+        if self._enabled and self.time_to_write():
+            self.clear()
+            num_lines = len(message.split('\n'))
+            self._area.make_space(num_lines)
+            self._area.display(message)
+            self._displayed_message = message
+            self._previous_write_at = self._now()
+        self._cached_message = message
 
     def clear(self):
-        '''Remove current message from terminal.'''
+        '''Remove currently displayed message from terminal, if any.'''
 
-        if self._first_output:
-            return
+        if self._displayed_message is not None:
+            num_lines = len(self._displayed_message.split('\n'))
+            self._area.clear_area(num_lines)
+            self._displayed_message = None
+            self._cached_message = None
+            self._previous_write_at = 0  # Next .write() should display.
 
-        rows = self._cached_msg.split('\n')
-
-        raw_parts = []
-
-        if rows:
-            up = curses.tparm(curses.tigetstr('cuu'), 1)
-            down = curses.tparm(curses.tigetstr('cud'), 1)
-            cr = curses.tigetstr('cr')
-            el = curses.tigetstr('el')
-
-            raw_parts.extend([
-                up * (len(rows) - 1),
-                cr,
-                el,
-            ])
-            for row in rows[1:]:
-                raw_parts.extend([
-                    down,
-                    cr,
-                    el,
-                ])
-            raw_parts.extend([
-                up * (len(rows) - 1),
-            ])
-
-        raw = ''.join(raw_parts)
-        self._raw_write(raw)
-
-    def notify(self, string, f, force=False):
+    def notify(self, message, f, force=False):
         '''Show a notification message string to the user.
 
         Notifications are meant for error messages and other things
@@ -185,24 +111,17 @@ class Messager(object):
         if self._enabled or force:
             self.clear()
             try:
-                f.write('%s\n' % string)
+                f.write(message)
+                f.write('\n')
                 f.flush()
             except IOError:
                 # We ignore these. No point in crashing if terminal is bad.
                 pass
-            self._first_output = True
-            self.write(self._cached_msg)
+            if self._cached_message is not None:
+                self.write(self._cached_message)
 
     def finish(self):
         '''Finalize output.'''
-        if self._cached_msg:
-            self.write(self._cached_msg)
-            self._raw_write('\n')
-
-    def disable(self):
-        '''Disable all output.'''
-        self._enabled = False
-
-    def enable(self):
-        '''Enable output to happen.'''
-        self._enabled = True
+        if self._cached_message is not None:
+            self.write(self._cached_message)
+            self._terminal.write('\n')

@@ -32,16 +32,20 @@ class TerminalStatus(object):
 
     '''
 
-    def __init__(self, output=None, period=None, messager=None):
-        self._m = messager or ttystatus.Messager(output=output, period=period)
+    def __init__(self, period=None, messager=None):
+        self._m = messager or ttystatus.Messager(period=period)
         self.clear()
 
     def add(self, widget):
         '''Add a new widget to the status display.'''
+        if not self._widget_rows:
+            self._widget_rows = [[]]
         self._widget_rows[-1].append(widget)
 
     def start_new_line(self):  # pragma: no cover
         '''Start a new line of widgets.'''
+        if not self._widget_rows:
+            self._widget_rows = [[]]
         self._widget_rows.append([])
 
     def format(self, format_string):
@@ -69,7 +73,7 @@ class TerminalStatus(object):
 
     def clear(self):
         '''Remove all widgets.'''
-        self._widget_rows = [[]]
+        self._widget_rows = []
         self._values = dict()
         self._m.clear()
 
@@ -105,7 +109,8 @@ class TerminalStatus(object):
         return '\n'.join(self._render_row(row) for row in self._widget_rows)
 
     def _render_row(self, widget_row):
-        remaining = self._m.width
+        max_chars = self._m.get_max_line_length()
+        remaining = max_chars
 
         texts = [None] * len(widget_row)
 
@@ -119,7 +124,7 @@ class TerminalStatus(object):
                 texts[i] = w.render(remaining)
                 remaining -= len(texts[i])
 
-        return (''.join(texts))[:self._m.width]
+        return (''.join(texts))[:max_chars]
 
     def _write(self):
         '''Render and output current state of all widgets.'''

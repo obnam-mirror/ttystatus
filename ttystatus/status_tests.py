@@ -22,11 +22,13 @@ import ttystatus
 
 class DummyMessager(object):
 
-    width = 80
-
     def __init__(self):
         self.written = StringIO.StringIO()
         self.enabled = True
+        self.fake_width = 80
+
+    def get_max_line_length(self):
+        return self.fake_width
 
     def clear(self):
         pass
@@ -144,14 +146,14 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts.add(w1)
         self.ts.add(w2)
         text = self.ts._render()
-        self.assertEqual(len(text), self.ts._m.width)
+        self.assertEqual(len(text), self.ts._m.get_max_line_length())
 
     def test_renders_from_beginning_if_there_is_not_enough_space(self):
         w1 = ttystatus.Literal('foo')
         w2 = ttystatus.Literal('bar')
         self.ts.add(w1)
         self.ts.add(w2)
-        self.ts._m.width = 4
+        self.ts._m.fake_width = 4
         text = self.ts._render()
         self.assertEqual(text, 'foob')
 
@@ -162,6 +164,6 @@ class TerminalStatusTests(unittest.TestCase):
         self.ts.add(w1)
         self.ts.add(w2)
         self.ts.add(w3)
-        self.ts._m.width = 9
+        self.ts._m.fake_width = 9
         text = self.ts._render()
         self.assertEqual(text, 'foo---bar')
