@@ -99,6 +99,8 @@ class Messager(object):
 
     def write(self, string):
         '''Write raw data, always.'''
+        if not string:
+            return
         self.update_width()
         rows = string.split('\n')
 
