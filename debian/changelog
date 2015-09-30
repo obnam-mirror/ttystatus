@@ -1,4 +1,4 @@
-python-ttystatus (0.24-1) UNRELEASED; urgency=low
+python-ttystatus (0.24-1) unstable; urgency=low
 
   * New upstream version.
   * debian/control: Make long description longer, more useful.
@@ -7,7 +7,7 @@ python-ttystatus (0.24-1) UNRELEASED; urgency=low
     changes required.
   * Add build-dependency on pep8 and pylint.
 
- -- Lars Wirzenius <liw@liw.fi>  Tue, 18 Mar 2014 21:46:57 +0000
+ -- Lars Wirzenius <liw@liw.fi>  Wed, 30 Sep 2015 10:14:35 +0300
 
 python-ttystatus (0.23-1) unstable; urgency=low
 

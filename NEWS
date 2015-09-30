@@ -1,7 +1,7 @@
 NEWS file for ttystatus
 =======================
 
-Version 0.24, released UNRELEASED
+Version 0.24, released 2015-09-30
 ---------------------------------
 
 * Output can now be on multiple lines. Add newlines to format string.
