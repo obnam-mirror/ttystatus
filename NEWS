@@ -1,6 +1,12 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.24.1, released 2015-10-01
+---------------------------------
+
+* Fix handling the case of the process not having a terminal to talk
+  to. Reported by Juergen Nickelsen.
+
 Version 0.24, released 2015-09-30
 ---------------------------------
 

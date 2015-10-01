@@ -53,12 +53,14 @@ class PhysicalTerminal(object):
 
         width = 80
 
-        try:
-            s = struct.pack('HHHH', 0, 0, 0, 0)
-            x = fcntl.ioctl(self._terminal.fileno(), termios.TIOCGWINSZ, s)
-            width = struct.unpack('HHHH', x)[1]
-        except IOError:
-            pass
+        if self._terminal is not None:
+            try:
+                s = struct.pack('HHHH', 0, 0, 0, 0)
+                x = fcntl.ioctl(
+                    self._terminal.fileno(), termios.TIOCGWINSZ, s)
+                width = struct.unpack('HHHH', x)[1]
+            except IOError:
+                pass
 
         return width
 
@@ -69,8 +71,9 @@ class PhysicalTerminal(object):
 
         '''
 
-        try:
-            self._terminal.write(raw_data)
-            self._terminal.flush()
-        except IOError:
-            pass
+        if self._terminal is not None:
+            try:
+                self._terminal.write(raw_data)
+                self._terminal.flush()
+            except IOError:
+                pass
