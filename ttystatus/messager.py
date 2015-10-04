@@ -46,6 +46,9 @@ class Messager(object):
         except IOError:
             self._enabled = False
 
+        if not self._terminal.has_capabilities():
+            self._enabled = False
+
         self._area = ttystatus.AreaManager()
         self._area.set_terminal(self._terminal)
 
@@ -122,6 +125,6 @@ class Messager(object):
 
     def finish(self):
         '''Finalize output.'''
-        if self._cached_message is not None:
+        if self._enabled and self._cached_message is not None:
             self.write(self._cached_message)
             self._terminal.write('\n')

@@ -31,6 +31,10 @@ class PhysicalTerminal(object):
         self._terminal = open('/dev/tty', 'wb')
         curses.setupterm(None, self._terminal.fileno())
 
+    def has_capabilities(self):
+        return all(curses.tigetstr(x) is not None
+                   for x in ['cuu', 'cud', 'cr', 'el'])
+
     def get_up_sequence(self):
         return curses.tparm(curses.tigetstr('cuu'), 1)
 
