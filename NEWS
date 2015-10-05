@@ -1,6 +1,12 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.25, released 2015-10-05
+---------------------------------
+
+* Fix handling of a terminal without the necessary capabilities, by
+  disabling output.
+
 Version 0.24.1, released 2015-10-01
 ---------------------------------
 
