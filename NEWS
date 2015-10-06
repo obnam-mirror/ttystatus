@@ -1,6 +1,12 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.26, released 2015-10-06
+---------------------------------
+
+* Fix looking up of capabilities when there is not terminal. Reported
+  by Sharon Kimble.
+
 Version 0.25, released 2015-10-05
 ---------------------------------
 

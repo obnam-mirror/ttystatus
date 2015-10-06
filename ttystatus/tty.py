@@ -26,25 +26,37 @@ class PhysicalTerminal(object):
 
     def __init__(self):
         self._terminal = None
+        self._cuu = None
+        self._cud = None
+        self._cr = None
+        self._el = None
 
     def open_tty(self):
         self._terminal = open('/dev/tty', 'wb')
         curses.setupterm(None, self._terminal.fileno())
+        self._cuu = curses.tparm(curses.tigetstr('cuu'), 1)
+        self._cud = curses.tparm(curses.tigetstr('cud'), 1)
+        self._cr = curses.tigetstr('cr')
+        self._el = curses.tigetstr('el')
 
     def has_capabilities(self):
-        return all(curses.tigetstr(x) is not None
-                   for x in ['cuu', 'cud', 'cr', 'el'])
+        return (self._cuu is not None and
+                self._cud is not None and
+                self._cr is not None and
+                self._el is not None)
 
     def get_up_sequence(self):
-        return curses.tparm(curses.tigetstr('cuu'), 1)
+        assert self._cuu is not None
+        return self._cuu
 
     def get_down_sequence(self):
-        return curses.tparm(curses.tigetstr('cud'), 1)
+        assert self._cud is not None
+        return self._cud
 
     def get_erase_line_sequence(self):
-        cr = curses.tigetstr('cr')
-        el = curses.tigetstr('el')
-        return cr + el
+        assert self._cr is not None
+        assert self._el is not None
+        return self._cr + self._el
 
     def get_width(self):
         '''Return width of terminal in characters.
