@@ -3,7 +3,7 @@ all:
 
 check:
 	python -m CoverageTestRunner --ignore-missing-from=without-tests
-	rm .coverage
+	rm -f .coverage
 	pep8 ttystatus
 	if command -v pylint && pylint --version | grep '^pylint [1-9]'; \
         then \
