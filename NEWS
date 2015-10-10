@@ -1,6 +1,12 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.27, released 2015-10-10
+---------------------------------
+
+* Improve speed when progress output is disabled, by avoiding
+  pointless rendering.
+
 Version 0.26, released 2015-10-06
 ---------------------------------
 
