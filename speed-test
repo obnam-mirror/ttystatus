@@ -53,6 +53,7 @@ ts.format(
     '%ElapsedTime() %Counter(current-file) files found; '
     '%ByteSize(uploaded-bytes) uploaded %Pathname(current-dir)')
 ts['uploaded-bytes'] = 0
+ts.disable()
 
 num_updates = 1000*1000
 

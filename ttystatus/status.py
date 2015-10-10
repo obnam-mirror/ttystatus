@@ -92,7 +92,7 @@ class TerminalStatus(object):
         for row in self._widget_rows:
             for w in row:
                 w.update(self)
-        if self._m.time_to_write():
+        if self._m.is_enabled() and self._m.time_to_write():
             self._write()
 
     def flush(self):

@@ -60,6 +60,10 @@ class Messager(object):
         '''Enable output to happen.'''
         self._enabled = True
 
+    def is_enabled(self):
+        '''Is output enabled?'''
+        return self._enabled
+
     def time_to_write(self):
         '''Is it time to write now?'''
         return self._now() - self._previous_write_at >= self._period
