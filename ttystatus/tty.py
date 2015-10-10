@@ -34,8 +34,12 @@ class PhysicalTerminal(object):
     def open_tty(self):
         self._terminal = open('/dev/tty', 'wb')
         curses.setupterm(None, self._terminal.fileno())
-        self._cuu = curses.tparm(curses.tigetstr('cuu'), 1)
-        self._cud = curses.tparm(curses.tigetstr('cud'), 1)
+
+        for name in ['cuu', 'cud']:
+            s = curses.tigetstr(name)
+            if s is not None:
+                setattr(self, '_' + name, curses.tparm(s, 1))
+
         self._cr = curses.tigetstr('cr')
         self._el = curses.tigetstr('el')
 
