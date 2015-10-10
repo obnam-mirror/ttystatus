@@ -49,13 +49,9 @@ class FakeTTY(object):
         
 tty = FakeTTY()
 ts = ttystatus.TerminalStatus(_terminal=tty, period=0)
-ts.add(ttystatus.ElapsedTime())
-ts.add(ttystatus.Literal(' '))
-ts.add(ttystatus.Counter('current-file'))
-ts.add(ttystatus.Literal(' files found; '))
-ts.add(ttystatus.ByteSize('uploaded-bytes'))
-ts.add(ttystatus.Literal(' uploaded '))
-ts.add(ttystatus.Pathname('current-dir'))
+ts.format(
+    '%ElapsedTime() %Counter(current-file) files found; '
+    '%ByteSize(uploaded-bytes) uploaded %Pathname(current-dir)')
 ts['uploaded-bytes'] = 0
 
 num_updates = 1000*1000
