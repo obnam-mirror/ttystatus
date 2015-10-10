@@ -31,7 +31,7 @@ class Messager(object):
 
     '''
 
-    def __init__(self, period=None):
+    def __init__(self, period=None, _terminal=None):
         self._period = 1.0 if period is None else period
 
         self._enabled = True
@@ -40,7 +40,7 @@ class Messager(object):
         self._displayed_message = None  # The latest message displayed.
         self._previous_write_at = 0  # When the latest message was written.
 
-        self._terminal = ttystatus.PhysicalTerminal()
+        self._terminal = _terminal or ttystatus.PhysicalTerminal()
         try:
             self._terminal.open_tty()
         except IOError:

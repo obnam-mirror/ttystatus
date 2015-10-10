@@ -32,8 +32,9 @@ class TerminalStatus(object):
 
     '''
 
-    def __init__(self, period=None, messager=None):
-        self._m = messager or ttystatus.Messager(period=period)
+    def __init__(self, period=None, messager=None, _terminal=None):
+        self._m = messager or ttystatus.Messager(
+            period=period, _terminal=_terminal)
         self.clear()
 
     def add(self, widget):

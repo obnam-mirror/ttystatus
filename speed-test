@@ -25,18 +25,30 @@ import ttystatus
 
 class FakeTTY(object):
 
-    def write(self, string):
+    def open_tty(self):
         pass
-        
-    def isatty(self):
+
+    def has_capabilities(self):
         return True
 
-    def flush(self):
+    def get_up_sequence(self):
+        return ''
+
+    def get_down_sequence(self):
+        return ''
+
+    def get_erase_line_sequence(self):
+        return ''
+
+    def get_width(self):
+        return 80
+
+    def write(self, raw_data):
         pass
         
         
-output = FakeTTY()
-ts = ttystatus.TerminalStatus(output=output)
+tty = FakeTTY()
+ts = ttystatus.TerminalStatus(_terminal=tty, period=0)
 ts.add(ttystatus.ElapsedTime())
 ts.add(ttystatus.Literal(' '))
 ts.add(ttystatus.Counter('current-file'))
@@ -53,4 +65,3 @@ def loop():
         ts['updated-bytes'] = i
 
 cProfile.run('loop()', 'ttystatus.prof')
-
