@@ -1,6 +1,14 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.29, released 2015-10-10
+---------------------------------
+
+* Do not write a newline to terminal when `finish()` is called, if
+  there is not output to the terminal otherwise. The point of the
+  newline is to make sure the shell prompt starts at the beginning of
+  a new line.
+
 Version 0.28, released 2015-10-10
 ---------------------------------
 
