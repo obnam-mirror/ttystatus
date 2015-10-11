@@ -131,4 +131,5 @@ class Messager(object):
         '''Finalize output.'''
         if self._enabled and self._cached_message is not None:
             self.write(self._cached_message)
-            self._terminal.write('\n')
+            if self._cached_message:
+                self._terminal.write('\n')
