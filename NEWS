@@ -1,6 +1,13 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.30, released UNRELEASED
+---------------------------------
+
+* Strip ASCII control characters from displayed output (but expand
+  TABs) in widget values. This avoids TABs making values longer than
+  expected, and terminals getting confused by control sequences.
+
 Version 0.29, released 2015-10-10
 ---------------------------------
 

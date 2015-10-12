@@ -117,15 +117,22 @@ class TerminalStatus(object):
 
         for i, w in enumerate(widget_row):
             if w.static_width:
-                texts[i] = w.render(0)
+                texts[i] = self._make_safe(w.render(0))
                 remaining -= len(texts[i])
 
         for i, w in enumerate(widget_row):
             if not w.static_width:
-                texts[i] = w.render(remaining)
+                texts[i] = self._make_safe(w.render(remaining))
                 remaining -= len(texts[i])
 
         return (''.join(texts))[:max_chars]
+
+    def _make_safe(self, line):
+        '''Expand TABs, remove all other ASCII control characters.'''
+        ASCII_SPACE = 32
+        return ''.join(
+            c if ord(c) >= ASCII_SPACE else ''
+            for c in line.expandtabs())
 
     def _write(self):
         '''Render and output current state of all widgets.'''
