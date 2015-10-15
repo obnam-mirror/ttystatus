@@ -8,6 +8,9 @@ Version 0.30, released UNRELEASED
   TABs) in widget values. This avoids TABs making values longer than
   expected, and terminals getting confused by control sequences.
 
+* New method `ttystatus.TerminalStatus.get_terminal_size` returns
+  terminal width and height.
+
 Version 0.29, released 2015-10-10
 ---------------------------------
 

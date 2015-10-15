@@ -62,27 +62,28 @@ class PhysicalTerminal(object):
         assert self._el is not None
         return self._cr + self._el
 
-    def get_width(self):
-        '''Return width of terminal in characters.
+    def get_size(self):
+        '''Return width, height of terminal in characters, rows.
 
-        If this fails, assume 80.
+        If this fails, assume 80 by 24.
 
         Borrowed and adapted from bzrlib.
 
         '''
 
         width = 80
+        height = 24
 
         if self._terminal is not None:
             try:
                 s = struct.pack('HHHH', 0, 0, 0, 0)
                 x = fcntl.ioctl(
                     self._terminal.fileno(), termios.TIOCGWINSZ, s)
-                width = struct.unpack('HHHH', x)[1]
+                height, width = struct.unpack('HHHH', x)[:2]
             except IOError:
                 pass
 
-        return width
+        return width, height
 
     def write(self, raw_data):
         '''Write raw data to terminal.

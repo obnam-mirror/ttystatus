@@ -37,6 +37,10 @@ class TerminalStatus(object):
             period=period, _terminal=_terminal)
         self.clear()
 
+    def get_terminal_size(self):  # pragma: no cover
+        '''Return terminal width, height.'''
+        return self._m.get_terminal_size()
+
     def add(self, widget):
         '''Add a new widget to the status display.'''
         if not self._widget_rows:

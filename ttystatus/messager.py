@@ -73,6 +73,10 @@ class Messager(object):
         # This is a wrapper around time.time(), for testing.
         return time.time()
 
+    def get_terminal_size(self):
+        '''Return terminal width, height.'''
+        return self._terminal.get_size()
+
     def get_max_line_length(self):
         return self._area.get_max_line_length()
 
