@@ -54,7 +54,7 @@ def parse(fmt):
             argnames = m.group('args').split(',')
             argnames = [x for x in argnames if x]
             widget = klass(*argnames)
-            widget.interested_in = argnames
+            widget.interested_in = argnames or None
             result.append(widget)
             fmt = fmt[m.end():]
         elif fmt.startswith('%%'):
