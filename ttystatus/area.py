@@ -25,7 +25,8 @@ class AreaManager(object):
         self._terminal = terminal
 
     def get_max_line_length(self):
-        return self._terminal.get_width() - 1
+        width, _ = self._terminal.get_size()
+        return width - 1
 
     def make_space(self, num_lines):
         '''Make space for a message needing a given number of lines.
