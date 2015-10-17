@@ -46,8 +46,16 @@ class TerminalStatus(object):
         if not self._widget_rows:
             self._widget_rows = [[]]
         self._widget_rows[-1].append(widget)
-        if not hasattr(widget, 'interested_in'):
-            widget.interested_in = None
+        self._register_interests(widget)
+
+    def _register_interests(self, widget):
+        if getattr(widget, 'interested_in', None) is None:
+            self._unknown_interest.append(widget)
+        else:
+            for key in widget.interested_in:
+                widgets = self._interested_in.get(key, [])
+                widgets.append(widget)
+                self._interested_in[key] = widgets
 
     def start_new_line(self):  # pragma: no cover
         '''Start a new line of widgets.'''
@@ -83,6 +91,7 @@ class TerminalStatus(object):
         self._widget_rows = []
         self._values = {}
         self._interested_in = {}
+        self._unknown_interest = []
         self._m.clear()
 
     def __getitem__(self, key):
@@ -96,10 +105,13 @@ class TerminalStatus(object):
     def __setitem__(self, key, value):
         '''Set value for key.'''
         self._values[key] = value
-        for row in self._widget_rows:
-            for w in row:
-                if w.interested_in is None or key in w.interested_in:
-                    w.update(self)
+        widget_lists = [
+            self._interested_in.get(key, []),
+            self._unknown_interest,
+        ]
+        for widgets in widget_lists:
+            for w in widgets:
+                w.update(self)
         if self._m.enabled and self._m.time_to_write():
             self._write()
 
