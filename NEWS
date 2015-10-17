@@ -1,7 +1,7 @@
 NEWS file for ttystatus
 =======================
 
-Version 0.30, released UNRELEASED
+Version 0.30, released 2015-10-17
 ---------------------------------
 
 * Strip ASCII control characters from displayed output (but expand

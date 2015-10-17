@@ -35,7 +35,7 @@ from .bytespeed import ByteSpeed
 from .fmt import parse
 
 
-__version__ = '0.29'
+__version__ = '0.30'
 
 
 __all__ = locals()
