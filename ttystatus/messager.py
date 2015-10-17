@@ -34,7 +34,7 @@ class Messager(object):
     def __init__(self, period=None, _terminal=None):
         self._period = 1.0 if period is None else period
 
-        self._enabled = True
+        self.enabled = True
 
         self._cached_message = None  # The latest message from caller.
         self._displayed_message = None  # The latest message displayed.
@@ -44,25 +44,21 @@ class Messager(object):
         try:
             self._terminal.open_tty()
         except IOError:
-            self._enabled = False
+            self.enabled = False
 
         if not self._terminal.has_capabilities():
-            self._enabled = False
+            self.enabled = False
 
         self._area = ttystatus.AreaManager()
         self._area.set_terminal(self._terminal)
 
     def disable(self):
         '''Disable all output except notifications.'''
-        self._enabled = False
+        self.enabled = False
 
     def enable(self):
         '''Enable output to happen.'''
-        self._enabled = True
-
-    def is_enabled(self):
-        '''Is output enabled?'''
-        return self._enabled
+        self.enabled = True
 
     def time_to_write(self):
         '''Is it time to write now?'''
@@ -87,7 +83,7 @@ class Messager(object):
 
         '''
 
-        if self._enabled and self.time_to_write():
+        if self.enabled and self.time_to_write():
             self.clear()
             num_lines = len(message.split('\n'))
             self._area.make_space(num_lines)
@@ -119,7 +115,7 @@ class Messager(object):
 
         '''
 
-        if self._enabled or force:
+        if self.enabled or force:
             self.clear()
             try:
                 f.write(message)
@@ -133,7 +129,7 @@ class Messager(object):
 
     def finish(self):
         '''Finalize output.'''
-        if self._enabled and self._cached_message is not None:
+        if self.enabled and self._cached_message is not None:
             self.write(self._cached_message)
             if self._cached_message:
                 self._terminal.write('\n')

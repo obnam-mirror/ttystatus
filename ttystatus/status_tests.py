@@ -51,9 +51,6 @@ class DummyMessager(object):
     def disable(self):
         self.enabled = False
 
-    def is_enabled(self):
-        return self.enabled
-
 
 class TerminalStatusTests(unittest.TestCase):
 

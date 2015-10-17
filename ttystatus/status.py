@@ -100,7 +100,7 @@ class TerminalStatus(object):
             for w in row:
                 if w.interested_in is None or key in w.interested_in:
                     w.update(self)
-        if self._m.is_enabled() and self._m.time_to_write():
+        if self._m.enabled and self._m.time_to_write():
             self._write()
 
     def flush(self):
