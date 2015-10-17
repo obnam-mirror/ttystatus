@@ -46,6 +46,8 @@ class TerminalStatus(object):
         if not self._widget_rows:
             self._widget_rows = [[]]
         self._widget_rows[-1].append(widget)
+        if not hasattr(widget, 'interested_in'):
+            widget.interested_in = None
 
     def start_new_line(self):  # pragma: no cover
         '''Start a new line of widgets.'''
@@ -79,7 +81,8 @@ class TerminalStatus(object):
     def clear(self):
         '''Remove all widgets.'''
         self._widget_rows = []
-        self._values = dict()
+        self._values = {}
+        self._interested_in = {}
         self._m.clear()
 
     def __getitem__(self, key):
@@ -95,7 +98,8 @@ class TerminalStatus(object):
         self._values[key] = value
         for row in self._widget_rows:
             for w in row:
-                w.update(self)
+                if w.interested_in is None or key in w.interested_in:
+                    w.update(self)
         if self._m.is_enabled() and self._m.time_to_write():
             self._write()
 

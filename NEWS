@@ -11,6 +11,11 @@ Version 0.30, released UNRELEASED
 * New method `ttystatus.TerminalStatus.get_terminal_size` returns
   terminal width and height.
 
+* Speed up updates by not updating widgets if they aren't interested
+  in the variable that got changed. This only works for widgets added
+  with the `format` method, but that should be all of them for anyone
+  not liking verbose, tedious code.
+
 Version 0.29, released 2015-10-10
 ---------------------------------
 

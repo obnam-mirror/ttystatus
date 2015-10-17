@@ -46,12 +46,16 @@ def parse(fmt):
         m = pat.match(fmt)
         if m:
             if prefix:
-                result.append(ttystatus.Literal(prefix))
+                literal = ttystatus.Literal(prefix)
+                literal.interested_in = []
+                result.append(literal)
                 prefix = ''
             klass = getattr(ttystatus, m.group('class'))
             argnames = m.group('args').split(',')
             argnames = [x for x in argnames if x]
-            result.append(klass(*argnames))
+            widget = klass(*argnames)
+            widget.interested_in = argnames
+            result.append(widget)
             fmt = fmt[m.end():]
         elif fmt.startswith('%%'):
             prefix += '%'
@@ -61,5 +65,7 @@ def parse(fmt):
             fmt = fmt[1:]
 
     if prefix:
-        result.append(ttystatus.Literal(prefix))
+        literal = ttystatus.Literal(prefix)
+        literal.interested_in = []
+        result.append(literal)
     return result
