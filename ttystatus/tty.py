@@ -57,10 +57,13 @@ class PhysicalTerminal(object):
         assert self._cud is not None
         return self._cud
 
-    def get_erase_line_sequence(self):
+    def get_carriage_return_sequence(self):
         assert self._cr is not None
+        return self._cr
+
+    def get_erase_line_sequence(self):
         assert self._el is not None
-        return self._cr + self._el
+        return self._el
 
     def get_size(self):
         '''Return width, height of terminal in characters, rows.

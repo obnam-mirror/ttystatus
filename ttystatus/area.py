@@ -51,6 +51,7 @@ class AreaManager(object):
         max_chars = self.get_max_line_length()
         up = self._terminal.get_up_sequence()
         down = self._terminal.get_down_sequence()
+        cr = self._terminal.get_carriage_return_sequence()
         erase = self._terminal.get_erase_line_sequence()
         lines = message.split('\n')
 
@@ -58,8 +59,9 @@ class AreaManager(object):
         for i, line in enumerate(message.split('\n')):
             if i > 0:
                 parts.append(down)
-            parts.append(erase)
+            parts.append(cr)
             parts.append(line[:max_chars])
+            parts.append(erase)
 
         self._terminal.write(''.join(parts))
 
