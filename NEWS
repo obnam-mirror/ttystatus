@@ -1,6 +1,13 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.31, released UNRELEASED
+---------------------------------
+
+* Fix bug in how areas on the terminal are erased. This exhibited
+  itself by the `TerminalStatus.notify` method not removing an
+  existing status message before writing out the notification.
+
 Version 0.30, released 2015-10-17
 ---------------------------------
 

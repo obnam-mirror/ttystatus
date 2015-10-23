@@ -74,5 +74,6 @@ class AreaManager(object):
         '''
 
         up = self._terminal.get_up_sequence()
+        cr = self._terminal.get_carriage_return_sequence()
         erase = self._terminal.get_erase_line_sequence()
-        self._terminal.write((erase + up) * (num_lines - 1) + erase)
+        self._terminal.write((cr + erase + up) * (num_lines - 1) + cr + erase)
