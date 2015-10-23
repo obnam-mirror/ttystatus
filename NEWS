@@ -8,6 +8,9 @@ Version 0.31, released UNRELEASED
   itself by the `TerminalStatus.notify` method not removing an
   existing status message before writing out the notification.
 
+* Fix bug in `TerminalStatus.flush` that meant it did not, in fact,
+  flush the output.
+
 Version 0.30, released 2015-10-17
 ---------------------------------
 

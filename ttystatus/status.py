@@ -122,7 +122,7 @@ class TerminalStatus(object):
 
         '''
 
-        self._write()
+        self._write(force=True)
 
     def _render(self):
         '''Render current state of all widgets.'''
@@ -154,9 +154,9 @@ class TerminalStatus(object):
             c if ord(c) >= ASCII_SPACE else ''
             for c in line.expandtabs())
 
-    def _write(self):
+    def _write(self, force=False):
         '''Render and output current state of all widgets.'''
-        self._m.write(self._render())
+        self._m.write(self._render(), force=force)
 
     def increase(self, key, delta):
         '''Increase value for a key by a given amount.'''

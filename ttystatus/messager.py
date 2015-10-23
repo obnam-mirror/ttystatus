@@ -76,14 +76,14 @@ class Messager(object):
     def get_max_line_length(self):
         return self._area.get_max_line_length()
 
-    def write(self, message):
+    def write(self, message, force=False):
         '''Write message to terminal.
 
         Message may be multiple lines.
 
         '''
 
-        if self.enabled and self.time_to_write():
+        if self.enabled and (force or self.time_to_write()):
             self.clear()
             num_lines = len(message.split('\n'))
             self._area.make_space(num_lines)

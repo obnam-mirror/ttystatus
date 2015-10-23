@@ -36,7 +36,7 @@ class DummyMessager(object):
     def time_to_write(self):
         return True
 
-    def write(self, string):
+    def write(self, string, force=False):
         self.written.write(string)
 
     def notify(self, string, f, force=False):
