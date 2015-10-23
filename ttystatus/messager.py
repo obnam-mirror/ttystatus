@@ -84,7 +84,8 @@ class Messager(object):
         '''
 
         if self.enabled and (force or self.time_to_write()):
-            self.clear()
+            if self._displayed_message is not None:
+                self._area.prepare_to_overwrite(self._displayed_message)
             num_lines = len(message.split('\n'))
             self._area.make_space(num_lines)
             self._area.display(message)

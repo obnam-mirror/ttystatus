@@ -28,6 +28,23 @@ class AreaManager(object):
         width, _ = self._terminal.get_size()
         return width - 1
 
+    def prepare_to_overwrite(self, displayed_message):
+        '''Prepare to overwrite currently displayed message.
+
+        This is like clear, but it only moves the cursor to the top of
+        the message, but does not clear all the lines. This is helpful
+        for avoiding flickering.
+
+        The cursor is assumed to be on the last line of the displayed
+        message.
+
+        '''
+
+        num_lines = len(displayed_message.split('\n'))
+        up = self._terminal.get_up_sequence()
+        cr = self._terminal.get_carriage_return_sequence()
+        self._terminal.write(up * (num_lines - 1) + cr)
+
     def make_space(self, num_lines):
         '''Make space for a message needing a given number of lines.
 
@@ -56,7 +73,7 @@ class AreaManager(object):
         lines = message.split('\n')
 
         parts = [up * (len(lines) - 1)]
-        for i, line in enumerate(message.split('\n')):
+        for i, line in enumerate(lines):
             if i > 0:
                 parts.append(down)
             parts.append(cr)
