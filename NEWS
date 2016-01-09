@@ -1,6 +1,11 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.32, released 2016-01-09
+---------------------------------
+
+* Fix some variable type changes found by pylint.
+
 Version 0.31, released 2016-01-09
 ---------------------------------
 
