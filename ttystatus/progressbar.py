@@ -34,10 +34,10 @@ class ProgressBar(ttystatus.Widget):
             done = float(self.done)
             total = float(self.total)
         except ValueError:
-            done = 0
-            total = 1
+            done = 0.0
+            total = 1.0
         if total == 0:
-            fraction = 0
+            fraction = 0.0
         else:
             fraction = done / total
         n_stars = int(round(fraction * width))
