@@ -1,3 +1,9 @@
+python-ttystatus (0.31-1) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Lars Wirzenius <liw@liw.fi>  Sat, 09 Jan 2016 11:42:55 +0200
+
 python-ttystatus (0.30-1) unstable; urgency=medium
 
   * New upstream version.

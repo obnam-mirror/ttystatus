@@ -1,7 +1,7 @@
 NEWS file for ttystatus
 =======================
 
-Version 0.31, released UNRELEASED
+Version 0.31, released 2016-01-09
 ---------------------------------
 
 * Fix bug in how areas on the terminal are erased. This exhibited
