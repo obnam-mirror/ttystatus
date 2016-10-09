@@ -1,4 +1,4 @@
-python-ttystatus (0.32+git-1) UNRELEASED; urgency=medium
+python-ttystatus (0.33+git-1) UNRELEASED; urgency=medium
 
   * New upstream version.
   * debian/control: Require Python 2.7.
