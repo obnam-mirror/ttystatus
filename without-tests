@@ -4,6 +4,7 @@ ttystatus/__init__.py
 ttystatus/area.py
 ttystatus/messager.py
 ttystatus/tty.py
+ttystatus/version.py
 ttystatus/widget.py
 setup.py
 doc/conf.py
