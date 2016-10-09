@@ -1,6 +1,11 @@
 NEWS file for ttystatus
 =======================
 
+Version 0.32+git, not yet released
+---------------------------------
+
+* Require Python 2.7.
+
 Version 0.32, released 2016-01-09
 ---------------------------------
 
