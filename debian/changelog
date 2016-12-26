@@ -1,3 +1,9 @@
+python-ttystatus (0.34+git-1) UNRELEASED; urgency=medium
+
+  * New upstream version.
+
+ -- Lars Wirzenius <liw@liw.fi>  Mon, 26 Dec 2016 10:39:36 +0200
+
 python-ttystatus (0.34-1) unstable; urgency=medium
 
   * New upstream version.
