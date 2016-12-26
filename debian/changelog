@@ -1,10 +1,10 @@
-python-ttystatus (0.33+git-1) UNRELEASED; urgency=medium
+python-ttystatus (0.34-1) unstable; urgency=medium
 
   * New upstream version.
     - Fixes FTBFS (Closes: #844235)
   * debian/control: Require Python 2.7.
 
- -- Lars Wirzenius <liw@liw.fi>  Sun, 09 Oct 2016 16:24:01 +0300
+ -- Lars Wirzenius <liw@liw.fi>  Mon, 26 Dec 2016 10:39:34 +0200
 
 python-ttystatus (0.32-1) unstable; urgency=medium
 
