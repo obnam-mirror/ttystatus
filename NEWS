@@ -5,6 +5,9 @@ Version 0.33+git, not yet released
 ---------------------------------
 
 * Require Python 2.7.
+* Add a missing empty line needed for PEP8 compliance. This caused a
+  failure in the test suite, no idea why it wasn't caught when making
+  the previous release.
 
 Version 0.32, released 2016-01-09
 ---------------------------------

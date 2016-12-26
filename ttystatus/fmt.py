@@ -28,6 +28,7 @@ def _find_widgets():
     subclasses = [w for w in widget_classes if w != ttystatus.Widget]
     return subclasses
 
+
 widgets = _find_widgets()
 
 
