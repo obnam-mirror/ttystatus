@@ -47,6 +47,7 @@ class TerminalStatus(object):
             self._widget_rows = [[]]
         self._widget_rows[-1].append(widget)
         self._register_interests(widget)
+        self.flush()
 
     def _register_interests(self, widget):
         if getattr(widget, 'interested_in', None) is None:
@@ -62,6 +63,7 @@ class TerminalStatus(object):
         if not self._widget_rows:
             self._widget_rows = [[]]
         self._widget_rows.append([])
+        self.flush()
 
     def format(self, format_string):
         '''Add new widgets based on format string.
@@ -78,6 +80,7 @@ class TerminalStatus(object):
                 self.start_new_line()
             for widget in ttystatus.parse(line):
                 self.add(widget)
+        self.flush()
 
     @property
     def widgets(self):
