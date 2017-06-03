@@ -118,7 +118,21 @@ class TerminalStatus(object):
         if self._m.enabled and self._m.time_to_write():
             self._write()
 
+    def hide(self):  # pragma: no cover
+        '''Hide current progress report.
+
+        Use .flush() to make it visible again. Hiding is useful if you
+        want to write things to stdout/stderr that might get mixed
+        with progress output. The .notify() and .error() methods get
+        disabled if progress reporting gets disabled, but .hide()
+        doesn't.
+
+        '''
+
+        self._m.clear()
+
     def flush(self):
+
         '''Force an update of current state to the screen.
 
         This happens even if it is not yet time to output the screen.
