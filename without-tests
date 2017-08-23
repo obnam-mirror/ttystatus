@@ -7,4 +7,3 @@ ttystatus/tty.py
 ttystatus/version.py
 ttystatus/widget.py
 setup.py
-doc/conf.py
