@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -eu
+
+python -m CoverageTestRunner --ignore-missing-from=without-tests
+rm -f .coverage
+pep8 ttystatus
+PYTHONPATH=. pylint --rcfile=pylint.conf ttystatus
