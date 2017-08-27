@@ -36,7 +36,7 @@ Hacking
 See <http://liw.fi/ttystatus/> for information about version control
 trees, etc.
 
-Run "make check" for unit tests. If you make any changes, run it
+Run `./check` for unit tests. If you make any changes, run it
 first, and don't stop fixing things until coverage is 100% again.
 
 If you do make any improvements, I would welcome patches. Send me
