@@ -7,6 +7,8 @@ Version 0.35+git, not yet released
 * The sphinx formatted manual is dropped. It was too much of a bother
   to maintain, sorry. Also, out of date.
 
+* `ttystatus` is not ported to Python 3.
+
 Version 0.35, released 2017-06-03
 ----------------------------------
 
