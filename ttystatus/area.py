@@ -77,10 +77,11 @@ class AreaManager(object):
             if i > 0:
                 parts.append(down)
             parts.append(cr)
-            parts.append(line[:max_chars])
+            parts.append(line[:max_chars].encode())
             parts.append(erase)
 
-        self._terminal.write(''.join(parts))
+        output = b''.join(parts)
+        self._terminal.write(output)
 
     def clear_area(self, num_lines):
         '''Clear area reserved for message needing a given number of lines.

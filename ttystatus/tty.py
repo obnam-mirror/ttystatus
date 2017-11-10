@@ -95,6 +95,8 @@ class PhysicalTerminal(object):
 
         '''
 
+        if not isinstance(raw_data, bytes):
+            raw_data = raw_data.encode()
         if self._terminal is not None:
             try:
                 self._terminal.write(raw_data)
