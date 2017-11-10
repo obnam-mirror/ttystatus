@@ -14,6 +14,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
+
+if sys.version_info >= (3,):
+    def xfrm(s):
+        return s.encode()
+else:
+    def xfrm(s):
+        return s
+
+
 class AreaManager(object):
 
     '''Manage the area on the terminal for displaying messages.'''
@@ -77,7 +88,7 @@ class AreaManager(object):
             if i > 0:
                 parts.append(down)
             parts.append(cr)
-            parts.append(line[:max_chars].encode())
+            parts.append(xfrm(line[:max_chars]))
             parts.append(erase)
 
         output = b''.join(parts)
