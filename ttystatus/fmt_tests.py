@@ -23,9 +23,9 @@ class FormatTests(unittest.TestCase):
 
     def test_knows_widgets(self):
         self.assertEqual(type(ttystatus.fmt.widgets), list)
-        self.assert_(len(ttystatus.fmt.widgets) > 0)
+        self.assertTrue(len(ttystatus.fmt.widgets) > 0)
         for widget in ttystatus.fmt.widgets:
-            self.assert_(issubclass(widget, ttystatus.Widget))
+            self.assertTrue(issubclass(widget, ttystatus.Widget))
             self.assertNotEqual(widget, ttystatus.Widget)
 
     def test_parses_string_without_widgets(self):

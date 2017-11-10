@@ -14,10 +14,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import StringIO
+import io as StringIO
 import unittest
 
 import ttystatus
+
+
+if 'unicode' in __builtins__:
+    make_text = __builtins__['unicode']
+else:
+    make_text = str
 
 
 class DummyMessager(object):
@@ -37,7 +43,7 @@ class DummyMessager(object):
         return True
 
     def write(self, string, force=False):
-        self.written.write(string)
+        self.written.write(make_text(string))
 
     def notify(self, string, f, force=False):
         pass
@@ -130,7 +136,7 @@ class TerminalStatusTests(unittest.TestCase):
     def test_enable_calls_messager_enable(self):
         self.ts.disable()
         self.ts.enable()
-        self.assert_(self.ts._m.enabled)
+        self.assertTrue(self.ts._m.enabled)
 
     def test_counts_correctly_even_without_rendering(self):
         w = ttystatus.Counter('value')
