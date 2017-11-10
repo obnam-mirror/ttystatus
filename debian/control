@@ -4,8 +4,13 @@ Homepage: http://liw.fi/ttystatus/
 Section: python
 Priority: optional
 Standards-Version: 3.9.8
-Build-Depends: debhelper (>= 9), python (>= 2.7~), 
-    python-coverage-test-runner, python-sphinx, pep8, pylint
+Build-Depends: debhelper (>= 9),
+  python (>= 2.7~),
+  python3,
+  python-coverage-test-runner, 
+  python3-coverage-test-runner, 
+  pycodestyle,
+  pylint3
 X-Python-Version: >= 2.7
 	
 Package: python-ttystatus
