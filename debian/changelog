@@ -1,6 +1,7 @@
 python-ttystatus (0.35+git-1) UNRELEASED; urgency=medium
 
   * New upstream version.
+  * Added Python3 support, and a python3-ttystatus package.
 
  -- Lars Wirzenius <liw@liw.fi>  Sat, 03 Jun 2017 22:42:29 +0300
 
