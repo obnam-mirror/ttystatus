@@ -2,7 +2,26 @@
 
 set -eu
 
-python -m CoverageTestRunner --ignore-missing-from=without-tests
+title()
+{
+    printf '\n\n%s\n' "$@"
+    for i in $(seq 77)
+    do
+        printf "-"
+    done
+    printf '\n'
+}
+
+title "Python2 unit tests"
+python2 -m CoverageTestRunner --ignore-missing-from=without-tests
 rm -f .coverage
-pep8 ttystatus
-PYTHONPATH=. pylint --rcfile=pylint.conf ttystatus
+
+title "Python3 unit tests"
+python3 -m CoverageTestRunner --ignore-missing-from=without-tests
+rm -f .coverage
+
+title "Style checks"
+pycodestyle ttystatus
+
+title "Static checks"
+PYTHONPATH=. pylint3 --rcfile=pylint.conf ttystatus
