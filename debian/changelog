@@ -1,9 +1,9 @@
-python-ttystatus (0.36+git-1) UNRELEASED; urgency=medium
+python-ttystatus (0.37-1) unstable; urgency=medium
 
   * New upstream version.
   * Fix debian/rules.
 
- -- Lars Wirzenius <liw@liw.fi>  Fri, 10 Nov 2017 23:03:54 +0100
+ -- Lars Wirzenius <liw@liw.fi>  Sat, 11 Nov 2017 10:30:11 +0100
 
 python-ttystatus (0.36-1) unstable; urgency=medium
 
