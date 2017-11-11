@@ -4,4 +4,4 @@ export PYBUILD_NAME=ttystatus
 
 
 %:
-	dh $@ --with=python2,python3 --with-buildsystem=pybuild
+	dh $@ --with=python2,python3 --buildsystem=pybuild
