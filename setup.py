@@ -19,14 +19,15 @@ from distutils.core import setup
 
 import ttystatus
 
-setup(name='ttystatus',
-      version=ttystatus.__version__,
-      description='terminal progress bar and status output for command line',
-      long_description='''\
+setup(
+    name='ttystatus',
+    version=ttystatus.__version__,
+    description='terminal progress bar and status output for command line',
+    long_description='''\
 The ttystatus Python library provides a simple widget-based way to show
 progress and current status in command line programs.
 ''',
-      classifiers=[
+    classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Intended Audience :: Developers',
@@ -35,9 +36,9 @@ progress and current status in command line programs.
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: User Interfaces',
         'Topic :: Terminals',
-      ],
-      author='Lars Wirzenius',
-      author_email='liw@liw.fi',
-      url='http://liw.fi/ttystatus/',
-      packages=['ttystatus'],
-     )
+    ],
+    author='Lars Wirzenius',
+    author_email='liw@liw.fi',
+    url='http://liw.fi/ttystatus/',
+    packages=['ttystatus'],
+)
