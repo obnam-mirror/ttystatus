@@ -1,8 +1,7 @@
 #!/usr/bin/make -f
+
+export PYBUILD_NAME=ttystatus
+
+
 %:
-	dh $@ --with=python2 --with-buildsystem=python_distutils
-
-override_dh_auto_install:
-	python setup.py install --prefix=debian/python-ttystatus/usr \
-        --install-layout=deb
-
+	dh $@ --with=python2,python3 --with-buildsystem=pybuild
