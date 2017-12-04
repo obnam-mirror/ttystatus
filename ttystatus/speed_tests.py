@@ -13,29 +13,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from .tty import PhysicalTerminal
-from .area import AreaManager
-from .messager import Messager
-from .status import TerminalStatus
-from .widget import Widget
 
-from .literal import Literal
-from .string import String
-from .integer import Integer
-from .pathname import Pathname
-from .bytesize import ByteSize
-from .counter import Counter
-from .index import Index
-from .percent import PercentDone
-from .progressbar import ProgressBar
-from .remtime import RemainingTime
-from .elapsed import ElapsedTime
-from .speed import Speed
-from .bytespeed import ByteSpeed
+import unittest
 
-from .fmt import parse
-
-from .version import __version__, __version_info__
+import ttystatus
 
 
-__all__ = locals()
+class SpeedTests(unittest.TestCase):
+
+    def setUp(self):
+        self.w = ttystatus.Speed('foo')
+
+    def test_is_not_static_width(self):
+        self.assertFalse(self.w.static_width)
+
+    def test_formats_zero_speed_without_update(self):
+        self.assertEqual(self.w.render(0), '0.00/s')
