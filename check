@@ -24,4 +24,5 @@ title "Style checks"
 pycodestyle ttystatus
 
 title "Static checks"
-PYTHONPATH=. pylint3 --rcfile=pylint.conf ttystatus
+pycodestyle ttystatus
+#PYTHONPATH=. pylint3 --rcfile=pylint.conf ttystatus

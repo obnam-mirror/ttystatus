@@ -1,6 +1,8 @@
 python-ttystatus (0.38+git-1) UNRELEASED; urgency=medium
 
   * New upstream version.
+  * Drop use of pylint3, until it is installable in Debian unstable
+    again.
 
  -- Lars Wirzenius <liw@liw.fi>  Mon, 04 Dec 2017 18:27:20 +0200
 
